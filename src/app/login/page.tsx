@@ -1,7 +1,17 @@
+"use client";
 import Link from "next/link";
+import { useActionState } from "react";
 import { LogIn } from "lucide-react";
+import { login } from "@/app/actions";
 
 const Login = () => {
+  const credentials = {
+    email: "",
+    password: "",
+  };
+
+  const [state, formAction, isPending] = useActionState(login, credentials);
+
   return (
     <div className="max-w-md mx-auto mt-16">
       <div className="brutalist-card">
@@ -9,24 +19,39 @@ const Login = () => {
           <LogIn className="w-8 h-8" />
         </div>
         <h2 className="text-3xl font-bold mb-8 mt-4">Login</h2>
-        <form className="space-y-6">
+        <div>
+          <pre>{JSON.stringify(credentials)}</pre>
+        </div>
+        <form className="space-y-6" action={formAction}>
           <div>
-            <label className="block font-bold mb-2">Email</label>
+            <label className="block font-bold mb-2" htmlFor="email">
+              Email
+            </label>
             <input
               type="email"
+              name="email"
+              id="email"
               className="brutalist-input"
               placeholder="your@email.com"
             />
           </div>
           <div>
-            <label className="block font-bold mb-2">Password</label>
+            <label className="block font-bold mb-2" htmlFor="password">
+              Password
+            </label>
             <input
               type="password"
+              name="password"
+              id="password"
               className="brutalist-input"
               placeholder="••••••••"
             />
           </div>
-          <button type="submit" className="brutalist-button w-full">
+          <button
+            type="submit"
+            className="brutalist-button w-full"
+            // disabled={pending}
+          >
             LOGIN
           </button>
         </form>

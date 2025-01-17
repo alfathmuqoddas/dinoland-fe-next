@@ -12,7 +12,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-red-500 text-white">
+    <div className="bg-red-500 text-white">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link
@@ -41,7 +41,7 @@ const Navbar = () => {
             </Link>
             <Link
               href="/register"
-              className={`flex items-center space-x-1 px-4 py-2 text-white font-bold transition-colors ${isActive(
+              className={`flex items-center space-x-1 px-4 py-2 text-whit font-bold transition-colors ${isActive(
                 "/register"
               )}`}
             >
@@ -51,7 +51,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </div>
   );
 };
 

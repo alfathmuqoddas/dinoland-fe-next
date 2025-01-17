@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function Home() {
-  return <div className="">Nope</div>;
+  return <div className="hover:text-pink-500">Nope</div>;
 }

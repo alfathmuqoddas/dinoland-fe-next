@@ -1,6 +1,11 @@
 import { ShoppingCart } from "lucide-react";
+import { SearchParams } from "next/dist/server/request/search-params";
 
-const Products = async () => {
+const Products = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) => {
   const data = await fetch("http://localhost:8080/api/product", {
     cache: "no-store",
   });
@@ -17,11 +22,15 @@ const Products = async () => {
     updatedAt: string;
   };
 
+  const { filter, sort } = await searchParams;
+
   return (
     <div>
       <h1 className="text-5xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-yellow-400">
         Featured Products
       </h1>
+      <div>Filter by: {filter}</div>
+      <div>Sort by: {sort}</div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product: TProduct) => (
           <div key={product.id} className="brutalist-card group">

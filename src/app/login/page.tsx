@@ -5,12 +5,12 @@ import { LogIn } from "lucide-react";
 import { login } from "@/app/actions";
 
 const Login = () => {
-  const credentials = {
-    email: "",
-    password: "",
+  const initialState = {
+    accessToken: "",
+    refreshToken: "",
   };
 
-  const [state, formAction, isPending] = useActionState(login, credentials);
+  const [state, formAction, isPending] = useActionState(login, initialState);
 
   return (
     <div className="max-w-md mx-auto mt-16">
@@ -20,7 +20,7 @@ const Login = () => {
         </div>
         <h2 className="text-3xl font-bold mb-8 mt-4">Login</h2>
         <div>
-          <pre>{JSON.stringify(credentials)}</pre>
+          <pre>{JSON.stringify(initialState, null, 2)}</pre>
         </div>
         <form className="space-y-6" action={formAction}>
           <div>
@@ -50,9 +50,9 @@ const Login = () => {
           <button
             type="submit"
             className="brutalist-button w-full"
-            // disabled={pending}
+            disabled={isPending}
           >
-            LOGIN
+            {isPending ? "Logging in..." : "LOGIN"}
           </button>
         </form>
         <p className="mt-6 text-center">

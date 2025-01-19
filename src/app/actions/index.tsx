@@ -1,4 +1,5 @@
 "use server";
+import { cookies } from "next/headers";
 
 export async function login(prevState: any, formData: FormData) {
   const data = {
@@ -6,10 +7,26 @@ export async function login(prevState: any, formData: FormData) {
     password: formData.get("password"),
   };
 
+  const cookiesStore = await cookies();
+
   try {
-    console.log(data);
-    return data;
+    const response = await fetch("http://localhost:3000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const json = await response.json();
+
+    if (json) {
+      cookiesStore.set("accessToken", json.accessToken);
+      cookiesStore.set("refreshToken", json.refreshToken);
+      return json;
+    } else {
+      throw new Error("Something went wrong");
+    }
   } catch (error) {
-    console.log(error);
+    console.error("Error logging in:", error);
   }
 }

@@ -1,5 +1,5 @@
 import { ShoppingCart } from "lucide-react";
-import { SearchParams } from "next/dist/server/request/search-params";
+import { TProduct } from "./type";
 
 const Products = async ({
   searchParams,
@@ -10,17 +10,6 @@ const Products = async ({
     cache: "no-store",
   });
   const products = await data.json();
-
-  type TProduct = {
-    id: number;
-    name: string;
-    price: number;
-    image: string;
-    description: string;
-    categoryId: number;
-    createdAt: string;
-    updatedAt: string;
-  };
 
   const { filter, sort } = await searchParams;
 

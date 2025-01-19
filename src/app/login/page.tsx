@@ -19,9 +19,6 @@ const Login = () => {
           <LogIn className="w-8 h-8" />
         </div>
         <h2 className="text-3xl font-bold mb-8 mt-4">Login</h2>
-        <div>
-          <pre>{JSON.stringify(initialState, null, 2)}</pre>
-        </div>
         <form className="space-y-6" action={formAction}>
           <div>
             <label className="block font-bold mb-2" htmlFor="email">
@@ -54,6 +51,10 @@ const Login = () => {
           >
             {isPending ? "Logging in..." : "LOGIN"}
           </button>
+          <div className="text-center">
+            {/* {state.accessToken && <p>Access Token: {state.accessToken}</p>}
+            {state.refreshToken && <p>Refresh Token: {state.refreshToken}</p>} */}
+          </div>
         </form>
         <p className="mt-6 text-center">
           Don't have an account?{" "}

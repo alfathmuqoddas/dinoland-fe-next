@@ -22,8 +22,16 @@ export async function login(prevState: any, formData: FormData) {
     const json = await response.json();
 
     if (json) {
-      cookiesStore.set("accessToken", json.accessToken);
-      cookiesStore.set("refreshToken", json.refreshToken);
+      cookiesStore.set({
+        name: "accessToken",
+        value: json.accessToken,
+        httpOnly: true,
+      });
+      cookiesStore.set({
+        name: "refreshToken",
+        value: json.refreshToken,
+        httpOnly: true,
+      });
       // redirect("/dashboard");
       return json;
     } else {

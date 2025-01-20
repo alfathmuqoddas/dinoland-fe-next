@@ -1,5 +1,6 @@
-import "server only";
+"use server";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function updateSession() {
   const accessToken = (await cookies()).get("accessToken")?.value;
@@ -19,4 +20,29 @@ export async function updateSession() {
     sameSite: "lax",
     path: "/",
   });
+}
+
+export async function isLogin() {
+  const accessToken = (await cookies()).get("accessToken")?.value;
+
+  if (accessToken) {
+    return true;
+  }
+
+  return false;
+}
+
+export async function logout() {
+  const cookiesStore = await cookies();
+  cookiesStore.set({
+    name: "accessToken",
+    value: "",
+    httpOnly: true,
+  });
+  cookiesStore.set({
+    name: "refreshToken",
+    value: "",
+    httpOnly: true,
+  });
+  redirect("/login");
 }

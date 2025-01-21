@@ -1,9 +1,28 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Store, LogIn, UserPlus } from "lucide-react";
 import { logout, isLogin } from "@/app/lib/session";
+
+export function useCookieExists(cookieName: string): boolean {
+  const [cookieExists, setCookieExists] = useState(false);
+
+  useEffect(() => {
+    const checkCookie = () => {
+      const cookieValue = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(`${cookieName}=`));
+
+      setCookieExists(!!cookieValue);
+    };
+
+    checkCookie();
+  }, [cookieName]);
+
+  return cookieExists;
+}
 
 const Navbar = () => {
   const location = usePathname();
@@ -11,6 +30,8 @@ const Navbar = () => {
   const isActive = (path: string) => {
     return location === path ? "bg-pink-500" : "hover:bg-pink-600";
   };
+
+  const hasAuthCookie = useCookieExists("accessToken");
 
   return (
     <div className="bg-gray-800 text-white">
@@ -32,7 +53,7 @@ const Navbar = () => {
               <span>Products</span>
             </Link>
 
-            {!isLogin ? (
+            {hasAuthCookie ? (
               <>
                 <Link
                   href="/login"

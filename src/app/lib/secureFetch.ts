@@ -1,4 +1,4 @@
-import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 
 export async function refreshToken(refreshToken: string) {
   const response = await fetch("http://localhost:8080/api/auth/refresh", {
@@ -20,6 +20,7 @@ export async function refreshToken(refreshToken: string) {
 }
 
 export async function fetchWithAuth(url: string, options: any) {
+  const authorization = (await headers()).get("authorization");
   let response = await fetch(url, {
     ...options,
     headers: {

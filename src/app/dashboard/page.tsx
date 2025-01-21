@@ -20,7 +20,7 @@ export default async function Dashboard() {
     throw new Error("Could not fetch dashboard");
   }
 
-  const { data } = await response.json();
+  const data = await response.json();
 
   return (
     <div>

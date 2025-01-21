@@ -22,27 +22,13 @@ export async function updateSession() {
   });
 }
 
-export async function isLogin() {
-  const accessToken = (await cookies()).get("accessToken")?.value;
-
-  if (accessToken) {
-    return true;
-  }
-
-  return false;
+export async function isLogin(): Promise<boolean> {
+  const cookieStore = await cookies();
+  return cookieStore.has("accessToken");
 }
 
 export async function logout() {
-  const cookiesStore = await cookies();
-  cookiesStore.set({
-    name: "accessToken",
-    value: "",
-    httpOnly: true,
-  });
-  cookiesStore.set({
-    name: "refreshToken",
-    value: "",
-    httpOnly: true,
-  });
+  (await cookies()).delete("accessToken");
+  (await cookies()).delete("refreshToken");
   redirect("/login");
 }

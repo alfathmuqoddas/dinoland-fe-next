@@ -1,37 +1,35 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import { Store, LogIn, UserPlus } from "lucide-react";
-import { logout, isLogin } from "@/app/lib/session";
-
-export function useCookieExists(cookieName: string): boolean {
-  const [cookieExists, setCookieExists] = useState(false);
-
-  useEffect(() => {
-    const checkCookie = () => {
-      const cookieValue = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith(`${cookieName}=`));
-
-      setCookieExists(!!cookieValue);
-    };
-
-    checkCookie();
-  }, [cookieName]);
-
-  return cookieExists;
-}
+import { logout } from "@/app/lib/session";
 
 const Navbar = () => {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const location = usePathname();
 
   const isActive = (path: string) => {
     return location === path ? "bg-pink-500" : "hover:bg-pink-600";
   };
 
-  const hasAuthCookie = useCookieExists("accessToken");
+  useEffect(() => {
+    const getClientSideCookie = (name: string): string | undefined => {
+      const cookieValue = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(`${name}=`))
+        ?.split("=")[1];
+
+      return cookieValue;
+    };
+
+    if (getClientSideCookie("accessToken")) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  }, []);
 
   return (
     <div className="bg-gray-800 text-white">
@@ -53,7 +51,7 @@ const Navbar = () => {
               <span>Products</span>
             </Link>
 
-            {hasAuthCookie ? (
+            {!loggedIn ? (
               <>
                 <Link
                   href="/login"

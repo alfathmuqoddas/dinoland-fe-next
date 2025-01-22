@@ -3,90 +3,135 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Store, LogIn, UserPlus } from "lucide-react";
-import { logout } from "@/app/lib/session";
+import { Store, LogIn, UserPlus, Menu, ShoppingCart } from "lucide-react";
+import { logout, isLogin } from "@/app/lib/session";
+import Form from "next/form";
+import { useSearchParams } from "next/navigation";
 
-const Navbar = () => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+export const SearchForm = () => {
+  const searchParams = useSearchParams();
+
+  return (
+    <Form action="/search" className="w-full px-12">
+      <input
+        type="text"
+        key={searchParams?.get("q")}
+        defaultValue={searchParams?.get("q") || ""}
+        name="q"
+        placeholder="Search"
+        className="w-full px-4 py-2 text-sm text-white bg-gray-700 border border-gray-600 focus:outline-none focus:border-pink-500"
+      />
+    </Form>
+  );
+};
+
+export const MobileMenu = () => {
+  return (
+    <div className="p-2 hover:bg-pink-600 hover:cursor-pointer">
+      <Menu className="w-5 h-5" />
+    </div>
+  );
+};
+
+export const Checkout = () => {
+  return (
+    <div className="p-2 hover:bg-pink-600 hover:cursor-pointer">
+      <ShoppingCart className="w-5 h-5" />
+    </div>
+  );
+};
+
+export const NavMenu: React.FC<{
+  link: string;
+  text: string;
+  icon: React.ReactNode;
+}> = ({ link, text, icon }) => {
   const location = usePathname();
 
   const isActive = (path: string) => {
     return location === path ? "bg-pink-500" : "hover:bg-pink-600";
   };
 
+  return (
+    <Link
+      href={link}
+      className={`flex items-center space-x-1 px-2 py-1 text-white text-sm font-bold transition-colors hover:bg-pink-600 ${isActive(
+        link
+      )}`}
+    >
+      {icon}
+      <span>{text}</span>
+    </Link>
+  );
+};
+
+export const NavMenuList = () => {
+  const navList = [
+    {
+      link: "/products",
+      text: "Products",
+      icon: <Store className="w-5 h-5" />,
+    },
+    // {
+    //   link: "/login",
+    //   text: "Login",
+    //   icon: <LogIn className="w-5 h-5" />,
+    // },
+    // {
+    //   link: "/register",
+    //   text: "Register",
+    //   icon: <UserPlus className="w-5 h-5" />,
+    // },
+  ];
+
+  return (
+    <div className="flex gap-4">
+      {navList.map((nav, index) => (
+        <NavMenu key={index} {...nav} />
+      ))}
+    </div>
+  );
+};
+
+const Navbar = () => {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
   useEffect(() => {
-    const getClientSideCookie = (name: string): string | undefined => {
-      const cookieValue = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith(`${name}=`))
-        ?.split("=")[1];
-
-      return cookieValue;
+    const checkLogin = async () => {
+      const loginStatus = await isLogin();
+      setLoggedIn(loginStatus);
     };
-
-    if (getClientSideCookie("accessToken")) {
-      setLoggedIn(true);
-    } else {
-      setLoggedIn(false);
-    }
+    checkLogin();
   }, []);
 
   return (
-    <div className="bg-gray-800 text-white">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+    <nav className="relative p-2 lg:px-6 bg-gray-800">
+      <div className="flex items-center justify-between max-w-[1440px] mx-auto">
+        <div className="flex lg:hidden">
+          <MobileMenu />
+        </div>
+        <div className="w-1/3">
           <Link
             href="/"
             className="flex items-center space-x-2 text-white font-bold text-xl"
           >
-            <Store className="w-8 h-8" />
-            <span>BRUTALIST STORE 🚀 {location}</span>
+            <span>BRUTALIST STORE 🚀</span>
           </Link>
-          <div className="flex space-x-4">
-            <Link
-              href="/products"
-              className={`flex items-center space-x-1 px-4 py-2 text-white font-bold transition-colors hover:bg-pink-600`}
-            >
-              <Store className="w-5 h-5" />
-              <span>Products</span>
-            </Link>
+        </div>
 
-            {!loggedIn ? (
-              <>
-                <Link
-                  href="/login"
-                  className={`flex items-center space-x-1 px-4 py-2 text-white font-bold transition-colors ${isActive(
-                    "/login"
-                  )}`}
-                >
-                  <LogIn className="w-5 h-5" />
-                  <span>Login</span>
-                </Link>
-                <Link
-                  href="/register"
-                  className={`flex items-center space-x-1 px-4 py-2 text-white font-bold transition-colors ${isActive(
-                    "/register"
-                  )}`}
-                >
-                  <UserPlus className="w-5 h-5" />
-                  <span>Register</span>
-                </Link>
-              </>
-            ) : (
-              <>
-                <div
-                  onClick={() => logout()}
-                  className={`flex items-center space-x-1 px-4 py-2 text-whit font-bold transition-colors hover:cursor-pointer hover:bg-pink-600`}
-                >
-                  <UserPlus className="w-5 h-5" />
-                  <span>Logout</span>
-                </div>
-              </>
-            )}
-          </div>
+        <div className="hidden md:flex justify-center w-1/3">
+          <SearchForm />
+        </div>
+
+        <div className="hidden lg:flex justify-end  w-1/3">
+          <NavMenuList />
+        </div>
+
+        <div className="flex lg:hidden">
+          <Checkout />
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 

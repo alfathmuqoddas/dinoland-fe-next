@@ -37,10 +37,7 @@ const Products = async ({
 
   return (
     <div>
-      <h1 className="text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-yellow-400">
-        Featured Products
-      </h1>
-      <div className="py-8">
+      <div className="pb-8">
         <div>Category: {categoryId}</div>
         <div>Sort by: {sortBy}</div>
         <div>Sort Order: {sortOrder}</div>

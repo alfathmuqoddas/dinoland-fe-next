@@ -11,7 +11,7 @@
 
 .brutalist-card {
   @apply relative bg-white text-black p-6 transform transition-transform duration-200 hover:scale-[1.02];
-  box-shadow: 8px 8px 0px theme("colors.pink.500");
+  /* box-shadow: 8px 8px 0px theme("colors.pink.500"); */
 }
 
 .brutalist-input {

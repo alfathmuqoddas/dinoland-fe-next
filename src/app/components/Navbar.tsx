@@ -19,7 +19,7 @@ export const SearchForm = () => {
   const searchParams = useSearchParams();
 
   return (
-    <Form action="/search" className="relative w-80 mx-auto">
+    <Form action="/products" className="relative w-80 mx-auto">
       <input
         key={searchParams?.get("q")}
         type="text"

@@ -11,7 +11,7 @@ const Products = async ({
 
   let url = "http://localhost:8080/api/product";
 
-  const queryParams = new URLSearchParams();
+  const queryParams = new URLSearchParams() as any;
 
   if (q) {
     queryParams.append("q", q);
@@ -52,7 +52,7 @@ const Products = async ({
           products.map((product: TProduct) => (
             <Link key={product.id} href={`/products/${product.id}`}>
               <div className="brutalist-card group">
-                <div className="relative overflow-hidden mb-4 border-4 border-black">
+                <div className="relative overflow-hidden mb-4 border-[3px] rounded-[12px] border-black">
                   <img
                     src={product.image}
                     alt={product.name}

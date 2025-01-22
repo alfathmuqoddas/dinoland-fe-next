@@ -3,7 +3,14 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { Store, LogIn, UserPlus, Menu, ShoppingCart } from "lucide-react";
+import {
+  Store,
+  LogIn,
+  UserPlus,
+  Menu,
+  ShoppingCart,
+  Search,
+} from "lucide-react";
 import { logout, isLogin } from "@/app/lib/session";
 import Form from "next/form";
 import { useSearchParams } from "next/navigation";
@@ -12,15 +19,19 @@ export const SearchForm = () => {
   const searchParams = useSearchParams();
 
   return (
-    <Form action="/search" className="w-full px-12">
+    <Form action="/search" className="relative w-80 mx-auto">
       <input
-        type="text"
         key={searchParams?.get("q")}
-        defaultValue={searchParams?.get("q") || ""}
+        type="text"
         name="q"
-        placeholder="Search"
-        className="w-full px-4 py-2 text-sm text-white bg-gray-700 border border-gray-600 focus:outline-none focus:border-pink-500"
+        placeholder="Search for products..."
+        autoComplete="off"
+        defaultValue={searchParams?.get("q") || ""}
+        className="text-md w-full border bg-transparent px-4 py-2 border-gray-600 focus:border-pink-500"
       />
+      <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
+        <Search className="h-4" />
+      </div>
     </Form>
   );
 };
@@ -110,7 +121,7 @@ const Navbar = () => {
         <div className="flex lg:hidden">
           <MobileMenu />
         </div>
-        <div className="w-1/3">
+        <div className="md:w-1/3">
           <Link
             href="/"
             className="flex items-center space-x-2 text-white font-bold text-xl"
@@ -119,11 +130,11 @@ const Navbar = () => {
           </Link>
         </div>
 
-        <div className="hidden md:flex justify-center w-1/3">
+        <div className="hidden md:flex justify-center md:w-1/3">
           <SearchForm />
         </div>
 
-        <div className="hidden lg:flex justify-end  w-1/3">
+        <div className="hidden lg:flex justify-end  md:w-1/3">
           <NavMenuList />
         </div>
 

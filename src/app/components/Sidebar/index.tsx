@@ -18,7 +18,7 @@ export const Category = ({ items }: { items: Category[] }) => {
   };
 
   const isActive = (categoryId: string) => {
-    return searchParams.get("categoryId") === categoryId ? "underline" : "";
+    return searchParams.get("categoryId") == categoryId ? "underline" : "";
   };
 
   return (

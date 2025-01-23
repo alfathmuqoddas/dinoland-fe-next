@@ -34,9 +34,6 @@ const Products = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   const { categoryId, sortBy, sortOrder, q } = await searchParams;
-  console.log(typeof categoryId);
-
-  console.log({ searchParams });
 
   let url = "http://localhost:8080/api/product";
 

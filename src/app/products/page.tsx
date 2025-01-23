@@ -1,6 +1,32 @@
 import { Link as LinkIcon, ShoppingCart } from "lucide-react";
 import { TProduct } from "./type";
 import Link from "next/link";
+import { Category, SortBy, SortOrder } from "@/app/components/Sidebar";
+
+export const Sidebar = async () => {
+  const categories = await fetch("http://localhost:8080/api/productCategory", {
+    cache: "no-store",
+  });
+  const categoriesData = await categories.json();
+  return (
+    <aside className="pb-8 w-1/6 flex flex-col gap-4">
+      <div>
+        <div>Categories:</div>
+        <Category items={categoriesData} />
+      </div>
+
+      <div>
+        <div>Sort By:</div>
+        <SortBy items={["price", "name"]} />
+      </div>
+
+      <div>
+        <div>Sort Order:</div>
+        <SortOrder items={["asc", "desc"]} />
+      </div>
+    </aside>
+  );
+};
 
 const Products = async ({
   searchParams,
@@ -8,6 +34,9 @@ const Products = async ({
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
   const { categoryId, sortBy, sortOrder, q } = await searchParams;
+  console.log(typeof categoryId);
+
+  console.log({ searchParams });
 
   let url = "http://localhost:8080/api/product";
 
@@ -36,15 +65,9 @@ const Products = async ({
   const products = await data.json();
 
   return (
-    <div>
-      <div className="pb-8">
-        <div>Category: {categoryId}</div>
-        <div>Sort by: {sortBy}</div>
-        <div>Sort Order: {sortOrder}</div>
-        <div>Products: {products.length}</div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="flex gap-4">
+      <Sidebar />
+      <div className="w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.length > 0 ? (
           products.map((product: TProduct) => (
             <Link key={product.id} href={`/products/${product.id}`}>
@@ -60,13 +83,6 @@ const Products = async ({
                   </div>
                 </div>
                 <h3 className="text-xl font-bold mb-2">{product.name}</h3>
-                {/* <button
-                className="brutalist-button w-full flex items-center justify-center space-x-2"
-                onClick={() => alert("Added to cart")}
-              >
-                <ShoppingCart className="w-5 h-5" />
-                <span>ADD TO CART</span>
-              </button> */}
               </div>
             </Link>
           ))

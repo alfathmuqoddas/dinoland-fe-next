@@ -10,20 +10,9 @@ export const Sidebar = async () => {
   const categoriesData = await categories.json();
   return (
     <aside className="pb-8 w-1/6 flex flex-col gap-4">
-      <div>
-        <div>Categories:</div>
-        <Category items={categoriesData} />
-      </div>
-
-      <div>
-        <div>Sort By:</div>
-        <SortBy items={["price", "name"]} />
-      </div>
-
-      <div>
-        <div>Sort Order:</div>
-        <SortOrder items={["asc", "desc"]} />
-      </div>
+      <Category items={categoriesData} />
+      <SortBy items={["price", "name"]} />
+      <SortOrder items={["asc", "desc"]} />
     </aside>
   );
 };

@@ -19,7 +19,9 @@ export const Category = ({ items }: { items: Category[] }) => {
   };
 
   const isActive = (categoryId: string) => {
-    return searchParams.get("categoryId") == categoryId ? "underline" : "";
+    return searchParams.get("categoryId") == categoryId
+      ? "underline pointer-events-none"
+      : "";
   };
 
   return (
@@ -54,7 +56,9 @@ export const SortBy = ({ items }: { items: string[] }) => {
   };
 
   const isActive = (item: string) => {
-    return searchParams.get("sortBy") === item ? "underline" : "";
+    return searchParams.get("sortBy") === item
+      ? "underline pointer-events-none"
+      : "";
   };
 
   return (
@@ -87,7 +91,9 @@ export const SortOrder = ({ items }: { items: string[] }) => {
   };
 
   const isActive = (item: string) => {
-    return searchParams.get("sortOrder") === item ? "underline" : "";
+    return searchParams.get("sortOrder") === item
+      ? "underline pointer-events-none"
+      : "";
   };
 
   return (

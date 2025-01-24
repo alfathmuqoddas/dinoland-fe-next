@@ -14,6 +14,7 @@ import {
 import { logout, isLogin } from "@/app/lib/session";
 import Form from "next/form";
 import { useSearchParams } from "next/navigation";
+import { Auth } from "./Auth";
 
 export const SearchForm = () => {
   const searchParams = useSearchParams();

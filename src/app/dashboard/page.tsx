@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 // import { redirect } from "next/navigation";
 
-import { fetchWithAuth } from "../lib/secureFetch";
+import { fetchWithAuth } from "../../lib/secureFetch";
 
 export default async function Dashboard() {
   const cookieStore = await cookies();

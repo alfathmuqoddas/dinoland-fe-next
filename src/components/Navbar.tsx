@@ -11,7 +11,7 @@ import {
   ShoppingCart,
   Search,
 } from "lucide-react";
-import { logout, isLogin } from "@/app/lib/session";
+import { logout, isLogin } from "@/lib/session";
 import Form from "next/form";
 import { useSearchParams } from "next/navigation";
 import { Auth } from "./Auth";

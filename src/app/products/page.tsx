@@ -1,7 +1,7 @@
 import { Link as LinkIcon, ShoppingCart } from "lucide-react";
 import { TProduct } from "./type";
 import Link from "next/link";
-import { Category, SortBy, SortOrder } from "@/app/components/Sidebar";
+import { Category, SortBy, SortOrder } from "@/components/Sidebar";
 
 export const Sidebar = async () => {
   const categories = await fetch("http://localhost:8080/api/productCategory", {

@@ -9,7 +9,7 @@ export const Sidebar = async () => {
   });
   const categoriesData = await categories.json();
   return (
-    <aside className="pb-8 w-1/6 flex flex-col gap-4">
+    <aside className="pb-8 w-1/6 flex-col gap-4 hidden md:flex">
       <Category items={categoriesData} />
       <SortBy items={["price", "name"]} />
       <SortOrder items={["asc", "desc"]} />

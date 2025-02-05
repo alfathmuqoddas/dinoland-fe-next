@@ -14,7 +14,7 @@ const Register = () => {
           <UserPlus className="w-8 h-8" />
         </div>
         <h2 className="text-3xl font-bold mb-8 mt-4">Register</h2>
-        <form className="space-y-6" action={registerAction}>
+        <form className="space-y-4" action={registerAction}>
           <div>
             <label className="block font-bold mb-2">Full Name</label>
             <input

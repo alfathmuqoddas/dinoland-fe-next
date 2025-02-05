@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { LogIn } from "lucide-react";
-import { login } from "@/actions";
+import { login } from "@/actions/loginActions";
 
 const Login = () => {
   const initialState = {
@@ -19,7 +19,7 @@ const Login = () => {
           <LogIn className="w-8 h-8" />
         </div>
         <h2 className="text-3xl font-bold mb-8 mt-4">Login</h2>
-        <form className="space-y-6" action={loginAction}>
+        <form className="space-y-4" action={loginAction} method="POST">
           <div>
             <label className="block font-bold mb-2" htmlFor="email">
               Email

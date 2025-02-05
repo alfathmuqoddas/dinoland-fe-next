@@ -39,5 +39,5 @@ export async function login(prevState: any, formData: FormData) {
   } catch (error) {
     return `Something went wrong ${error}`;
   }
-  redirect("/dashboard");
+  redirect("/");
 }

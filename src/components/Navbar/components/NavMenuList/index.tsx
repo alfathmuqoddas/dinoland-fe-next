@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import NavMenu from "./NavMenu";
-import { Store, LogIn, UserPlus, LogOut, User } from "lucide-react";
+import { Store, LogIn, UserPlus, User } from "lucide-react";
+import SignOutButton from "./SignOutButton";
 
 const NavMenuList = async () => {
   const cookieStore = await cookies();
@@ -13,11 +14,6 @@ const NavMenuList = async () => {
           link: "/profile",
           text: "Profile",
           icon: <User className="w-5 h-5" />,
-        },
-        {
-          link: "/signout",
-          text: "Sign Out",
-          icon: <LogOut className="w-5 h-5" />,
         },
       ]
     : [
@@ -43,6 +39,7 @@ const NavMenuList = async () => {
       {navList.map((nav, index) => (
         <NavMenu key={index} {...nav} />
       ))}
+      {isAuthenticated && <SignOutButton />}
     </div>
   );
 };

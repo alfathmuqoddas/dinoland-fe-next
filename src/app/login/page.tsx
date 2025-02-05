@@ -10,7 +10,7 @@ const Login = () => {
     refreshToken: "",
   };
 
-  const [state, formAction, isPending] = useActionState(login, initialState);
+  const [state, loginAction, isPending] = useActionState(login, null);
 
   return (
     <div className="max-w-md mx-auto mt-16">
@@ -19,7 +19,7 @@ const Login = () => {
           <LogIn className="w-8 h-8" />
         </div>
         <h2 className="text-3xl font-bold mb-8 mt-4">Login</h2>
-        <form className="space-y-6" action={formAction}>
+        <form className="space-y-6" action={loginAction}>
           <div>
             <label className="block font-bold mb-2" htmlFor="email">
               Email
@@ -51,10 +51,7 @@ const Login = () => {
           >
             {isPending ? "Logging in..." : "LOGIN"}
           </button>
-          <div className="text-center">
-            {/* {state.accessToken && <p>Access Token: {state.accessToken}</p>}
-            {state.refreshToken && <p>Refresh Token: {state.refreshToken}</p>} */}
-          </div>
+          <div className="text-center">{state && <p>{state}</p>}</div>
         </form>
         <p className="mt-6 text-center">
           Don't have an account?{" "}

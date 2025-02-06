@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "../components/ThemeProvider";
 import "./globals.css";
 
@@ -35,7 +35,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         > */}
-        <Toaster />
+        <Toaster richColors closeButton position="top-center" />
         {children}
         {/* </ThemeProvider> */}
       </body>

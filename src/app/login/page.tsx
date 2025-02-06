@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { toast } from "sonner";
 import { useActionState } from "react";
 import { LogIn } from "lucide-react";
 import { login } from "@/actions/loginActions";
@@ -11,6 +12,10 @@ const Login = () => {
   };
 
   const [state, loginAction, isPending] = useActionState(login, null);
+
+  if (state?.error) {
+    return toast.error(state.error);
+  }
 
   return (
     <div className="max-w-md mx-auto mt-16">
@@ -51,7 +56,6 @@ const Login = () => {
           >
             {isPending ? "Logging in..." : "LOGIN"}
           </button>
-          <div className="text-center">{state && <p>{state}</p>}</div>
         </form>
         <p className="mt-6 text-center">
           Don't have an account?{" "}

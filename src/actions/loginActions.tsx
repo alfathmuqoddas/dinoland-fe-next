@@ -34,10 +34,10 @@ export async function login(prevState: any, formData: FormData) {
     });
 
     if (!response.ok) {
-      return json.error;
+      return { error: json.error };
     }
   } catch (error) {
-    return `Something went wrong ${error}`;
+    return { error: `Something went wrong ${error}` };
   }
   redirect("/");
 }

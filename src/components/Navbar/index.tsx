@@ -2,7 +2,7 @@ import Link from "next/link";
 import SearchForm from "./components/Search";
 import MobileMenu from "./components/MobileMenu";
 import NavMenuList from "./components/NavMenuList";
-import Checkout from "./components/Checkout";
+import Cart from "./components/Cart";
 
 const Navbar = () => {
   return (
@@ -28,8 +28,8 @@ const Navbar = () => {
           <NavMenuList />
         </div>
 
-        <div className="flex lg:hidden">
-          <Checkout />
+        <div className="flex ml-0 md:ml-4">
+          <Cart />
         </div>
       </div>
     </nav>

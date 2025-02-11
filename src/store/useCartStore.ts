@@ -72,20 +72,27 @@ const useCartStore = create<CartState>()(
       decrementQuantity: (productId: number) => {
         const existingItem = get().items.find((item) => item.id === productId);
         if (existingItem) {
-          set({
-            items: get().items.map((item) =>
-              item.id === productId
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            ),
-          });
+          if (existingItem.quantity === 1) {
+            set({ items: get().items.filter((item) => item.id !== productId) });
+          } else {
+            set({
+              items: get().items.map((item) =>
+                item.id === productId
+                  ? { ...item, quantity: item.quantity - 1 }
+                  : item
+              ),
+            });
+          }
         }
       },
       clearCart: () => {
         set({ items: [] });
       },
       getTotalPrice: () => {
-        return get().items.reduce((acc, item) => acc + item.price, 0);
+        return get().items.reduce(
+          (acc, item) => acc + item.price * item.quantity,
+          0
+        );
       },
       getTotalQuantity: () => {
         return get().items.reduce((acc, item) => acc + item.quantity, 0);

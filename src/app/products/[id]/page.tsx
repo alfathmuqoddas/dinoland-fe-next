@@ -1,5 +1,6 @@
 import { TProduct } from "../type";
 import SimilarProducts from "./components/SimilarProducts";
+import AddToCartButton from "./components/AddToCartButton";
 
 export default async function ProductDetails({
   params,
@@ -38,10 +39,11 @@ export default async function ProductDetails({
               className="w-full"
             />
           </div>
-          <div className="text-gray-900">
+          <div className="text-gray-900 flex flex-col gap-4">
             <h1 className="text-3xl font-bold">{productData.name}</h1>
             <p className="text-xl font-bold">${productData.price} USD</p>
             <div>{productData.description}</div>
+            <AddToCartButton product={productData} />
           </div>
         </div>
       </section>

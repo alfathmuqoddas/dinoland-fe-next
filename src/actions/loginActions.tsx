@@ -21,20 +21,20 @@ export async function login(prevState: any, formData: FormData) {
 
     const json = await response.json();
 
-    const setAccessToken = (await cookies()).set({
+    const _setAccessToken = (await cookies()).set({
       name: "accessToken",
       value: json.accessToken,
       httpOnly: true,
     });
 
-    const setRefreshToken = (await cookies()).set({
+    const _setRefreshToken = (await cookies()).set({
       name: "refreshToken",
       value: json.refreshToken,
       httpOnly: true,
     });
 
     if (!response.ok) {
-      return { error: json.error };
+      throw new Error(json.error);
     }
   } catch (error) {
     return { error: `Something went wrong ${error}` };

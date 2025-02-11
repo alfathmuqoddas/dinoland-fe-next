@@ -30,7 +30,7 @@ export default async function ProductDetails({
     <div>
       <section>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-          <div className="rounded-xl border-[3px] border-black overflow-hidden shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+          <div className="rounded-2xl border-4 border-black overflow-hidden shadow-[4px_4px_0px_rgba(0,0,0,1)]">
             <img
               src={`https://picsum.photos/seed/${productData.name}/320/180`}
               alt={productData.name}

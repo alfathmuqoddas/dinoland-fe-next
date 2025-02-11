@@ -1,7 +1,8 @@
-import { Link as LinkIcon, ShoppingCart } from "lucide-react";
+// import { Link as LinkIcon, ShoppingCart } from "lucide-react";
 import { TProduct } from "./type";
 import Link from "next/link";
 import { Category, SortBy, SortOrder } from "@/components/Sidebar";
+import ProductCard from "@/components/Card/ProductCard";
 
 export const Sidebar = async () => {
   const categories = await fetch("http://localhost:8080/api/productCategory", {
@@ -56,22 +57,7 @@ const Products = async ({
       <div className="w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.length > 0 ? (
           products.map((product: TProduct) => (
-            <Link key={product.id} href={`/products/${product.id}`}>
-              <div className="brutalist-card group">
-                <div className="relative overflow-hidden mb-4 border-[3px] rounded-[12px] border-black">
-                  <img
-                    src={`https://picsum.photos/seed/${product.name}/320/180`}
-                    alt={product.name}
-                    loading="lazy"
-                    className="w-full h-48 object-cover transform transition-transform group-hover:scale-110"
-                  />
-                  <div className="absolute top-0 right-0 bg-yellow-400 px-4 py-2 border-l-4 border-b-4 border-black font-bold">
-                    ${product.price}
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold mb-2">{product.name}</h3>
-              </div>
-            </Link>
+            <ProductCard key={product.id} product={product} />
           ))
         ) : (
           <>No Product</>

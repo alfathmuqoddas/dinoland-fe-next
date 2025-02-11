@@ -29,8 +29,8 @@ export default async function ProductDetails({
   return (
     <div>
       <section>
-        <div className="flex gap-8">
-          <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+          <div className="rounded-xl border-[3px] border-black overflow-hidden shadow-[4px_4px_0px_rgba(0,0,0,1)]">
             <img
               src={`https://picsum.photos/seed/${productData.name}/320/180`}
               alt={productData.name}
@@ -38,14 +38,13 @@ export default async function ProductDetails({
               className="w-full"
             />
           </div>
-          <div>
+          <div className="text-gray-900">
             <h1 className="text-3xl font-bold">{productData.name}</h1>
             <p className="text-xl font-bold">${productData.price} USD</p>
             <div>{productData.description}</div>
           </div>
         </div>
       </section>
-      <hr />
       <section>
         <SimilarProducts data={similarProductsDataFiltered} />
       </section>

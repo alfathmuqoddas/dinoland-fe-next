@@ -1,7 +1,6 @@
 import { TProduct } from "../../type";
-import SimilarProducts from "./components/SimilarProducts";
-import AddToCartButton from "./components/AddToCartButton";
-import { cookies } from "next/headers";
+import AddToCartButton from "../../../../components/Buttons/AddToCartButton";
+import ProductCard from "@/components/Card/ProductCard";
 
 export default async function ProductDetails({
   params,
@@ -9,7 +8,6 @@ export default async function ProductDetails({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const accessToken = (await cookies()).get("accessToken")?.value;
 
   const product = await fetch(`http://localhost:8080/api/product/${id}`, {
     cache: "no-store",
@@ -50,7 +48,14 @@ export default async function ProductDetails({
         </div>
       </section>
       <section>
-        <SimilarProducts data={similarProductsDataFiltered} />
+        <h1 className="text-3xl font-bold mt-16 mb-4 text-gray-900">
+          Similar Products
+        </h1>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {similarProductsDataFiltered.map((product: TProduct) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </section>
     </div>
   );

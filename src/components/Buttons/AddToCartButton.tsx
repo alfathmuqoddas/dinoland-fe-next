@@ -2,7 +2,7 @@
 import { start } from "repl";
 // import { TProduct } from "../../type";
 // import useCartStore from "@/store/useCartStore";
-import { addToCartAction } from "./addToCartAction";
+import { addToCartAction } from "../../actions/cart/addToCartAction";
 import { useTransition } from "react";
 
 export default function AddToCartButton({ productId }: { productId: number }) {

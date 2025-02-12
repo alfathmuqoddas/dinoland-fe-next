@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function ProductCard({ product }: { product: TProduct }) {
   return (
-    <Link key={product.id} href={`/products/${product.id}`}>
+    <Link key={product.id} href={`/products/details/${product.id}`}>
       <div className="brutalist-card group">
         <div className="relative overflow-hidden mb-4 border-[3px] rounded-[12px] border-black">
           <img

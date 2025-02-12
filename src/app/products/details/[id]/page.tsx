@@ -1,6 +1,7 @@
-import { TProduct } from "../type";
+import { TProduct } from "../../type";
 import SimilarProducts from "./components/SimilarProducts";
 import AddToCartButton from "./components/AddToCartButton";
+import { cookies } from "next/headers";
 
 export default async function ProductDetails({
   params,
@@ -8,6 +9,7 @@ export default async function ProductDetails({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const accessToken = (await cookies()).get("accessToken")?.value;
 
   const product = await fetch(`http://localhost:8080/api/product/${id}`, {
     cache: "no-store",
@@ -43,7 +45,7 @@ export default async function ProductDetails({
             <h1 className="text-3xl font-bold">{productData.name}</h1>
             <p className="text-xl font-bold">${productData.price} USD</p>
             <div>{productData.description}</div>
-            <AddToCartButton product={productData} />
+            <AddToCartButton productId={productData.id} />
           </div>
         </div>
       </section>

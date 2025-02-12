@@ -1,5 +1,5 @@
 import ProductCard from "@/components/Card/ProductCard";
-import { TProduct } from "../../type";
+import { TProduct } from "../../../type";
 
 export default function SimilarProducts({ data }: { data: TProduct[] }) {
   return (

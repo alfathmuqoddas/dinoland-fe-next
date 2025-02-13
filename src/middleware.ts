@@ -15,14 +15,6 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));
   }
 
-  // if (
-  //   isPublicRoutes &&
-  //   cookie &&
-  //   !req.nextUrl.pathname.startsWith("/dashboard")
-  // ) {
-  //   return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
-  // }
-
   console.log("Middleware worked!");
 
   return NextResponse.next();

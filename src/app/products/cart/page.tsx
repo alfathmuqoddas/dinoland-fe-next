@@ -1,16 +1,12 @@
 import { cookies } from "next/headers";
 import CartItemCard from "@/components/Card/CartItemCard";
+import { fetchWithAuth } from "@/lib/secureFetch";
 
 export default async function Cart() {
   const accessToken = (await cookies()).get("accessToken")?.value;
+  const refreshToken = (await cookies()).get("refreshToken")?.value;
 
-  const response = await fetch("http://localhost:8080/api/cart", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const response = await fetchWithAuth("http://localhost:8080/api/cart");
 
   const cartData = await response.json();
   const { cartItem, totalPrice, totalQuantity } = cartData;

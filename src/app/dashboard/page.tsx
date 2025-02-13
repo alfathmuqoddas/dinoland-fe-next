@@ -9,11 +9,7 @@ export default async function Dashboard() {
   const refreshToken = cookieStore.get("refreshToken")?.value;
 
   const response = await fetchWithAuth(
-    "http://localhost:8080/api/dashboard/protected",
-    {
-      accessToken,
-      refreshToken,
-    }
+    "http://localhost:8080/api/dashboard/protected"
   );
 
   if (!response.ok) {

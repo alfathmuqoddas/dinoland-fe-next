@@ -1,15 +1,16 @@
 "use server";
 import { cookies } from "next/headers";
+import { fetchWithAuth } from "@/lib/secureFetch";
 
 export async function addToCartAction(productId: number) {
   const accessToken = (await cookies()).get("accessToken")?.value;
+  const refreshToken = (await cookies()).get("refreshToken")?.value;
 
   try {
-    const response = await fetch("http://localhost:8080/api/cart", {
+    const response = await fetchWithAuth("http://localhost:8080/api/cart", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({ productId, quantity: 1 }),
     });

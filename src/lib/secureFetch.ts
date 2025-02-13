@@ -1,4 +1,4 @@
-// fetcher.js
+"use server";
 
 import { redirect } from "next/navigation";
 // import { getCookie, setCookie, deleteCookie } from "cookies-next";

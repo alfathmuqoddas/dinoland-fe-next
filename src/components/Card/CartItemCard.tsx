@@ -1,3 +1,5 @@
+import { Trash } from "lucide-react";
+
 export default async function CartItemCard({
   name,
   price,

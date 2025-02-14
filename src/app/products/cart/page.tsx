@@ -14,7 +14,7 @@ export default async function Cart() {
   return (
     <main>
       <h1 className="text-3xl font-bold my-8">Cart</h1>
-      <section className="flex gap-8">
+      <section className="flex gap-8 items-start">
         <section className="rounded-3xl text-gray-800 border-[3px] border-black p-4 bg-white shadow-[4px_4px_0px_rgb(0,0,0)] w-8/12">
           <div className="flex flex-col gap-6">
             {cartItem.map((product: any) => (
@@ -35,6 +35,9 @@ export default async function Cart() {
             <h1 className="text-3xl font-bold">Total Quantity</h1>
             <p className="text-xl font-bold">{totalQuantity}</p>
           </div>
+          <button className="bg-yellow-400 border-[3px] border-black text-black font-xl font-bold px-4 py-2 rounded-xl">
+            Checkout
+          </button>
         </section>
       </section>
     </main>

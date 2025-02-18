@@ -1,11 +1,7 @@
-import { cookies } from "next/headers";
 import CartItemCard from "@/components/Card/CartItemCard";
 import { fetchWithAuth } from "@/lib/secureFetch";
 
 export default async function Cart() {
-  const accessToken = (await cookies()).get("accessToken")?.value;
-  const refreshToken = (await cookies()).get("refreshToken")?.value;
-
   const response = await fetchWithAuth("http://localhost:8080/api/cart");
 
   const cartData = await response.json();
@@ -17,13 +13,18 @@ export default async function Cart() {
       <section className="flex flex-col md:flex-row gap-4 items-start">
         <section className="rounded-3xl text-gray-800 border-[3px] border-black p-4 bg-white shadow-[4px_4px_0px_rgb(0,0,0)] md:w-8/12">
           <div className="flex flex-col gap-6">
-            {cartItem.map((product: any) => (
-              <CartItemCard
-                key={product.id}
-                name={product.items.name}
-                price={product.items.price}
-              />
-            ))}
+            {cartItem.length > 0 ? (
+              cartItem.map((product: any) => (
+                <CartItemCard
+                  key={product.id}
+                  name={product.items.name}
+                  price={product.items.price}
+                  productId={product.productId}
+                />
+              ))
+            ) : (
+              <p>Your cart is empty</p>
+            )}
           </div>
         </section>
         <section className="order-first md:order-last w-full md:w-4/12 bg-white shadow-[4px_4px_0px_rgb(0,0,0)] p-4 rounded-3xl border-[3px] border-black text-black flex flex-col gap-4">

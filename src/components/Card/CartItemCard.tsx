@@ -1,9 +1,13 @@
+import RemoveFromCartButton from "../Buttons/RemoveFromCartButton";
+
 export default async function CartItemCard({
   name,
   price,
+  productId,
 }: {
   name: string;
   price: number;
+  productId: number;
 }) {
   //cart item cart brutalism style
   return (
@@ -22,6 +26,7 @@ export default async function CartItemCard({
           <p className="font-bold">${price} USD</p>
         </div>
       </div>
+      <RemoveFromCartButton productId={productId} />
     </div>
   );
 }

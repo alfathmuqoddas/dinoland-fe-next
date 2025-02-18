@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { fetchWithAuth } from "./lib/secureFetch";
 
 const protectedRoutes = ["/dashboard", "/products/cart"];
 const publicRoutes = ["/login", "/register", "/about", "/products"];
@@ -10,6 +11,13 @@ export default async function middleware(req: NextRequest) {
   const isPublicRoutes = publicRoutes.includes(path);
 
   const cookie = (await cookies()).get("accessToken")?.value;
+
+  // const isValidated = await fetch(
+  //   "http://localhost:8080/api/dashboard/protected",
+  //   {
+  //     headers: { Authorization: `Bearer ${cookie}` },
+  //   }
+  // );
 
   if (isProtectedRoutes && !cookie) {
     return NextResponse.redirect(new URL("/login", req.nextUrl));

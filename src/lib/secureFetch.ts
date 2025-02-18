@@ -17,6 +17,10 @@ export async function fetchWithAuth(url: string, options: any = {}) {
   //   redirect("/login");
   // }
 
+  // if (!accessToken) {
+  //   redirect("/login");
+  // }
+
   return response;
 }
 

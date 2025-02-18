@@ -9,21 +9,27 @@ export async function removeFromCartAction(productId: number) {
       `http://localhost:8080/api/cart/delete/${productId}`,
       {
         method: "POST",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     );
 
-    const json = await response.json();
-
-    if (!response.ok) {
-      return { success: false, ...json };
+    if (!response.ok && response.status !== 401) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Something went wrong");
     }
 
-    // return { success: true, ...json };
-    revalidatePath("/products/cart");
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
+
+    const data = await response.json();
+
+    return { success: true, message: data.message };
   } catch (error: any) {
     return { success: false, message: error.message };
+  } finally {
+    revalidatePath("/products/cart");
   }
 }

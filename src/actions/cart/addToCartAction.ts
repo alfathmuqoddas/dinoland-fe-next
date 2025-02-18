@@ -11,12 +11,16 @@ export async function addToCartAction(productId: number) {
       body: JSON.stringify({ productId, quantity: 1 }),
     });
 
-    const json = await response.json();
-
-    if (!response.ok) {
-      return { success: false, ...json };
+    if (!response.ok && response.status !== 401) {
+      const json = await response.json();
+      throw new Error(json.message);
     }
 
+    if (response.status === 401) {
+      throw new Error("Unauthorized");
+    }
+
+    const json = await response.json();
     return { success: true, ...json };
   } catch (error: any) {
     return { success: false, message: error.message };

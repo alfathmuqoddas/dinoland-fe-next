@@ -2,6 +2,7 @@
 import { removeFromCartAction } from "@/actions/cart/deleteFromCart";
 import { Trash } from "lucide-react";
 import { useTransition } from "react";
+import { redirect } from "next/navigation";
 
 export default function RemoveFromCartButton({
   productId,
@@ -16,6 +17,9 @@ export default function RemoveFromCartButton({
 
       if (result.success) {
         alert(result.message);
+      } else if (result.message === "Unauthorized") {
+        alert("You are not authorized to remove this item");
+        redirect("/login");
       } else {
         alert(result.message);
       }

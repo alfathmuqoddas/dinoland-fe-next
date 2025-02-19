@@ -8,7 +8,7 @@ const Register = () => {
   const [state, registerAction, isPending] = useActionState(register, null);
 
   return (
-    <div className="max-w-md mx-auto mt-16">
+    <div className="max-w-md mx-auto px-4 mt-16">
       <div className="brutalist-card">
         <div className="absolute -top-8 -left-8 bg-yellow-400 p-4 border-4 border-black">
           <UserPlus className="w-8 h-8" />

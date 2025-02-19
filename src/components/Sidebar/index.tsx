@@ -15,6 +15,7 @@ export const Category = ({ items }: { items: Category[] }) => {
     const updatedSearchParams = new URLSearchParams(searchParams);
     updatedSearchParams.set("categoryId", categoryId);
     updatedSearchParams.delete("q");
+    updatedSearchParams.delete("page");
     return updatedSearchParams.toString();
   };
 

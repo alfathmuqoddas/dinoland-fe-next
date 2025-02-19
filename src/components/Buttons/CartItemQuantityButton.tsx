@@ -47,7 +47,7 @@ export default function CartItemQuantityButton({
   return (
     <div className="flex items-center">
       <button
-        className="bg-yellow-400 border-[3px] border-black text-black p-0.5"
+        className="bg-red-500 border-[3px] border-black text-black p-0.5"
         onClick={handleDecrementCartItemQuantity}
         disabled={isPending}
       >
@@ -57,7 +57,7 @@ export default function CartItemQuantityButton({
         {quantity}
       </div>
       <button
-        className="bg-green-400 border-[3px] border-black text-black p-0.5"
+        className="bg-blue-500 border-[3px] border-black text-black p-0.5"
         onClick={handleIncrementCartItemQuantity}
         disabled={isPending}
       >

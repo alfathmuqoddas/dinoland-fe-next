@@ -58,9 +58,13 @@
   }
 }
 
+.brutalist-style {
+  @apply bg-white rounded-2xl border-[3px] border-black text-black shadow-[8px_8px_0px_rgba(0,0,0,1)];
+}
+
 .brutalist-card {
-  @apply relative bg-white rounded-xl border-[3px] border-black text-black p-6 transform transition-transform duration-200 hover:scale-[1.02];
-  box-shadow: 4px 4px 0px theme("colors.black");
+  @apply relative brutalist-style p-6 transform transition-transform duration-200 hover:scale-[1.02];
+  box-shadow: 8px 8px 0px theme("colors.black");
 }
 
 .brutalist-input {

@@ -29,14 +29,16 @@ export default async function ProductDetails({
 
   return (
     <div>
-      <section>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-          <div className="rounded-2xl border-4 border-black overflow-hidden shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+      <section className="mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
+          <div className="brutalist-style overflow-hidden">
             <img
               src={`https://picsum.photos/seed/${productData.name}/320/180`}
               alt={productData.name}
               loading="lazy"
-              className="w-full"
+              width="320"
+              height="180"
+              className="w-full h-auto object-cover"
             />
           </div>
           <div className="text-gray-900 flex flex-col gap-4">

@@ -11,8 +11,8 @@ export default async function Cart() {
   return (
     <main>
       <h1 className="text-3xl font-bold my-4">Cart</h1>
-      <section className="flex flex-col md:flex-row gap-4 items-start">
-        <section className="rounded-3xl text-gray-800 border-[3px] border-black p-4 bg-white shadow-[4px_4px_0px_rgb(0,0,0)] w-full md:w-8/12">
+      <section className="flex flex-col md:flex-row gap-8 items-start">
+        <section className="text-gray-800 brutalist-style p-6 w-full md:w-8/12">
           <div className="flex flex-col gap-6">
             {cartItem.length > 0 ? (
               cartItem.map((product: any) => (
@@ -29,7 +29,7 @@ export default async function Cart() {
             )}
           </div>
         </section>
-        <section className="order-first md:order-last w-full md:w-4/12 bg-white shadow-[4px_4px_0px_rgb(0,0,0)] p-4 rounded-3xl border-[3px] border-black text-black flex flex-col gap-4">
+        <section className="order-first md:order-last w-full md:w-4/12 brutalist-style p-6 flex flex-col gap-4">
           <div>
             <h1 className="text-xl font-bold">Total Price</h1>
             <p className="font-bold">${totalPrice} USD</p>
@@ -38,7 +38,7 @@ export default async function Cart() {
             <h1 className="text-xl font-bold">Total Quantity</h1>
             <p className="font-bold">{totalQuantity}</p>
           </div>
-          <button className="bg-yellow-400 border-[3px] border-black text-black font-xl font-bold px-4 py-2 rounded-xl">
+          <button className="bg-blue-500 border-[3px] border-black text-white font-xl font-bold px-4 py-2 rounded-xl">
             <div className="flex gap-2 justify-center items-center">
               <ShoppingBasket />
               <p>Checkout</p>

@@ -22,15 +22,15 @@ export default async function ProductDetails({
     }
   );
 
-  const similarProductsData = await similarProducts.json();
+  const { products: similarProductsData } = await similarProducts.json();
   const similarProductsDataFiltered = similarProductsData.filter(
     (product: TProduct) => product.id.toString() !== id
   );
 
   return (
-    <div>
-      <section className="mt-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-12">
+    <div className="flex flex-col gap-4">
+      <section className="mt-4 md:mt-8">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-12">
           <div className="brutalist-style overflow-hidden">
             <img
               src={`https://picsum.photos/seed/${productData.name}/320/180`}
@@ -50,10 +50,10 @@ export default async function ProductDetails({
         </div>
       </section>
       <section>
-        <h1 className="text-3xl font-bold mt-16 mb-4 text-gray-900">
+        <h1 className="text-3xl font-bold my-8 text-gray-900">
           Similar Products
         </h1>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
           {similarProductsDataFiltered.map((product: TProduct) => (
             <ProductCard key={product.id} product={product} />
           ))}

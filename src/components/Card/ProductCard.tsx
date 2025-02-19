@@ -5,7 +5,7 @@ export default function ProductCard({ product }: { product: TProduct }) {
   return (
     <Link key={product.id} href={`/products/details/${product.id}`}>
       <div className="brutalist-card group">
-        <div className="relative overflow-hidden mb-4 border-[3px] rounded-[12px] border-black">
+        <div className="relative overflow-hidden border-[3px] rounded-[12px] border-black">
           <img
             src={`https://picsum.photos/seed/${product.name}/320/180`}
             alt={product.name}
@@ -18,7 +18,7 @@ export default function ProductCard({ product }: { product: TProduct }) {
             ${product.price}
           </div>
         </div>
-        <h3 className="text-base md:text-xl font-bold mb-2">{product.name}</h3>
+        <h3 className="text-base md:text-xl font-bold mt-2">{product.name}</h3>
       </div>
     </Link>
   );

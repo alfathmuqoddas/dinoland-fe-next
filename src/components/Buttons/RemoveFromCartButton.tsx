@@ -12,23 +12,27 @@ export default function RemoveFromCartButton({
   const [isPending, startTransition] = useTransition();
 
   async function handleRemoveFromCart() {
-    startTransition(async () => {
-      const result = await removeFromCartAction(productId);
+    if (confirm("Are you sure you want to remove this item from your cart?")) {
+      startTransition(async () => {
+        const result = await removeFromCartAction(productId);
 
-      if (result.success) {
-        alert(result.message);
-      } else if (result.message === "Unauthorized") {
-        alert("You are not authorized to remove this item");
-        redirect("/login");
-      } else {
-        alert(result.message || "Something went wrong");
-      }
-    });
+        if (result.success) {
+          alert(result.message);
+        } else if (result.message === "Unauthorized") {
+          alert("You are not authorized to remove this item");
+          redirect("/login");
+        } else {
+          alert(result.message || "Something went wrong");
+        }
+      });
+    } else {
+      return;
+    }
   }
 
   return (
     <button
-      className="bg-red-500 border-[3px] border-black text-black font-xl font-bold p-1"
+      className="bg-red-500 border-[3px] border-black text-black font-xl font-bold p-1 disabled:bg-gray-500"
       onClick={handleRemoveFromCart}
       disabled={isPending}
     >

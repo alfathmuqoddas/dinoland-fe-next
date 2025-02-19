@@ -33,9 +33,6 @@ export default function AddToCartButton({ productId }: { productId: number }) {
       >
         Add to Cart
       </button>
-      <button className="bg-yellow-400 text-black font-bold px-4 py-2 rounded-xl border-[3px] border-black">
-        View Cart
-      </button>
     </div>
   );
 }

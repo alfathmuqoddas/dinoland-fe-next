@@ -13,13 +13,13 @@ export async function fetchWithAuth(url: string, options: any = {}) {
 
   const response = await fetch(url, { ...options, headers: authHeaders });
 
-  // if (response.status === 401) {
-  //   redirect("/login");
-  // }
+  if (response.status === 401) {
+    redirect("/login");
+  }
 
-  // if (!accessToken) {
-  //   redirect("/login");
-  // }
+  if (!accessToken) {
+    redirect("/login");
+  }
 
   return response;
 }

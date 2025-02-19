@@ -1,13 +1,16 @@
 import RemoveFromCartButton from "../Buttons/RemoveFromCartButton";
+import CartItemQuantityButton from "../Buttons/CartItemQuantityButton";
 
 export default async function CartItemCard({
   name,
   price,
   productId,
+  quantity,
 }: {
   name: string;
   price: number;
   productId: number;
+  quantity: number;
 }) {
   //cart item cart brutalism style
   return (
@@ -24,6 +27,9 @@ export default async function CartItemCard({
         <div className="flex flex-col gap-2">
           <h3 className="text-xl font-bold">{name}</h3>
           <p className="font-bold">${price} USD</p>
+          <div>
+            <CartItemQuantityButton quantity={quantity} productId={productId} />
+          </div>
         </div>
       </div>
       <RemoveFromCartButton productId={productId} />

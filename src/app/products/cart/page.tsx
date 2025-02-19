@@ -1,9 +1,9 @@
 import CartItemCard from "@/components/Card/CartItemCard";
 import { fetchWithAuth } from "@/lib/secureFetch";
+import { redirect } from "next/navigation";
 
 export default async function Cart() {
   const response = await fetchWithAuth("http://localhost:8080/api/cart");
-
   const cartData = await response.json();
   const { cartItem, totalPrice, totalQuantity } = cartData;
 
@@ -11,7 +11,7 @@ export default async function Cart() {
     <main>
       <h1 className="text-3xl font-bold my-8">Cart</h1>
       <section className="flex flex-col md:flex-row gap-4 items-start">
-        <section className="rounded-3xl text-gray-800 border-[3px] border-black p-4 bg-white shadow-[4px_4px_0px_rgb(0,0,0)] md:w-8/12">
+        <section className="rounded-3xl text-gray-800 border-[3px] border-black p-4 bg-white shadow-[4px_4px_0px_rgb(0,0,0)] w-full md:w-8/12">
           <div className="flex flex-col gap-6">
             {cartItem.length > 0 ? (
               cartItem.map((product: any) => (
@@ -20,6 +20,7 @@ export default async function Cart() {
                   name={product.items.name}
                   price={product.items.price}
                   productId={product.productId}
+                  quantity={product.quantity}
                 />
               ))
             ) : (

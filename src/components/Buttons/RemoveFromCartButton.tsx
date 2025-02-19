@@ -21,14 +21,14 @@ export default function RemoveFromCartButton({
         alert("You are not authorized to remove this item");
         redirect("/login");
       } else {
-        alert(result.message);
+        alert(result.message || "Something went wrong");
       }
     });
   }
 
   return (
     <button
-      className="bg-yellow-400 border-[3px] border-black text-black font-xl font-bold px-4 py-2 rounded-xl"
+      className="bg-red-500 border-[3px] border-black text-black font-xl font-bold p-1"
       onClick={handleRemoveFromCart}
       disabled={isPending}
     >

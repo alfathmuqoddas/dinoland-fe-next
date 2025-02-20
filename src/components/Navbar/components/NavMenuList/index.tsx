@@ -1,38 +1,23 @@
 import { cookies } from "next/headers";
 import NavMenu from "./NavMenu";
-import { Store, LogIn, UserPlus, User } from "lucide-react";
 import SignOutButton from "./SignOutButton";
+import getNavItems from "./getNavItems";
+import { fetchWithAuth } from "@/lib/secureFetch";
 
 const NavMenuList = async () => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
   const isAuthenticated = Boolean(accessToken);
 
-  const navList = isAuthenticated
-    ? [
-        {
-          link: "/profile",
-          text: "Profile",
-          icon: <User className="w-5 h-5" />,
-        },
-      ]
-    : [
-        {
-          link: "/products",
-          text: "Products",
-          icon: <Store className="w-5 h-5" />,
-        },
-        {
-          link: "/login",
-          text: "Login",
-          icon: <LogIn className="w-5 h-5" />,
-        },
-        {
-          link: "/register",
-          text: "Register",
-          icon: <UserPlus className="w-5 h-5" />,
-        },
-      ];
+  let isAdmin = false;
+
+  const response = await fetchWithAuth(
+    "http://localhost:8080/api/auth/isAdmin"
+  );
+
+  ({ isAdmin } = await response.json());
+
+  const navList = getNavItems(isAuthenticated, isAdmin);
 
   return (
     <div className="flex gap-4">

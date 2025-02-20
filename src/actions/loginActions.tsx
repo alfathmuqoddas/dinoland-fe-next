@@ -36,8 +36,8 @@ export async function login(prevState: any, formData: FormData) {
     if (!response.ok) {
       throw new Error(json.error);
     }
-  } catch (error) {
-    return { error: `Something went wrong ${error}` };
+  } catch (err: any) {
+    return { error: `${err.message}` };
   }
   redirect("/");
 }

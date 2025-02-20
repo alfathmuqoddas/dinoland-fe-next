@@ -1,5 +1,5 @@
 import { TProduct } from "../../type";
-import AddToCartButton from "../../../../components/Buttons/AddToCartButton";
+import AddToCartButton from "../../../../../components/Buttons/AddToCartButton";
 import ProductCard from "@/components/Card/ProductCard";
 
 export default async function ProductDetails({

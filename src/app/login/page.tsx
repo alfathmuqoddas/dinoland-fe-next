@@ -18,8 +18,8 @@ const Login = () => {
         <div className="absolute -top-8 -left-8 bg-yellow-400 p-4 border-4 border-black">
           <LogIn className="w-8 h-8" />
         </div>
-        <h2 className="text-3xl font-bold mb-8 mt-4">Login</h2>
-        <form className="space-y-4" action={loginAction}>
+        <h2 className="text-3xl font-bold my-4">Login</h2>
+        <form className="flex flex-col gap-4" action={loginAction}>
           <div>
             <label className="block font-bold mb-2" htmlFor="email">
               Email
@@ -41,7 +41,7 @@ const Login = () => {
               name="password"
               id="password"
               className="brutalist-input"
-              placeholder="••••••••"
+              placeholder="password"
             />
           </div>
           <button
@@ -51,7 +51,7 @@ const Login = () => {
           >
             {isPending ? "Logging in..." : "LOGIN"}
           </button>
-          {state?.error && state.error}
+          <div>{state?.error && state.error}</div>
         </form>
         <p className="mt-6 text-center">
           Don't have an account?{" "}

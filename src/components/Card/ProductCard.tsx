@@ -1,4 +1,4 @@
-import { TProduct } from "@/app/products/type";
+import { TProduct } from "@/app/(main)/products/type";
 import Link from "next/link";
 
 export default function ProductCard({ product }: { product: TProduct }) {

@@ -25,7 +25,7 @@ export async function register(prevState: any, formData: FormData) {
     }
 
     return "User registered successfully, now you can log in";
-  } catch (error) {
-    return `Something went wrong ${error}`;
+  } catch (error: any) {
+    return error.message;
   }
 }

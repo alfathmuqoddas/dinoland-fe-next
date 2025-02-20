@@ -26,7 +26,7 @@ export default function PageSelector({
   };
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 text-gray-900">
       {allPages.length > 1 ? (
         allPages.map((page) => (
           <Link

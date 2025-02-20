@@ -9,9 +9,9 @@ export default async function Cart() {
   const { cartItem, totalPrice, totalQuantity } = cartData;
 
   return (
-    <main>
-      <h1 className="text-3xl font-bold my-4">Cart</h1>
-      <section className="flex flex-col md:flex-row gap-8 items-start">
+    <>
+      <h1 className="text-3xl font-bold my-4 text-gray-900">Cart</h1>
+      <section className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
         <section className="text-gray-800 brutalist-style p-6 w-full md:w-8/12">
           <div className="flex flex-col gap-6">
             {cartItem.length > 0 ? (
@@ -46,6 +46,6 @@ export default async function Cart() {
           </button>
         </section>
       </section>
-    </main>
+    </>
   );
 }

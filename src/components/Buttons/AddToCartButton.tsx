@@ -27,7 +27,7 @@ export default function AddToCartButton({ productId }: { productId: number }) {
   return (
     <div>
       <button
-        className="bg-yellow-400 text-black disabled:bg-gray-400 disabled:text-gray-600 font-bold px-4 py-2 rounded-xl border-[3px] border-black"
+        className="brutalist-button"
         onClick={handleAddToCart}
         disabled={isPending}
       >

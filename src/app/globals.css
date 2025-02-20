@@ -58,8 +58,12 @@
   }
 }
 
-.brutalist-style {
+/* .brutalist-style {
   @apply bg-white rounded-2xl border-[2px] md:border-[3px] border-black text-black shadow-[4px_4px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_rgba(0,0,0,1)];
+} */
+
+.brutalist-style {
+  @apply bg-white rounded-2xl border-[3px] border-black text-black;
 }
 
 .brutalist-card {

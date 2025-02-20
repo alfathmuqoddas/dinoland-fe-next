@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function ProductCard({ product }: { product: TProduct }) {
   return (
     <Link key={product.id} href={`/products/details/${product.id}`}>
-      <div className="brutalist-card group">
+      <div className="brutalist-card group h-full">
         <div className="relative overflow-hidden border-[3px] rounded-[12px] border-black">
           <img
             src={`https://picsum.photos/seed/${product.name}/320/180`}

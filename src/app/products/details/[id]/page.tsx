@@ -53,7 +53,7 @@ export default async function ProductDetails({
         <h1 className="text-3xl font-bold my-8 text-gray-900">
           Similar Products
         </h1>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
           {similarProductsDataFiltered.map((product: TProduct) => (
             <ProductCard key={product.id} product={product} />
           ))}

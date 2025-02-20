@@ -19,7 +19,7 @@ export default function CartItemQuantityButton({
       const result = await cartItemQuantityAction("increment", productId);
 
       if (result.success) {
-        alert(result.message);
+        // alert(result.message);
       } else if (result.message === "Unauthorized") {
         alert("You are not authorized to add this item");
         redirect("/login");
@@ -34,7 +34,7 @@ export default function CartItemQuantityButton({
       const result = await cartItemQuantityAction("decrement", productId);
 
       if (result.success) {
-        alert(result.message);
+        // alert(result.message);
       } else if (result.message === "Unauthorized") {
         alert("You are not authorized to add this item");
         redirect("/login");

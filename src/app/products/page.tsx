@@ -66,7 +66,7 @@ const Products = async ({
       <div className="md:w-1/6">
         <Sidebar />
       </div>
-      <div className="md:5/6 flex flex-col gap-x-4 gap-y-8">
+      <div className="md:w-5/6 flex flex-col gap-x-4 gap-y-8">
         <div className="text-2xl font-bold text-gray-900">
           Total Records : {totalRecords}
         </div>

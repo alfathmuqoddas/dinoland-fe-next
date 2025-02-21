@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { LogIn } from "lucide-react";
-import { login } from "@/actions/loginActions";
+import { login } from "@/actions/auth/loginActions";
 
 const Login = () => {
   const initialState = {

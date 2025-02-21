@@ -1,5 +1,5 @@
 "use server";
-import { cookies } from "next/headers";
+import { fetchWithAuth } from "@/lib/secureFetch";
 
 export default async function addProduct(prevState: any, formData: FormData) {
   const data = {
@@ -11,14 +11,16 @@ export default async function addProduct(prevState: any, formData: FormData) {
   };
 
   try {
-    const response = await fetch("http://localhost:8080/api/product/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${(await cookies()).get("accessToken")?.value}`,
-      },
-      body: JSON.stringify(data),
-    });
+    const response = await fetchWithAuth(
+      "http://localhost:8080/api/product/add",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const result = await response.json();
 

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { UserPlus } from "lucide-react";
-import { register } from "@/actions/userRegisterActions";
+import { register } from "@/actions/auth/userRegisterActions";
 
 const Register = () => {
   const [state, registerAction, isPending] = useActionState(register, null);

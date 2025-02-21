@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import React, { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import {
   ChevronDown,
   ChevronUp,
@@ -17,6 +18,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+const convertToLocale = (date: Date) => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+  };
+  return date.toLocaleDateString("en-US", options);
+};
+
 type SortDirection = "asc" | "desc" | null;
 
 interface Column<T> {
@@ -27,8 +39,9 @@ interface Column<T> {
 interface SortableTableProps<T extends { id: string | number }> {
   data: T[];
   columns: Column<T>[];
-  onEdit?: (id: T["id"]) => void;
-  onDelete?: (id: T["id"]) => void;
+  onDelete: (
+    id: T["id"]
+  ) => Promise<{ success: boolean; message: string } | void>;
 }
 
 function useSortableData<T>(
@@ -71,8 +84,11 @@ function useSortableData<T>(
 export function SortableTable<T extends { id: string | number }>({
   data,
   columns,
+  onDelete,
 }: SortableTableProps<T>) {
   const { items, requestSort, sortConfig } = useSortableData(data);
+
+  const router = useRouter();
 
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-200 text-black">
@@ -118,18 +134,20 @@ export function SortableTable<T extends { id: string | number }>({
               <TableCell className="text-center">{index + 1}</TableCell>
               {columns.map((column) => (
                 <TableCell key={column.key as string}>
-                  {item[column.key] as React.ReactNode}
+                  {column.key === "createdAt" || column.key === "updatedAt"
+                    ? convertToLocale(new Date(item[column.key] as string))
+                    : (item[column.key] as React.ReactNode)}
                 </TableCell>
               ))}
               <TableCell className="text-center space-x-2">
                 <button
-                  onClick={() => alert(item.id)}
+                  onClick={() => router.push("/admin/edit/" + item.id)}
                   className="p-1 text-blue-600 hover:text-blue-800"
                 >
                   <Edit className="h-5 w-5" />
                 </button>
                 <button
-                  onClick={() => alert(item.id)}
+                  onClick={() => onDelete(item.id)}
                   className="p-1 text-red-600 hover:text-red-800"
                 >
                   <Trash className="h-5 w-5" />

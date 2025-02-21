@@ -18,12 +18,7 @@ export default function CartItemQuantityButton({
     startTransition(async () => {
       const result = await cartItemQuantityAction("increment", productId);
 
-      if (result.success) {
-        // alert(result.message);
-      } else if (result.message === "Unauthorized") {
-        alert("You are not authorized to add this item");
-        redirect("/login");
-      } else {
+      if (result?.success === false) {
         alert(result.message || "Something went wrong");
       }
     });
@@ -33,12 +28,7 @@ export default function CartItemQuantityButton({
     startTransition(async () => {
       const result = await cartItemQuantityAction("decrement", productId);
 
-      if (result.success) {
-        // alert(result.message);
-      } else if (result.message === "Unauthorized") {
-        alert("You are not authorized to add this item");
-        redirect("/login");
-      } else {
+      if (result?.success === false) {
         alert(result.message || "Something went wrong");
       }
     });

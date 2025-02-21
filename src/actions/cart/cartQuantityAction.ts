@@ -6,37 +6,29 @@ export async function cartItemQuantityAction(
   type: "increment" | "decrement",
   productId: number
 ) {
-  try {
-    const response = await fetchWithAuth(
-      `http://localhost:8080/api/cart/${type}/${productId}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    // Check for unauthorized first
-    if (response.status === 401) {
-      return { success: false, message: "Unauthorized" };
+  const response = await fetchWithAuth(
+    `http://localhost:8080/api/cart/${type}/${productId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
+  );
 
-    // For any other non-OK response, try to get a detailed message
-    if (!response.ok) {
-      const errorData = await response.json();
-      return {
-        success: false,
-        message: errorData.message || "Something went wrong",
-      };
-    }
-
-    const data = await response.json();
-
-    return { success: true, message: data.message };
-  } catch (error: any) {
-    return { success: false, message: error.message };
-  } finally {
-    revalidatePath("/products/cart");
+  // Check for unauthorized first
+  if (response.status === 401) {
+    return { success: false, message: "Unauthorized" };
   }
+
+  // For any other non-OK response, try to get a detailed message
+  if (!response.ok) {
+    const errorData = await response.json();
+    return {
+      success: false,
+      message: errorData.message || "Something went wrong",
+    };
+  }
+
+  revalidatePath("/products/cart");
 }

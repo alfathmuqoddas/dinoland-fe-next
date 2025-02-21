@@ -16,13 +16,8 @@ export default function RemoveFromCartButton({
       startTransition(async () => {
         const result = await removeFromCartAction(productId);
 
-        if (result.success) {
-          alert(result.message);
-        } else if (result.message === "Unauthorized") {
-          alert("You are not authorized to remove this item");
-          redirect("/login");
-        } else {
-          alert(result.message || "Something went wrong");
+        if (result?.success === false) {
+          alert(result?.message || "Something went wrong");
         }
       });
     } else {

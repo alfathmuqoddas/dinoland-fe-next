@@ -1,33 +1,35 @@
 "use server";
 import { fetchWithAuth } from "@/lib/secureFetch";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export default async function addProduct(prevState: any, formData: FormData) {
-  const data = {
-    name: formData.get("name"),
-    price: formData.get("price"),
-    image: formData.get("image"),
-    description: formData.get("description"),
-    category: formData.get("category"),
-  };
+  const data = [
+    {
+      name: formData.get("addProductName"),
+      price: formData.get("addProductPrice"),
+      description: formData.get("addProductDescription"),
+      image: formData.get("addProductImage"),
+      categoryId: formData.get("addProductCategoryId"),
+    },
+  ];
 
-  try {
-    const response = await fetchWithAuth(
-      "http://localhost:8080/api/product/add",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      return result.error;
+  const response = await fetchWithAuth(
+    "http://localhost:8080/api/product/add",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     }
-  } catch (error) {
-    return `Something went wrong ${error}`;
+  );
+
+  if (!response.ok) {
+    const result = await response.json();
+    return { success: false, message: result.error };
   }
+
+  revalidatePath("/admin");
+  redirect("/admin");
 }

@@ -1,5 +1,6 @@
 import { SortableTable } from "@/components/Table/SortTable";
 import { deleteProductAction } from "@/actions/admin/deleteProductAction";
+import Link from "next/link";
 
 export default async function Admin() {
   const response = await fetch("http://localhost:8080/api/product?pageSize=50");
@@ -21,12 +22,19 @@ export default async function Admin() {
 
   return (
     <>
-      <h1>Admin</h1>
-      <SortableTable
-        data={flattenedProducts}
-        columns={columns}
-        onDelete={deleteProductAction}
-      />
+      <div className="flex flex-col gap-4">
+        <h1>Admin</h1>
+        <div>
+          <button className="brutalist-button">
+            <Link href="/admin/add">Add New</Link>
+          </button>
+        </div>
+        <SortableTable
+          data={flattenedProducts}
+          columns={columns}
+          onDelete={deleteProductAction}
+        />
+      </div>
     </>
   );
 }

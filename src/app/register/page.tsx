@@ -58,7 +58,7 @@ const Register = () => {
           <button type="submit" className="brutalist-button w-full">
             {isPending ? "Loading..." : "REGISTER"}
           </button>
-          {state && <p>{state}</p>}
+          {state && <p>{state.message}</p>}
         </form>
         <p className="mt-6 text-center">
           Already have an account?{" "}

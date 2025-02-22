@@ -1,37 +1,18 @@
 "use client";
 import { useActionState, useState, useEffect } from "react";
 import addProduct from "@/actions/admin/addProductActions";
+import { TProductCategory } from "@/lib/type/product";
+import useSWR from "swr";
+import { fetcher } from "@/actions/fetcher";
 
 export default function Add() {
   const [state, addProductAction, isPending] = useActionState(addProduct, null);
 
-  type Category = {
-    id: number;
-    name: string;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-
-  const [productCategories, setProductCategories] = useState<Category[]>([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8080/api/productCategory"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch categories");
-        }
-        const json = await response.json();
-        setProductCategories(json);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  const {
+    data: productCategories,
+    error: errorCategories,
+    isLoading: isLoadingCategories,
+  } = useSWR(`http://localhost:8080/api/productCategory`, fetcher);
 
   return (
     <div>
@@ -55,15 +36,19 @@ export default function Add() {
           className="brutalist-input"
         />
         <select name="addProductCategoryId" className="text-black">
-          {productCategories.map((category) => (
-            <option
-              key={category.id}
-              value={category.id}
-              className="text-black"
-            >
-              {category.name}
-            </option>
-          ))}
+          {isLoadingCategories ? (
+            <option>Loading...</option>
+          ) : (
+            productCategories.map((category: TProductCategory) => (
+              <option
+                key={category.id}
+                value={category.id}
+                className="text-black"
+              >
+                {category.name}
+              </option>
+            ))
+          )}
         </select>
         <input
           type="text"

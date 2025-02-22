@@ -1,4 +1,4 @@
-import { TProduct } from "../../type";
+import { TProduct } from "@/lib/type/product";
 import AddToCartButton from "../../../../../components/Buttons/AddToCartButton";
 import ProductCard from "@/components/Card/ProductCard";
 

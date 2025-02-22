@@ -1,7 +1,7 @@
 "use client";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { TProduct } from "@/app/(main)/products/type";
+import { TProduct } from "@/lib/type/product";
 
 interface CartItem extends TProduct {
   quantity: number;

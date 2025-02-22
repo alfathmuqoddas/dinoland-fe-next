@@ -1,6 +1,5 @@
-// import { Link as LinkIcon, ShoppingCart } from "lucide-react";
-import { TProduct } from "./type";
-import Link from "next/link";
+import { TProduct } from "@/lib/type/product";
+// import Link from "next/link";
 import { Category, SortBy, SortOrder } from "@/components/Sidebar";
 import ProductCard from "@/components/Card/ProductCard";
 import PageSelector from "@/components/Pagination/PageSelector";

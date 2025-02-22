@@ -1,4 +1,5 @@
 "use server";
+import { Category } from "@/components/Sidebar";
 import { fetchWithAuth } from "@/lib/secureFetch";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -10,9 +11,10 @@ export default async function addProduct(prevState: any, formData: FormData) {
       price: formData.get("addProductPrice"),
       description: formData.get("addProductDescription"),
       image: formData.get("addProductImage"),
-      categoryId: formData.get("addProductCategoryId"),
+      categoryId: Number(formData.get("addProductCategoryId")),
     },
   ];
+  console.log(data);
 
   const response = await fetchWithAuth(
     "http://localhost:8080/api/product/add",

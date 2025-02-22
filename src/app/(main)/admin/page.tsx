@@ -25,9 +25,9 @@ export default async function Admin() {
       <div className="flex flex-col gap-4">
         <h1>Admin</h1>
         <div>
-          <button className="brutalist-button">
-            <Link href="/admin/add">Add New</Link>
-          </button>
+          <Link href="/admin/add" className="brutalist-button">
+            Add New
+          </Link>
         </div>
         <SortableTable
           data={flattenedProducts}

@@ -1,40 +1,96 @@
 "use client";
-import { useState, useEffect } from "react";
+import useSWR from "swr";
 import { useParams } from "next/navigation";
+import { fetcher } from "@/actions/fetcher";
+import { TProductCategory } from "@/lib/type/product";
+import editProduct from "@/actions/admin/editProductActions";
+import { useActionState } from "react";
 
 export default function Edit() {
   const { id } = useParams();
 
-  const [product, setProduct] = useState<any>({});
+  const {
+    data: productData,
+    error: errorProduct,
+    isLoading: isLoadingProduct,
+  } = useSWR(`http://localhost:8080/api/product/${id}`, fetcher);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`http://localhost:8080/api/product/${id}`);
-        const data = await response.json();
-        if (!response.ok) {
-          throw new Error(data.error);
-        }
-        setProduct(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchProduct();
-  }, []);
+  const {
+    data: productCategories,
+    error: errorCategories,
+    isLoading: isLoadingCategories,
+  } = useSWR(`http://localhost:8080/api/productCategory`, fetcher);
 
-  const { name, description, price } = product;
+  const [state, editProductAction, isPending] = useActionState(
+    editProduct,
+    null
+  );
+
+  if (isLoadingProduct || isLoadingCategories) {
+    return <p>Loading...</p>;
+  }
+
+  if (errorProduct || errorCategories) {
+    return <p>Error loading data.</p>;
+  }
+
   return (
-    <>
-      {product ? (
-        <>
-          <div>{name}</div>
-          <div>{description}</div>
-          <div>{price}</div>
-        </>
-      ) : (
-        <>No Product exist</>
-      )}
-    </>
+    <div>
+      <form action={editProductAction} className="flex flex-col gap-4">
+        <input type="hidden" name="productId" value={id} />
+        <input
+          type="text"
+          name="addProductName"
+          placeholder="Name"
+          className="brutalist-input"
+          defaultValue={productData.name}
+        />
+        <input
+          type="number"
+          name="addProductPrice"
+          placeholder="Price"
+          className="brutalist-input"
+          defaultValue={productData.price}
+          step="any"
+        />
+        <input
+          type="text"
+          name="addProductDescription"
+          placeholder="Description"
+          className="brutalist-input"
+          defaultValue={productData.description}
+        />
+        <select
+          name="addProductCategoryId"
+          className="text-black"
+          defaultValue={productData.categoryId.toString()}
+        >
+          {productCategories.map((category: TProductCategory) => (
+            <option
+              key={category.id}
+              value={category.id}
+              className="text-black"
+            >
+              {category.name}
+            </option>
+          ))}
+        </select>
+        <input
+          type="text"
+          name="addProductImage"
+          placeholder="Image"
+          className="brutalist-input"
+          defaultValue={productData.image}
+        />
+        <button
+          type="submit"
+          className="brutalist-button w-full"
+          disabled={isPending}
+        >
+          {isPending ? "Loading..." : "UPDATE"}
+        </button>
+        {state && <p>{state.message}</p>}
+      </form>
+    </div>
   );
 }

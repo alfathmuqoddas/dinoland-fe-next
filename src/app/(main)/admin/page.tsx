@@ -7,18 +7,31 @@ import { fetcher } from "@/actions/fetcher";
 import { useFilterProduct } from "@/hooks/useFilterProduct";
 import { useState, useMemo } from "react";
 import { Plus } from "lucide-react";
+import { TProductCategory } from "@/lib/type/product";
 
 export default function Admin() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [params, setParams] = useState({ pageSize: 20, page: 1 });
+  const [params, setParams] = useState({
+    pageSize: 20,
+    page: 1,
+    categoryId: "",
+  });
   const {
     data: productsData,
     error: errorProducts,
     isLoading: isLoadingProducts,
   } = useSWR(
-    `http://localhost:8080/api/product?page=${params.page}&pageSize=${params.pageSize}`,
+    `http://localhost:8080/api/product?page=${params.page}&pageSize=${
+      params.pageSize
+    }${params.categoryId && `&categoryId=${params.categoryId}`}`,
     fetcher
   );
+
+  const {
+    data: categoryData,
+    error: errorCategory,
+    isLoading: isLoadingCategories,
+  } = useSWR("http://localhost:8080/api/productCategory", fetcher);
 
   const productList = useMemo(() => {
     return productsData
@@ -65,7 +78,7 @@ export default function Admin() {
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold text-gray-900">Admin</h1>
-      <div className="flex gap-2 justify-between">
+      <div className="flex flex-col md:flex-row gap-2 justify-between">
         <div>
           <input
             type="text"
@@ -74,29 +87,57 @@ export default function Admin() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <div>
-          <select
-            name="pageSize"
-            className="brutalist-input-select"
-            value={params.pageSize}
-            onChange={(e) =>
-              setParams((prevParams) => ({
-                ...prevParams,
-                pageSize: Number(e.target.value),
-              }))
-            }
-          >
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-          </select>
+        <div className="flex gap-2">
+          <div>
+            <select
+              name="pageSize"
+              className="brutalist-input-select"
+              value={params.pageSize}
+              onChange={(e) =>
+                setParams((prevParams) => ({
+                  ...prevParams,
+                  pageSize: Number(e.target.value),
+                }))
+              }
+            >
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+          <div>
+            <select
+              name="categoryFilter"
+              className="brutalist-input-select"
+              onChange={(e) =>
+                setParams((prevState) => ({
+                  ...prevState,
+                  categoryId: e.target.value,
+                }))
+              }
+              defaultValue={params.categoryId}
+            >
+              <option value="">All</option>
+              {isLoadingCategories ? (
+                <option>Loading...</option>
+              ) : (
+                categoryData.map((category: TProductCategory) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))
+              )}
+            </select>
+          </div>
         </div>
-        <Link
-          href="/admin/add"
-          className="brutalist-button flex items-center gap-2"
-        >
-          Add Product <Plus className="w-4 h-4" />
-        </Link>
+        <div>
+          <Link
+            href="/admin/add"
+            className="brutalist-button flex items-center gap-2"
+          >
+            Add Product <Plus className="w-4 h-4" />
+          </Link>
+        </div>
       </div>
       <SortableTable
         data={filteredProducts}

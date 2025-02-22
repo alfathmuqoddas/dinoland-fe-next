@@ -1,4 +1,4 @@
-export type TProduct = {
+export interface TProduct {
   id: number;
   name: string;
   price: number;
@@ -7,11 +7,15 @@ export type TProduct = {
   categoryId: number;
   createdAt: string;
   updatedAt: string;
-};
+}
 
-export type TProductCategory = {
+export interface TProductFlattened extends TProduct {
+  categoryName: string;
+}
+
+export interface TProductCategory {
   id: number;
   name: string;
   createdAt: string;
   updatedAt: string;
-};
+}

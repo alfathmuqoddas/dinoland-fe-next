@@ -74,6 +74,10 @@
   @apply w-full text-sm p-2 bg-white border-[3px] rounded-lg border-black text-black font-bold focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)] focus:bg-pink-200;
 }
 
+.brutalist-input-select {
+  @apply w-full text-sm p-2 bg-white border-[3px] rounded-lg border-black text-black font-bold focus:outline-none focus:shadow-[2px_2px_0px_rgba(0,0,0,1)];
+}
+
 .brutalist-button {
   @apply px-3 py-2 bg-yellow-400 rounded-xl text-black font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,1)] active:translate-x-0 active:shadow-none disabled:bg-gray-400 disabled:text-gray-600;
 }

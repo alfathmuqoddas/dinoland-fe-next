@@ -35,7 +35,8 @@ export default function Edit() {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-2xl font-bold text-gray-900">Edit Product</h1>
       <form action={editProductAction} className="flex flex-col gap-4">
         <input type="hidden" name="productId" value={id} />
         <input
@@ -62,15 +63,11 @@ export default function Edit() {
         />
         <select
           name="addProductCategoryId"
-          className="text-black"
+          className="brutalist-input-select"
           defaultValue={productData.categoryId.toString()}
         >
           {productCategories.map((category: TProductCategory) => (
-            <option
-              key={category.id}
-              value={category.id}
-              className="text-black"
-            >
+            <option key={category.id} value={category.id}>
               {category.name}
             </option>
           ))}

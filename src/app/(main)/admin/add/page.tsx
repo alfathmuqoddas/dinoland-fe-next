@@ -36,7 +36,10 @@ export default function Add() {
           placeholder="Description"
           className="brutalist-input"
         />
-        <select name="addProductCategoryId" className="text-black">
+        <select
+          name="addProductCategoryId"
+          className="brutalist-input-select text-black"
+        >
           {isLoadingCategories ? (
             <option>Loading...</option>
           ) : (

@@ -6,25 +6,32 @@ import useSWR from "swr";
 import { fetcher } from "@/actions/fetcher";
 import { useFilterProduct } from "@/hooks/useFilterProduct";
 import { useState, useMemo } from "react";
+import { Plus } from "lucide-react";
 
 export default function Admin() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [params, setParams] = useState({ pageSize: 20, page: 1 });
   const {
     data: productsData,
     error: errorProducts,
     isLoading: isLoadingProducts,
-  } = useSWR(`http://localhost:8080/api/product?pageSize=50`, fetcher);
+  } = useSWR(
+    `http://localhost:8080/api/product?page=${params.page}&pageSize=${params.pageSize}`,
+    fetcher
+  );
 
   const productList = useMemo(() => {
     return productsData
-      ? Array.isArray(productsData)
-        ? productsData
-        : productsData.products || []
-      : [];
+      ? {
+          products: productsData.products,
+          totalPages: productsData.totalPages,
+          totalRecords: productsData.totalRecords,
+        }
+      : { products: [], totalPages: 0, totalRecords: 0 };
   }, [productsData]);
 
   const flattenedProducts = useMemo(() => {
-    return productList.map((product: any) => {
+    return (productList.products || []).map((product: any) => {
       const { category, ...rest } = product;
       return {
         ...rest,
@@ -34,6 +41,10 @@ export default function Admin() {
   }, [productList]);
 
   const filteredProducts = useFilterProduct(searchQuery, flattenedProducts);
+  const allPages = Array.from(
+    { length: Number(productList.totalPages) },
+    (_, i) => i + 1
+  );
 
   const columns: any = [
     { key: "name", label: "Name" },
@@ -63,8 +74,28 @@ export default function Admin() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <Link href="/admin/add" className="brutalist-button">
-          Add New
+        <div>
+          <select
+            name="pageSize"
+            className="brutalist-input-select"
+            value={params.pageSize}
+            onChange={(e) =>
+              setParams((prevParams) => ({
+                ...prevParams,
+                pageSize: Number(e.target.value),
+              }))
+            }
+          >
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+          </select>
+        </div>
+        <Link
+          href="/admin/add"
+          className="brutalist-button flex items-center gap-2"
+        >
+          Add Product <Plus className="w-4 h-4" />
         </Link>
       </div>
       <SortableTable
@@ -72,6 +103,24 @@ export default function Admin() {
         columns={columns}
         onDelete={deleteProductAction}
       />
+      <div className="flex gap-2 text-gray-900 font-bold">
+        {allPages.map((paginate, index) => (
+          <div
+            key={index}
+            onClick={() =>
+              setParams((prevParams) => ({
+                ...prevParams,
+                page: paginate,
+              }))
+            }
+            className={`${
+              paginate === params.page && "underline underline-offset-4"
+            } hover:cursor-pointer`}
+          >
+            {paginate}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

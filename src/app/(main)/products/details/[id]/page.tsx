@@ -1,6 +1,7 @@
 import { TProduct } from "@/lib/type/product";
 import AddToCartButton from "../../../../../components/Buttons/AddToCartButton";
 import ProductCard from "@/components/Card/ProductCard";
+import Image from "next/image";
 
 export default async function ProductDetails({
   params,
@@ -32,12 +33,12 @@ export default async function ProductDetails({
       <section className="mt-4 md:mt-8">
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 ">
           <div className="brutalist-style overflow-hidden md:w-1/2">
-            <img
-              src={`https://picsum.photos/seed/${productData.name}/320/180`}
+            <Image
+              src={`https://picsum.photos/seed/${productData.name}/1920/1080`}
               alt={productData.name}
               loading="lazy"
-              width="320"
-              height="180"
+              width="1920"
+              height="1080"
               className="w-full h-auto object-cover"
             />
           </div>

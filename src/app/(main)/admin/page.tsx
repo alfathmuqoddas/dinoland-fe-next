@@ -112,6 +112,7 @@ export default function Admin() {
               onChange={(e) =>
                 setParams((prevState) => ({
                   ...prevState,
+                  page: 1,
                   categoryId: e.target.value,
                 }))
               }

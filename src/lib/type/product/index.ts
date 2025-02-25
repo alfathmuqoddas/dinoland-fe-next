@@ -19,3 +19,21 @@ export interface TProductCategory {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface TMyBuild {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface TMyBuildItem {
+  id: number;
+  productId: number;
+  buildId: number;
+  createdAt: string;
+  updatedAt: string;
+  product: Pick<
+    TProduct,
+    "id" | "name" | "description" | "price" | "image" | "categoryId"
+  >;
+}

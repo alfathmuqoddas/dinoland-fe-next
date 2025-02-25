@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { signOut } from "@/actions/auth/signOutActions";
 
 export async function fetchWithAuth(url: string, options: any = {}) {
   const accessToken = (await cookies()).get("accessToken")?.value;
@@ -12,10 +13,12 @@ export async function fetchWithAuth(url: string, options: any = {}) {
   const response = await fetch(url, { ...options, headers: authHeaders });
 
   if (response.status === 401) {
+    signOut();
     redirect("/login");
   }
 
   if (!accessToken) {
+    signOut();
     redirect("/login");
   }
 

@@ -1,12 +1,9 @@
 "use client";
-// import { TProduct } from "../../type";
-// import useCartStore from "@/store/useCartStore";
 import { addToCartAction } from "../../actions/cart/addToCartAction";
 import { useTransition } from "react";
 import { redirect } from "next/navigation";
 
 export default function AddToCartButton({ productId }: { productId: number }) {
-  //   const { items, addItem } = useCartStore();
   const [isPending, startTransition] = useTransition();
 
   async function handleAddToCart() {

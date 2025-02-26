@@ -1,43 +1,6 @@
 import { fetchWithAuth } from "@/lib/secureFetch";
-import { TMyBuildItem, TProductCategory } from "@/lib/type/product";
 import Link from "next/link";
-
-const BuildItemByCategory = ({
-  categoryData,
-  data,
-}: {
-  categoryData: TProductCategory[];
-  data: TMyBuildItem[];
-}) => {
-  const productNamesByCategory = data.reduce<
-    Record<number, { name: string; price: number }>
-  >((acc, { product: { categoryId, name, price } }) => {
-    acc[categoryId] = { name, price };
-    return acc;
-  }, {});
-
-  const selectFromData = (id: number) => productNamesByCategory[id];
-
-  return (
-    <div>
-      {categoryData.map((category) => {
-        const product = selectFromData(category.id);
-        return (
-          <div key={category.id}>
-            {category.name} :{" "}
-            {product ? (
-              <>
-                {product.name} - ${product.price}
-              </>
-            ) : (
-              "Not Available"
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+import BuildItemByCategory from "@/components/Table/BuildItemTable";
 
 export default async function MyBuildsLayout({
   searchParams,
@@ -61,8 +24,8 @@ export default async function MyBuildsLayout({
   return (
     <>
       <h1 className="text-2xl font-bold text-gray-900">My Builds</h1>
-      <div className="flex flex-col md:flex-row gap-4 items-start">
-        <div className="flex flex-col gap-2 md:w-1/6 border-2 border-black rounded-xl text-gray-900 p-2 bg-white">
+      <div className="flex flex-col md:flex-row gap-12 items-start">
+        <div className="flex flex-col gap-2 brutalist-style p-2 w-full md:w-3/12">
           {myBuilds.map((myBuild: any) => (
             <Link
               href={`/profile/my-builds?buildId=${myBuild.id}`}
@@ -75,16 +38,16 @@ export default async function MyBuildsLayout({
             </Link>
           ))}
         </div>
-        {buildId ? (
-          <div className="w-full md:w-5/6 flex flex-col gap-2">
+        <div className="w-full md:w-9/12">
+          {buildId ? (
             <BuildItemByCategory
               data={myBuildItems}
               categoryData={categoryData}
             />
-          </div>
-        ) : (
-          <div className="w-full md:w-5/6">No build selected</div>
-        )}
+          ) : (
+            <div>No build selected</div>
+          )}
+        </div>
       </div>
     </>
   );

@@ -83,13 +83,13 @@
 }
 
 .default-link {
-  @apply hover:text-blue-500 hover:underline;
+  @apply hover:text-blue-500 hover:underline underline-offset-4;
 }
 
 @layer base {
   body {
     @apply bg-green-400 text-white;
     font-family: var(--font-geist-sans);
-    /* @apply bg-background text-foreground; */
+    @apply text-foreground;
   }
 }

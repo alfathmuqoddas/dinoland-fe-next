@@ -33,7 +33,6 @@ const BuildItemByCategory = ({
       <TableHeader>
         <TableRow>
           <TableHead className="text-black font-bold">Category</TableHead>
-          <TableHead className="text-black font-bold">Image</TableHead>
           <TableHead className="text-black font-bold">Product Name</TableHead>
           <TableHead className="text-black font-bold">Price</TableHead>
         </TableRow>
@@ -51,30 +50,26 @@ const BuildItemByCategory = ({
                   {category.name}
                 </Link>
               </TableCell>
-              <TableCell>
-                {product?.image ? (
-                  <figure className="w-16 h-16 overflow-hidden rounded-lg">
-                    <Image
-                      src={`https://picsum.photos/seed/${product?.image}/160/90`}
-                      alt={product?.image}
-                      width={160}
-                      height={90}
-                      className="object-cover h-full"
-                    />
-                  </figure>
-                ) : (
-                  <div>Not Available</div>
-                )}
-              </TableCell>
+
               <TableCell>
                 {product ? (
-                  <Link
-                    key={product.id}
-                    href={`/products/details/${product.id}`}
-                    className="default-link"
-                  >
-                    {product.name}
-                  </Link>
+                  <div key={product.id} className="flex gap-2 items-center">
+                    <figure className="w-12 h-12 overflow-hidden rounded-lg">
+                      <Image
+                        src={`https://picsum.photos/seed/${product?.image}/160/90`}
+                        alt={product?.image}
+                        width={160}
+                        height={90}
+                        className="object-cover h-full"
+                      />
+                    </figure>
+                    <Link
+                      href={`/products/details/${product.id}`}
+                      className="default-link"
+                    >
+                      {product.name}
+                    </Link>
+                  </div>
                 ) : (
                   <>Not Available</>
                 )}

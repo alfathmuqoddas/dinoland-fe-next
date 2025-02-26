@@ -29,59 +29,64 @@ const BuildItemByCategory = ({
   const selectFromData = (id: number) => productNamesByCategory[id];
 
   return (
-    <Table className="text-black">
-      <TableHeader>
-        <TableRow>
-          <TableHead className="text-black font-bold">Category</TableHead>
-          <TableHead className="text-black font-bold">Product Name</TableHead>
-          <TableHead className="text-black font-bold">Price</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {categoryData.map((category) => {
-          const product = selectFromData(category.id);
-          return (
-            <TableRow key={category.id}>
-              <TableCell>
-                <Link
-                  href={`/products/?categoryId=${category.id}`}
-                  className="default-link font-bold"
-                >
-                  {category.name}
-                </Link>
-              </TableCell>
+    <div className="overflow-x-auto text-black">
+      <Table className="text-black">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="text-black font-bold">Category</TableHead>
+            <TableHead className="text-black font-bold">Product Name</TableHead>
+            <TableHead className="text-black font-bold">Price</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {categoryData.map((category) => {
+            const product = selectFromData(category.id);
+            return (
+              <TableRow key={category.id}>
+                <TableCell>
+                  <Link
+                    href={`/products/?categoryId=${category.id}`}
+                    className="default-link font-bold"
+                  >
+                    {category.name}
+                  </Link>
+                </TableCell>
 
-              <TableCell>
-                {product ? (
-                  <div key={product.id} className="flex gap-2 items-center">
-                    <figure className="w-12 h-12 overflow-hidden rounded-lg">
-                      <Image
-                        src={`https://picsum.photos/seed/${product?.image}/160/90`}
-                        alt={product?.image}
-                        width={160}
-                        height={90}
-                        className="object-cover h-full"
-                      />
-                    </figure>
-                    <Link
-                      href={`/products/details/${product.id}`}
-                      className="default-link"
+                <TableCell>
+                  {product ? (
+                    <div
+                      key={product.id}
+                      className="flex flex-col md:flex-row gap-2 md:items-center"
                     >
-                      {product.name}
-                    </Link>
-                  </div>
-                ) : (
-                  <>Not Available</>
-                )}
-              </TableCell>
-              <TableCell>
-                {product ? `$${product.price.toFixed(2)}` : "Not Available"}
-              </TableCell>
-            </TableRow>
-          );
-        })}
-      </TableBody>
-    </Table>
+                      <figure className="w-12 h-12 overflow-hidden rounded-lg border-2 border-black">
+                        <Image
+                          src={`https://picsum.photos/seed/${product?.image}/160/90`}
+                          alt={product?.image}
+                          width={160}
+                          height={90}
+                          className="object-cover h-full"
+                        />
+                      </figure>
+                      <Link
+                        href={`/products/details/${product.id}`}
+                        className="default-link"
+                      >
+                        {product.name}
+                      </Link>
+                    </div>
+                  ) : (
+                    <>Not Available</>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {product ? `$${product.price.toFixed(2)}` : "Not Available"}
+                </TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 

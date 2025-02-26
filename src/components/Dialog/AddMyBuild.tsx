@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
 import { useActionState } from "react";
-import addNewBuildAction from "@/actions/admin/addNewBuildAction";
+import { addNewBuildAction } from "@/actions/admin/myBuildAction";
+import { Button } from "../ui/button";
 
 export function AddNewBuild() {
   const [state, addNewBuild, isPending] = useActionState(
@@ -21,17 +22,16 @@ export function AddNewBuild() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="brutalist-button">
-          <div className="flex items-center gap-2">
-            <Plus className="h-4 w-4" /> New Build
-          </div>
-        </button>
+        <Button size={"lg"} variant={"warning"}>
+          New Build
+          <Plus className="h-4 w-4" />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>New Build</DialogTitle>
           <DialogDescription>
-            Add New Build. Click save when you're done.
+            {/* Add New Build. Click save when you're done. */}
           </DialogDescription>
         </DialogHeader>
         <form action={addNewBuild} className="flex flex-col gap-4">
@@ -44,6 +44,7 @@ export function AddNewBuild() {
               name="buildName"
               placeholder="Enter Build Name"
               className="brutalist-input"
+              required
             />
           </div>
           <div className="">
@@ -57,14 +58,11 @@ export function AddNewBuild() {
               className="brutalist-input"
             />
           </div>
+          {state ? <div>{state.message}</div> : <></>}
           <DialogFooter>
-            <button
-              type="submit"
-              className="brutalist-button"
-              disabled={isPending}
-            >
+            <Button type="submit" variant={"warning"} disabled={isPending}>
               Save
-            </button>
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -1,11 +1,13 @@
 import { fetchWithAuth } from "@/lib/secureFetch";
 import Link from "next/link";
 import BuildItemByCategory from "@/components/Table/BuildItemTable";
-import { Pencil, Plus } from "lucide-react";
+import { Pencil, Trash } from "lucide-react";
 import { TMyBuild } from "@/lib/type/product";
 import { AddNewBuild } from "@/components/Dialog/AddMyBuild";
+import { Button } from "@/components/ui/button";
+import RemoveMyBuild from "@/components/Buttons/RemoveMyBuild";
 
-export default async function MyBuildsLayout({
+export default async function MyBuilds({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -31,7 +33,7 @@ export default async function MyBuildsLayout({
   return (
     <>
       <h1 className="text-2xl font-bold text-gray-900">My Builds</h1>
-      <div className="flex flex-col md:flex-row gap-12 items-start mt-8">
+      <div className="flex flex-col md:flex-row gap-12 items-start mt-4">
         <aside className="w-full md:w-3/12">
           <div className="mb-8">
             <AddNewBuild />
@@ -55,18 +57,19 @@ export default async function MyBuildsLayout({
         </aside>
         <section className="w-full md:w-9/12">
           {buildId ? (
-            <div className="flex flex-col gap-4">
-              <div className="text-center">
+            <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-4">
                 <h1 className="text-2xl font-bold text-gray-900">
                   {myBuildDetails.name}
                 </h1>
-                <div>
+                <div className="flex gap-2">
                   <Link
                     href={"my-builds/edit/" + buildId}
-                    className="flex gap-2 items-center justify-center default-link"
+                    className="brutalist-button-custom bg-blue-600 h-10 px-8"
                   >
                     Edit this Build <Pencil className="h-4 w-4" />
                   </Link>
+                  <RemoveMyBuild buildId={buildId} />
                 </div>
               </div>
               <BuildItemByCategory

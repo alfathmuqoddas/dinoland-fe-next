@@ -35,9 +35,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <main className="relative">
+          <main>
             {children}
-            <div className="absolute bottom-0 right-0 p-2">
+            <div className="fixed bottom-0 right-0 p-2">
               <DarkModeToggle />
             </div>
           </main>

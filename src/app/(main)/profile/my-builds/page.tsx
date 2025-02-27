@@ -41,9 +41,7 @@ export default async function MyBuilds({
         ? await myBuildDetailsResponse.json()
         : null;
     const myBuildItems =
-      buildId && myBuildItemsResponse
-        ? await myBuildItemsResponse.json()
-        : null;
+      buildId && myBuildItemsResponse ? await myBuildItemsResponse.json() : [];
     const categoryData = await categoryDataResponse.json();
 
     return (

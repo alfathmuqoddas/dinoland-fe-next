@@ -10,11 +10,11 @@ export default async function Cart() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold my-4 text-gray-900">Cart</h1>
+      <h1 className="text-3xl font-bold my-4 ">Cart</h1>
       <section className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
-        <section className="text-gray-800 brutalist-style p-6 w-full md:w-8/12">
+        <section className=" brutalist-style p-6 w-full md:w-8/12">
           <div className="flex flex-col gap-6">
-            {cartItem.length > 0 ? (
+            {cartItem ? (
               cartItem.map((product: any) => (
                 <CartItemCard
                   key={product.id}

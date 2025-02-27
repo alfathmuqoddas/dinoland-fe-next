@@ -42,7 +42,7 @@ export default async function ProductDetails({
               className="w-full h-auto object-cover"
             />
           </div>
-          <div className="text-gray-900 flex flex-col gap-4 md:w-1/2">
+          <div className="flex flex-col gap-4 md:w-1/2">
             <h1 className="text-3xl font-bold">{productData.name}</h1>
             <p className="text-xl font-bold">${productData.price} USD</p>
             <div>{productData.description}</div>
@@ -51,9 +51,7 @@ export default async function ProductDetails({
         </div>
       </section>
       <section>
-        <h1 className="text-3xl font-bold my-8 text-gray-900">
-          Similar Products
-        </h1>
+        <h1 className="text-3xl font-bold my-8 ">Similar Products</h1>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
           {similarProductsDataFiltered.map((product: TProduct) => (
             <ProductCard key={product.id} product={product} />

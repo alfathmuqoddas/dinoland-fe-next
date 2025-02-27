@@ -77,7 +77,7 @@ export default function Admin() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-bold text-gray-900">Admin</h1>
+      <h1 className="text-2xl font-bold">Admin</h1>
       <div className="flex flex-col md:flex-row gap-2 justify-between">
         <div>
           <input
@@ -145,7 +145,7 @@ export default function Admin() {
         columns={columns}
         onDelete={deleteProductAction}
       />
-      <div className="flex gap-2 text-gray-900 font-bold">
+      <div className="flex gap-2 font-bold">
         {allPages.map((paginate, index) => (
           <div
             key={index}

@@ -21,10 +21,10 @@ export default async function AdminLayout({
     <div className="flex flex-col gap-4">
       <NextBreadcrumb
         homeElement={"Home"}
-        separator={<ChevronRight className="w-4 h-4 text-gray-900" />}
+        separator={<ChevronRight className="w-4 h-4" />}
         activeClasses="font-bold text-sm"
         containerClasses="flex items-center"
-        listClasses="hover:underline text-sm text-gray-900"
+        listClasses="hover:underline text-sm"
         capitalizeLinks
       />
       {children}

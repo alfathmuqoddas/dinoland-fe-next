@@ -16,8 +16,8 @@ export default async function MyBuildsItems({
   return (
     <>
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Edit Build {name}</h1>
-        <p className="text-gray-900">{description}</p>
+        <h1 className="text-2xl font-bold ">Edit Build {name}</h1>
+        <p>{description}</p>
       </div>
     </>
   );

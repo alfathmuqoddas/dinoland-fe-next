@@ -8,7 +8,7 @@ const Cart = () => {
   return (
     <Link href="/products/cart">
       <div
-        className="p-2 hover:bg-pink-600 hover:cursor-pointer flex items-center space-x-1"
+        className="p-2 hover:bg-pink-600 text-white hover:cursor-pointer flex items-center space-x-1"
         // onClick={() => alert(JSON.stringify(items, null, 2))}
       >
         {items && items.length}

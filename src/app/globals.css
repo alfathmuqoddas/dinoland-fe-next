@@ -92,8 +92,7 @@
 
 @layer base {
   body {
-    @apply bg-green-400 text-white;
     font-family: var(--font-geist-sans);
-    @apply text-foreground;
+    @apply bg-background text-foreground;
   }
 }

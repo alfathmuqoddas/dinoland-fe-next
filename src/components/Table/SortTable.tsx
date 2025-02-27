@@ -91,17 +91,15 @@ export function SortableTable<T extends { id: string | number }>({
   const router = useRouter();
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200 text-black">
+    <div className="overflow-x-auto rounded-lg border border-gray-200 ">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="bg-gray-100 font-bold text-black">
-              No
-            </TableHead>
+            <TableHead className="font-bold ">No</TableHead>
             {columns.map((column) => (
               <TableHead
                 key={column.key as string}
-                className="bg-gray-100 font-bold text-black cursor-pointer hover:bg-gray-200"
+                className="font-bold  cursor-pointer hover:bg-gray-500"
                 onClick={() => requestSort(column.key)}
               >
                 <div className="flex items-center justify-between">
@@ -120,16 +118,16 @@ export function SortableTable<T extends { id: string | number }>({
                 </div>
               </TableHead>
             ))}
-            <TableHead className="bg-gray-100 font-bold text-black">
-              Actions
-            </TableHead>
+            <TableHead className="font-bold ">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {items.map((item, index) => (
             <TableRow
               key={item.id}
-              className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+              className={
+                index % 2 === 0 ? "light:bg-white" : "light:bg-gray-50"
+              }
             >
               <TableCell className="text-center">{index + 1}</TableCell>
               {columns.map((column) => (

@@ -26,7 +26,7 @@ export const Category = ({ items }: { items: Category[] }) => {
   };
 
   return (
-    <section className="text-gray-900">
+    <section>
       <h3 className="text-xl font-bold">Categories :</h3>
       <ul>
         {items.map((item) => (
@@ -63,7 +63,7 @@ export const SortBy = ({ items }: { items: string[] }) => {
   };
 
   return (
-    <section className="text-gray-900">
+    <section>
       <h3 className="text-xl font-bold">Sort By :</h3>
       <ul>
         {items.map((item, index) => (
@@ -98,7 +98,7 @@ export const SortOrder = ({ items }: { items: string[] }) => {
   };
 
   return (
-    <section className="text-gray-900">
+    <section>
       <h3 className="text-xl font-bold">Sort Order :</h3>
       <ul>
         {items.map((item, index) => (

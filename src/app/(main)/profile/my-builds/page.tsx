@@ -48,13 +48,13 @@ export default async function MyBuilds({
 
     return (
       <>
-        <h1 className="text-2xl font-bold text-gray-900">My Builds</h1>
+        <h1 className="text-2xl font-bold ">My Builds</h1>
         <div className="flex flex-col md:flex-row gap-12 items-start mt-4">
           <aside className="w-full md:w-3/12">
             <div className="mb-8">
               <AddNewBuild />
             </div>
-            <h1 className="text-gray-900 my-2">Saved Builds</h1>
+            <h1 className=" my-2">Saved Builds</h1>
             <div className="flex flex-col gap-2 brutalist-style p-2">
               {myBuilds.map((myBuild: TMyBuild) => (
                 <Link
@@ -75,9 +75,7 @@ export default async function MyBuilds({
             {buildId && myBuildDetails ? (
               <div className="flex flex-col gap-8">
                 <div className="flex flex-col gap-4">
-                  <h1 className="text-2xl font-bold text-gray-900">
-                    {myBuildDetails.name}
-                  </h1>
+                  <h1 className="text-2xl font-bold ">{myBuildDetails.name}</h1>
                   <div className="flex gap-2">
                     <Link
                       href={"my-builds/edit/" + buildId}

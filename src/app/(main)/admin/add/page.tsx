@@ -16,7 +16,7 @@ export default function Add() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-bold text-gray-900">Add New Product</h1>
+      <h1 className="text-2xl font-bold">Add New Product</h1>
       <form action={addProductAction} className="flex flex-col gap-4">
         <input
           type="text"

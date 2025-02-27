@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "../components/ThemeProvider";
+import DarkModeToggle from "../components/DarkModeToggle";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,7 +35,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <main className="relative">
+            {children}
+            <div className="absolute bottom-0 right-0 p-2">
+              <DarkModeToggle />
+            </div>
+          </main>
         </ThemeProvider>
       </body>
     </html>

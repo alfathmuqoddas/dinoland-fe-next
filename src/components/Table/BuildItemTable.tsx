@@ -29,13 +29,13 @@ const BuildItemByCategory = ({
   const selectFromData = (id: number) => productNamesByCategory[id];
 
   return (
-    <div className="overflow-x-auto text-black">
-      <Table className="text-black">
+    <div className="overflow-x-auto ">
+      <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="text-black font-bold">Category</TableHead>
-            <TableHead className="text-black font-bold">Product Name</TableHead>
-            <TableHead className="text-black font-bold">Price</TableHead>
+            <TableHead className="font-bold">Category</TableHead>
+            <TableHead className="font-bold">Product Name</TableHead>
+            <TableHead className="font-bold">Price</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

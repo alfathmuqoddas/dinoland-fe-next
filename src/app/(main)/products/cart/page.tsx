@@ -11,9 +11,9 @@ export default async function Cart() {
   return (
     <>
       <h1 className="text-3xl font-bold my-4 ">Cart</h1>
-      <section className="flex flex-col md:flex-row gap-4 md:gap-8 items-start">
-        <section className=" brutalist-style p-6 w-full md:w-8/12">
-          <div className="flex flex-col gap-6">
+      <section className="flex flex-col md:flex-row gap-2 md:gap-8 items-start">
+        <section className="w-full md:w-8/12">
+          <div className="flex flex-col gap-2 md:gap-4">
             {cartItem ? (
               cartItem.map((product: any) => (
                 <CartItemCard

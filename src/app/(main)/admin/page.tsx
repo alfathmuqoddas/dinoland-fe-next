@@ -8,6 +8,7 @@ import { useFilterProduct } from "@/hooks/useFilterProduct";
 import { useState, useMemo } from "react";
 import { Plus } from "lucide-react";
 import { TProductCategory } from "@/lib/type/product";
+import { Button } from "@/components/ui/button";
 
 export default function Admin() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -132,11 +133,10 @@ export default function Admin() {
           </div>
         </div>
         <div>
-          <Link
-            href="/admin/add"
-            className="brutalist-button flex items-center gap-2"
-          >
-            Add Product <Plus className="w-4 h-4" />
+          <Link href="/admin/add">
+            <Button variant={"warning"} size={"lg"} className="font-bold">
+              Add Product <Plus className="w-4 h-4" />
+            </Button>
           </Link>
         </div>
       </div>

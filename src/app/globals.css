@@ -33,8 +33,8 @@
   .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
+    --card: 24 9.8% 10%;
+    --card-foreground: 0 0% 95%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
     --primary: 0 0% 98%;
@@ -63,7 +63,7 @@
 } */
 
 .brutalist-style {
-  @apply bg-white rounded-2xl border-2 border-black text-black;
+  @apply bg-white rounded-2xl border-2 border-black dark:border-border dark:bg-card;
 }
 
 .brutalist-card {
@@ -93,6 +93,6 @@
 @layer base {
   body {
     font-family: var(--font-geist-sans);
-    @apply bg-background text-foreground;
+    @apply bg-green-300 dark:bg-background text-foreground border-border;
   }
 }

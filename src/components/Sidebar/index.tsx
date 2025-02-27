@@ -35,7 +35,7 @@ export const Category = ({ items }: { items: Category[] }) => {
               href={`products?${newParams(item.id)}`}
               className={`hover:underline underline-offset-4 ${isActive(
                 item.id
-              )}`}
+              )} text-sm`}
             >
               {item.name}
             </Link>
@@ -70,7 +70,9 @@ export const SortBy = ({ items }: { items: string[] }) => {
           <li key={index}>
             <Link
               href={`products?${newParams(item)}`}
-              className={`hover:underline underline-offset-4 ${isActive(item)}`}
+              className={`hover:underline underline-offset-4 ${isActive(
+                item
+              )} text-sm`}
             >
               {item}
             </Link>
@@ -105,7 +107,9 @@ export const SortOrder = ({ items }: { items: string[] }) => {
           <li key={index}>
             <Link
               href={`products?${newParams(item)}`}
-              className={`hover:underline underline-offset-4 ${isActive(item)}`}
+              className={`hover:underline underline-offset-4 ${isActive(
+                item
+              )} text-sm`}
             >
               {item}
             </Link>

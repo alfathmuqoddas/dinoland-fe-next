@@ -2,6 +2,8 @@
 import { addToCartAction } from "../../actions/cart/addToCartAction";
 import { useTransition } from "react";
 import { redirect } from "next/navigation";
+import { Button } from "../ui/button";
+import { ShoppingCart } from "lucide-react";
 
 export default function AddToCartButton({ productId }: { productId: number }) {
   const [isPending, startTransition] = useTransition();
@@ -23,13 +25,15 @@ export default function AddToCartButton({ productId }: { productId: number }) {
 
   return (
     <div>
-      <button
-        className="brutalist-button"
+      <Button
+        variant={"warning"}
+        size={"lg"}
+        className="font-bold"
         onClick={handleAddToCart}
         disabled={isPending}
       >
-        Add to Cart
-      </button>
+        Add to Cart <ShoppingCart className="w-4 h-4" />
+      </Button>
     </div>
   );
 }

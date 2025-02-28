@@ -91,15 +91,15 @@ export function SortableTable<T extends { id: string | number }>({
   const router = useRouter();
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-gray-200 ">
+    <div className="overflow-x-auto brutalist-style">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="font-bold ">No</TableHead>
+            <TableHead className="font-bold">No</TableHead>
             {columns.map((column) => (
               <TableHead
                 key={column.key as string}
-                className="font-bold  cursor-pointer hover:bg-gray-500"
+                className="font-bold cursor-pointer"
                 onClick={() => requestSort(column.key)}
               >
                 <div className="flex items-center justify-between">

@@ -29,7 +29,7 @@ const BuildItemByCategory = ({
   const selectFromData = (id: number) => productNamesByCategory[id];
 
   return (
-    <div className="overflow-x-auto ">
+    <div className="overflow-x-auto brutalist-style">
       <Table>
         <TableHeader>
           <TableRow>

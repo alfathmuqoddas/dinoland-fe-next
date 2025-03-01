@@ -1,10 +1,10 @@
 import { fetchWithAuth } from "@/lib/secureFetch";
 import Link from "next/link";
 import BuildItemByCategory from "@/components/Table/BuildItemTable";
-import { Pencil, Trash } from "lucide-react";
 import { TMyBuild } from "@/lib/type/product";
 import { AddNewBuild } from "@/components/Dialog/AddMyBuild";
 import RemoveMyBuild from "@/components/Buttons/RemoveMyBuild";
+import { EditMyBuild } from "@/components/Dialog/EditMyBuild";
 
 export default async function MyBuilds({
   searchParams,
@@ -73,14 +73,14 @@ export default async function MyBuilds({
             {buildId && myBuildDetails ? (
               <div className="flex flex-col gap-8">
                 <div className="flex flex-col gap-4">
-                  <h1 className="text-2xl font-bold ">{myBuildDetails.name}</h1>
-                  <div className="flex gap-2">
-                    <Link
-                      href={"my-builds/edit/" + buildId}
-                      className="brutalist-button-custom bg-blue-600 h-10 px-8"
-                    >
-                      Edit this Build <Pencil className="h-4 w-4" />
-                    </Link>
+                  <div>
+                    <h1 className="text-2xl font-bold ">
+                      {myBuildDetails.name}
+                    </h1>
+                    <p>{myBuildDetails.description}</p>
+                  </div>
+                  <div className="flex gap-4">
+                    <EditMyBuild initialData={myBuildDetails} />
                     <RemoveMyBuild buildId={buildId} />
                   </div>
                 </div>

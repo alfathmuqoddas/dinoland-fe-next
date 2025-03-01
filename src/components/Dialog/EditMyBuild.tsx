@@ -9,43 +9,32 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Plus } from "lucide-react";
-import { useActionState, useState, useEffect } from "react";
-import { addNewBuildAction } from "@/actions/admin/myBuildAction";
+import { Pencil } from "lucide-react";
+import { useActionState } from "react";
+import { editBuildAction } from "@/actions/admin/myBuildAction";
 import { Button } from "../ui/button";
 
-export function AddNewBuild() {
-  const [open, setOpen] = useState(false);
-  const [state, addNewBuild, isPending] = useActionState(
-    addNewBuildAction,
-    null
-  );
-
-  useEffect(() => {
-    if (state?.success) {
-      alert(state?.message);
-      setOpen(false);
-    } else {
-      return;
-    }
-  }, [state]);
+export function EditMyBuild({
+  initialData,
+}: {
+  initialData: { name: string; description: string; id: string | number };
+}) {
+  const [state, editBuild, isPending] = useActionState(editBuildAction, null);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
-        <Button size={"lg"} variant={"warning"}>
-          New Build
-          <Plus className="h-4 w-4" />
+        <Button size={"lg"} variant={"blue"}>
+          Edit Build
+          <Pencil className="h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>New Build</DialogTitle>
-          <DialogDescription>
-            {/* Add New Build. Click save when you're done. */}
-          </DialogDescription>
+          <DialogTitle>Edit Build</DialogTitle>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
-        <form action={addNewBuild} className="flex flex-col gap-4">
+        <form action={editBuild} className="flex flex-col gap-4">
           <div>
             <label htmlFor="buildName" className="text-right">
               Build Name
@@ -55,6 +44,7 @@ export function AddNewBuild() {
               name="buildName"
               placeholder="Enter Build Name"
               className="brutalist-input"
+              defaultValue={initialData.name}
               required
             />
           </div>
@@ -65,11 +55,13 @@ export function AddNewBuild() {
             <input
               id="buildDescription"
               name="buildDescription"
+              defaultValue={initialData.description}
               placeholder="Enter Build Description"
               className="brutalist-input"
             />
+            <input type="hidden" name="buildId" value={initialData.id} />
           </div>
-          {state && !state?.success ? <div>{state.message}</div> : <></>}
+          {state && <div>{state.message}</div>}
           <DialogFooter>
             <Button type="submit" variant={"warning"} disabled={isPending}>
               Save

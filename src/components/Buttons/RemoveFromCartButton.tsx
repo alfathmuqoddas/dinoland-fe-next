@@ -1,8 +1,7 @@
 "use client";
-import { removeFromCartAction } from "@/actions/cart/deleteFromCart";
+import { cartItemAction } from "@/actions/cart/cartItemAction";
 import { Trash } from "lucide-react";
 import { useTransition } from "react";
-import { redirect } from "next/navigation";
 
 export default function RemoveFromCartButton({
   productId,
@@ -14,7 +13,7 @@ export default function RemoveFromCartButton({
   async function handleRemoveFromCart() {
     if (confirm("Are you sure you want to remove this item from your cart?")) {
       startTransition(async () => {
-        const result = await removeFromCartAction(productId);
+        const result = await cartItemAction("delete", productId);
 
         if (result?.success === false) {
           alert(result?.message || "Something went wrong");

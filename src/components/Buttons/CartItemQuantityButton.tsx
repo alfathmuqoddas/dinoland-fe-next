@@ -1,8 +1,7 @@
 "use client";
 
-import { cartItemQuantityAction } from "@/actions/cart/cartQuantityAction";
+import { cartItemAction } from "@/actions/cart/cartItemAction";
 import { useTransition } from "react";
-import { redirect } from "next/navigation";
 import { Plus, Minus } from "lucide-react";
 
 export default function CartItemQuantityButton({
@@ -16,7 +15,7 @@ export default function CartItemQuantityButton({
 
   async function handleIncrementCartItemQuantity() {
     startTransition(async () => {
-      const result = await cartItemQuantityAction("increment", productId);
+      const result = await cartItemAction("increment", productId);
 
       if (result?.success === false) {
         alert(result.message || "Something went wrong");
@@ -26,7 +25,7 @@ export default function CartItemQuantityButton({
 
   async function handleDecrementCartItemQuantity() {
     startTransition(async () => {
-      const result = await cartItemQuantityAction("decrement", productId);
+      const result = await cartItemAction("decrement", productId);
 
       if (result?.success === false) {
         alert(result.message || "Something went wrong");

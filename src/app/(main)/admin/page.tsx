@@ -7,6 +7,10 @@ import PageSizeDropdown from "@/components/Admin/PageSizeDropdown";
 import FilterCategoryDropdown from "@/components/Admin/FilterCategoryDropdown";
 import FilterProductNameInput from "@/components/Admin/FilterProductNameInput";
 import PageSelector from "@/components/Pagination/PageSelector";
+import {
+  SortByDropdown,
+  SortOrderDropdown,
+} from "@/components/Admin/SortByDropdown";
 
 export default async function Admin({
   searchParams,
@@ -36,6 +40,10 @@ export default async function Admin({
     params.append("sortBy", sortBy);
   }
 
+  if (sortOrder) {
+    params.append("sortOrder", sortOrder);
+  }
+
   if (q) {
     params.append("q", q);
   }
@@ -59,6 +67,8 @@ export default async function Admin({
         <div className="flex gap-2">
           <PageSizeDropdown />
           <FilterCategoryDropdown categories={categories} />
+          <SortByDropdown />
+          <SortOrderDropdown />
         </div>
         <div>
           <Link href="/admin/add">
@@ -68,11 +78,7 @@ export default async function Admin({
           </Link>
         </div>
       </div>
-      {products ? (
-        <AdminProductTable data={products.products} />
-      ) : (
-        <p>Loading...</p>
-      )}
+      <AdminProductTable data={products.products} />
       <PageSelector totalPages={products.totalPages} path="admin" />
     </div>
   );

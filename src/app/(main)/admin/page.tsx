@@ -9,11 +9,13 @@ import { useState, useMemo } from "react";
 import { Plus } from "lucide-react";
 import { TProductCategory } from "@/lib/type/product";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function Admin() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [params, setParams] = useState({
-    pageSize: 20,
+    pageSize: 50,
     page: 1,
     categoryId: "",
   });
@@ -75,6 +77,17 @@ export default function Admin() {
   if (errorProducts) {
     return <p>Error loading data.</p>;
   }
+
+  const handleDeleteProduct = async (productId: number) => {
+    const result = await deleteProductAction(productId);
+
+    if (result?.success) {
+      alert(result.message);
+      router.refresh();
+    } else {
+      alert(result?.message || "Something went wrong");
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4">
@@ -143,7 +156,7 @@ export default function Admin() {
       <SortableTable
         data={filteredProducts}
         columns={columns}
-        onDelete={deleteProductAction}
+        onDelete={handleDeleteProduct}
       />
       <div className="flex gap-2 font-bold">
         {allPages.map((paginate, index) => (

@@ -13,10 +13,11 @@ export async function deleteProductAction(productId: number | string) {
     }
   );
 
+  const json = await response.json();
+
   if (!response.ok) {
-    const json = await response.json();
     return { success: false, message: json.message };
   }
 
-  revalidatePath("/admin");
+  return { success: true, message: json.message };
 }

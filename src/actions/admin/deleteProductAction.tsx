@@ -19,5 +19,6 @@ export async function deleteProductAction(productId: number | string) {
     return { success: false, message: json.message };
   }
 
+  revalidatePath("/admin");
   return { success: true, message: json.message };
 }

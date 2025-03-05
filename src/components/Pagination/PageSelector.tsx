@@ -5,9 +5,11 @@ import Link from "next/link";
 export default function PageSelector({
   //   currentPage,
   totalPages,
+  path = "products",
 }: {
   //   currentPage: number;
   totalPages: number;
+  path: string;
 }) {
   const allPages = Array.from({ length: totalPages }, (_, i) => i + 1);
   const searchParams = useSearchParams();
@@ -30,7 +32,7 @@ export default function PageSelector({
       {allPages.length > 1 ? (
         allPages.map((page) => (
           <Link
-            href={`products?${newParams(page)}`}
+            href={`${path}?${newParams(page)}`}
             key={page}
             className={`hover:underline underline-offset-4 text-xl font-bold ${isActive(
               page === 1 ? 1 : page

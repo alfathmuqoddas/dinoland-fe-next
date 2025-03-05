@@ -1,149 +1,64 @@
-"use client";
-import { SortableTable } from "@/components/Table/SortTable";
-import { deleteProductAction } from "@/actions/admin/deleteProductAction";
 import Link from "next/link";
-import useSWR from "swr";
-import { fetcher } from "@/actions/fetcher";
-import { useFilterProduct } from "@/hooks/useFilterProduct";
-import { useState, useMemo } from "react";
 import { Plus } from "lucide-react";
-import { TProductCategory } from "@/lib/type/product";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import AdminProductTable from "@/components/Table/AdminProductTable";
+import { fetchWithAuth } from "@/lib/secureFetch";
+import PageSizeDropdown from "@/components/Admin/PageSizeDropdown";
+import FilterCategoryDropdown from "@/components/Admin/FilterCategoryDropdown";
+import FilterProductNameInput from "@/components/Admin/FilterProductNameInput";
+import PageSelector from "@/components/Pagination/PageSelector";
 
-export default function Admin() {
-  const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [params, setParams] = useState({
-    pageSize: 50,
-    page: 1,
-    categoryId: "",
-  });
-  const {
-    data: productsData,
-    error: errorProducts,
-    isLoading: isLoadingProducts,
-  } = useSWR(
-    `http://localhost:8080/api/product?page=${params.page}&pageSize=${
-      params.pageSize
-    }${params.categoryId && `&categoryId=${params.categoryId}`}`,
-    fetcher
-  );
+export default async function Admin({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const { categoryId, sortBy, sortOrder, q, page, pageSize } =
+    await searchParams;
 
-  const {
-    data: categoryData,
-    error: errorCategory,
-    isLoading: isLoadingCategories,
-  } = useSWR("http://localhost:8080/api/productCategory", fetcher);
+  let url = "http://localhost:8080/api/product";
 
-  const productList = useMemo(() => {
-    return productsData
-      ? {
-          products: productsData.products,
-          totalPages: productsData.totalPages,
-          totalRecords: productsData.totalRecords,
-        }
-      : { products: [], totalPages: 0, totalRecords: 0 };
-  }, [productsData]);
+  const params = new URLSearchParams() as any;
 
-  const flattenedProducts = useMemo(() => {
-    return (productList.products || []).map((product: any) => {
-      const { category, ...rest } = product;
-      return {
-        ...rest,
-        categoryName: category?.name,
-      };
-    });
-  }, [productList]);
-
-  const filteredProducts = useFilterProduct(searchQuery, flattenedProducts);
-  const allPages = Array.from(
-    { length: Number(productList.totalPages) },
-    (_, i) => i + 1
-  );
-
-  const columns: any = [
-    { key: "name", label: "Name" },
-    { key: "categoryName", label: "Category" },
-    { key: "price", label: "Price" },
-    { key: "createdAt", label: "Created At" },
-    { key: "updatedAt", label: "Updated At" },
-  ];
-
-  if (isLoadingProducts) {
-    return <p>Loading...</p>;
+  if (page) {
+    params.append("page", page);
   }
 
-  if (errorProducts) {
-    return <p>Error loading data.</p>;
+  if (pageSize) {
+    params.append("pageSize", pageSize);
   }
 
-  const handleDeleteProduct = async (productId: number) => {
-    const result = await deleteProductAction(productId);
+  if (categoryId) {
+    params.append("categoryId", categoryId);
+  }
 
-    if (result?.success) {
-      alert(result.message);
-      router.refresh();
-    } else {
-      alert(result?.message || "Something went wrong");
-    }
-  };
+  if (sortBy) {
+    params.append("sortBy", sortBy);
+  }
+
+  if (q) {
+    params.append("q", q);
+  }
+
+  if (params.toString()) {
+    url += `?${params.toString()}`;
+  }
+
+  const products = await (await fetchWithAuth(url)).json();
+  const categories = await (
+    await fetchWithAuth("http://localhost:8080/api/productCategory")
+  ).json();
 
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold">Admin</h1>
       <div className="flex flex-col md:flex-row gap-2 justify-between">
         <div>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="brutalist-input"
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+          <FilterProductNameInput />
         </div>
         <div className="flex gap-2">
-          <div>
-            <select
-              name="pageSize"
-              className="brutalist-input-select"
-              value={params.pageSize}
-              onChange={(e) =>
-                setParams((prevParams) => ({
-                  ...prevParams,
-                  pageSize: Number(e.target.value),
-                }))
-              }
-            >
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-            </select>
-          </div>
-          <div>
-            <select
-              name="categoryFilter"
-              className="brutalist-input-select"
-              onChange={(e) =>
-                setParams((prevState) => ({
-                  ...prevState,
-                  page: 1,
-                  categoryId: e.target.value,
-                }))
-              }
-              defaultValue={params.categoryId}
-            >
-              <option value="">All</option>
-              {isLoadingCategories ? (
-                <option>Loading...</option>
-              ) : (
-                categoryData.map((category: TProductCategory) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))
-              )}
-            </select>
-          </div>
+          <PageSizeDropdown />
+          <FilterCategoryDropdown categories={categories} />
         </div>
         <div>
           <Link href="/admin/add">
@@ -153,29 +68,12 @@ export default function Admin() {
           </Link>
         </div>
       </div>
-      <SortableTable
-        data={filteredProducts}
-        columns={columns}
-        onDelete={handleDeleteProduct}
-      />
-      <div className="flex gap-2 font-bold">
-        {allPages.map((paginate, index) => (
-          <div
-            key={index}
-            onClick={() =>
-              setParams((prevParams) => ({
-                ...prevParams,
-                page: paginate,
-              }))
-            }
-            className={`${
-              paginate === params.page && "underline underline-offset-4"
-            } hover:cursor-pointer`}
-          >
-            {paginate}
-          </div>
-        ))}
-      </div>
+      {products ? (
+        <AdminProductTable data={products.products} />
+      ) : (
+        <p>Loading...</p>
+      )}
+      <PageSelector totalPages={products.totalPages} path="admin" />
     </div>
   );
 }

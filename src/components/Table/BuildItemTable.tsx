@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import Image from "next/image";
+import { Button } from "../ui/button";
+import { Plus } from "lucide-react";
 
 const BuildItemByCategory = ({
   categoryData,
@@ -75,7 +77,16 @@ const BuildItemByCategory = ({
                       </Link>
                     </div>
                   ) : (
-                    <>Not Available</>
+                    <Link href={`/products?categoryId=${category.id}`}>
+                      <Button
+                        variant={"blue"}
+                        size={"sm"}
+                        className="font-bold"
+                      >
+                        Select {category.name}
+                        <Plus size={8} />
+                      </Button>
+                    </Link>
                   )}
                 </TableCell>
                 <TableCell>

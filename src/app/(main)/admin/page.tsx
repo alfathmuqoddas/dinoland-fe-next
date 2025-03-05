@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, RedoIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AdminProductTable from "@/components/Table/AdminProductTable";
 import { fetchWithAuth } from "@/lib/secureFetch";
@@ -20,7 +20,7 @@ export default async function Admin({
   const { categoryId, sortBy, sortOrder, q, page, pageSize } =
     await searchParams;
 
-  let url = "http://localhost:8080/api/product";
+  let url = `http://localhost:8080/api/product`;
 
   const params = new URLSearchParams() as any;
 
@@ -28,9 +28,7 @@ export default async function Admin({
     params.append("page", page);
   }
 
-  if (pageSize) {
-    params.append("pageSize", pageSize);
-  }
+  params.append("pageSize", pageSize ? pageSize.toString() : "10");
 
   if (categoryId) {
     params.append("categoryId", categoryId);

@@ -15,7 +15,15 @@ export default function FilterProductNameInput() {
   useEffect(() => {
     const debounceTimer = setTimeout(() => {
       const params = new URLSearchParams(searchParams.toString());
-      params.set("q", searchQuery);
+
+      // Only update "q" if searchQuery has content; otherwise, remove it.
+      if (searchQuery.trim()) {
+        params.set("q", searchQuery);
+        params.delete("page");
+      } else {
+        params.delete("q");
+      }
+
       router.push(`?${params.toString()}`);
     }, 500);
 

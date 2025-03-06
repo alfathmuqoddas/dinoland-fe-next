@@ -68,7 +68,6 @@ const Products = async ({
       </div>
       <div className="md:w-5/6 flex flex-col gap-x-4 gap-y-8">
         <div className="text-2xl font-bold">Total Records : {totalRecords}</div>
-        <span>buildId : {buildId}</span>
         <div className="w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
           {products.length > 0 ? (
             products.map((product: TProduct) => (

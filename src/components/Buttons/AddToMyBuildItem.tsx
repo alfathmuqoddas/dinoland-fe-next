@@ -9,7 +9,7 @@ export default function AddToMyBuildItem({
   buildId,
   productId,
 }: {
-  buildId: string | string[];
+  buildId: string | string[] | undefined;
   productId: number;
 }) {
   const [isPending, startTransition] = useTransition();

@@ -99,7 +99,7 @@ export const deleteMyBuildItemAction = async (
 };
 
 export const addBuildItemAction = async (
-  buildId: string | string[],
+  buildId: string | string[] | undefined,
   productId: number
 ) => {
   const response = await fetchWithAuth(

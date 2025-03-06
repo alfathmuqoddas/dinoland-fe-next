@@ -67,7 +67,7 @@
 }
 
 .brutalist-card {
-  @apply relative brutalist-style p-2 transform transition-transform duration-200 hover:scale-[1.02];
+  @apply relative brutalist-style p-2 transform transition-transform duration-200;
 }
 
 .brutalist-input {

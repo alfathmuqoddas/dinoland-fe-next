@@ -73,3 +73,27 @@ export const editBuildAction = async (prevState: any, formData: FormData) => {
   revalidatePath("/profile/my-builds");
   return { success: true, message: "Build updated successfully" };
 };
+
+export const deleteMyBuildItemAction = async (
+  buildId: number | string,
+  productId: number | string
+) => {
+  const response = await fetchWithAuth(
+    `http://localhost:8080/api/my-build-item/delete/${buildId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId }),
+    }
+  );
+
+  const res = await response.json();
+
+  if (!response.ok) return { success: false, message: res.error };
+
+  revalidatePath("/profile/my-builds?buildId=" + buildId);
+
+  return { success: true, message: "Build item removed successfully" };
+};

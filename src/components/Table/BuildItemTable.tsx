@@ -13,11 +13,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
+import RemoveMyBuildItemButton from "../Buttons/RemoveMyBuildItemButton";
 
 const BuildItemByCategory = ({
+  buildId,
   categoryData,
   data,
 }: {
+  buildId: any;
   categoryData: TProductCategory[];
   data: TMyBuildItem[];
 }) => {
@@ -38,6 +41,7 @@ const BuildItemByCategory = ({
             <TableHead className="font-bold">Category</TableHead>
             <TableHead className="font-bold">Product Name</TableHead>
             <TableHead className="font-bold">Price</TableHead>
+            <TableHead className="font-bold">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -91,6 +95,16 @@ const BuildItemByCategory = ({
                 </TableCell>
                 <TableCell>
                   {product ? `$${product.price.toFixed(2)}` : "Not Available"}
+                </TableCell>
+                <TableCell>
+                  {product ? (
+                    <RemoveMyBuildItemButton
+                      buildId={buildId}
+                      productId={product.id}
+                    />
+                  ) : (
+                    ""
+                  )}
                 </TableCell>
               </TableRow>
             );

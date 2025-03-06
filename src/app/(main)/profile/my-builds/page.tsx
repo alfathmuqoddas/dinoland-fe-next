@@ -88,6 +88,7 @@ export default async function MyBuilds({
                   <BuildItemByCategory
                     data={myBuildItems}
                     categoryData={categoryData}
+                    buildId={buildId}
                   />
                 ) : (
                   <div>No build items available.</div>

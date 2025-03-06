@@ -97,3 +97,25 @@ export const deleteMyBuildItemAction = async (
 
   return { success: true, message: "Build item removed successfully" };
 };
+
+export const addBuildItemAction = async (
+  buildId: string | string[],
+  productId: number
+) => {
+  const response = await fetchWithAuth(
+    `http://localhost:8080/api/my-build-item/${buildId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId }),
+    }
+  );
+
+  const res = await response.json();
+
+  if (!response.ok) return { success: false, message: res.error };
+
+  redirect("/profile/my-builds?buildId=" + buildId);
+};

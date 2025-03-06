@@ -81,7 +81,9 @@ const BuildItemByCategory = ({
                       </Link>
                     </div>
                   ) : (
-                    <Link href={`/products?categoryId=${category.id}`}>
+                    <Link
+                      href={`/products?categoryId=${category.id}&buildId=${buildId}`}
+                    >
                       <Button
                         variant={"blue"}
                         size={"sm"}

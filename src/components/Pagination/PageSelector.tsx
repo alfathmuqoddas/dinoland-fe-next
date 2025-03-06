@@ -9,7 +9,7 @@ export default function PageSelector({
 }: {
   //   currentPage: number;
   totalPages: number;
-  path: string;
+  path?: string;
 }) {
   const allPages = Array.from({ length: totalPages }, (_, i) => i + 1);
   const searchParams = useSearchParams();

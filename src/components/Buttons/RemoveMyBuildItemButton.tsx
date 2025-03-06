@@ -22,8 +22,6 @@ export default function RemoveMyBuildItemButton({
 
       if (result.success === false) {
         alert(result.message || "Something went wrong");
-      } else {
-        alert("Build item removed successfully");
       }
     });
   }

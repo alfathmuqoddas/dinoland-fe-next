@@ -3,6 +3,7 @@ import { TProduct } from "@/lib/type/product";
 import { Category, SortBy, SortOrder } from "@/components/Sidebar";
 import ProductCard from "@/components/Card/ProductCard";
 import PageSelector from "@/components/Pagination/PageSelector";
+import AddToMyBuildItem from "@/components/Buttons/AddToMyBuildItem";
 
 export const Sidebar = async () => {
   const categories = await fetch("http://localhost:8080/api/productCategory", {
@@ -23,7 +24,7 @@ const Products = async ({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) => {
-  const { categoryId, sortBy, sortOrder, q, page, pageSize } =
+  const { categoryId, sortBy, sortOrder, q, page, pageSize, buildId } =
     await searchParams;
 
   let url = "http://localhost:8080/api/product";
@@ -67,10 +68,15 @@ const Products = async ({
       </div>
       <div className="md:w-5/6 flex flex-col gap-x-4 gap-y-8">
         <div className="text-2xl font-bold">Total Records : {totalRecords}</div>
+        <span>buildId : {buildId}</span>
         <div className="w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4">
           {products.length > 0 ? (
             products.map((product: TProduct) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+                buildId={buildId ? buildId : ""}
+              />
             ))
           ) : (
             <>No Product</>

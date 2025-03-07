@@ -66,8 +66,12 @@ const BuildItemByCategory = ({
                     >
                       <figure className="w-12 h-12 overflow-hidden rounded-lg border-2 border-black">
                         <Image
-                          src={`https://picsum.photos/seed/${product?.image}/160/90`}
-                          alt={product?.image}
+                          src={
+                            product.image
+                              ? product.image
+                              : `https://picsum.photos/seed/${product.name}/160/90`
+                          }
+                          alt={product.name}
                           width={160}
                           height={90}
                           className="object-cover h-full"

@@ -36,7 +36,7 @@ export default function Edit() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-2xl font-bold text-gray-900">Edit Product</h1>
+      <h1 className="text-2xl font-bold">Edit Product</h1>
       <form action={editProductAction} className="flex flex-col gap-4">
         <input type="hidden" name="productId" value={id} />
         <input

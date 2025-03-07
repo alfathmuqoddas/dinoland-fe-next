@@ -14,7 +14,11 @@ export default function ProductCard({
     <div className="brutalist-card group h-full">
       <div className="relative overflow-hidden border-2 dark:border-border border-black rounded-[12px]">
         <Image
-          src={`https://picsum.photos/seed/${product.name}/1920/1080`}
+          src={
+            product.image
+              ? product.image
+              : `https://picsum.photos/seed/${product.name}/1920/1080`
+          }
           alt={product.name}
           loading="lazy"
           width={1920}

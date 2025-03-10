@@ -8,7 +8,7 @@ export default function ProductCard({
   buildId,
 }: {
   product: TProduct;
-  buildId: string | string[] | undefined;
+  buildId?: string | string[] | undefined;
 }) {
   return (
     <div className="brutalist-card group h-full">

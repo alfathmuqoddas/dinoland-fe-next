@@ -13,8 +13,8 @@ export const Sidebar = async () => {
   return (
     <aside className="pb-8 flex-col gap-4 hidden md:flex">
       <Category items={categoriesData} />
-      <SortBy items={["price", "name"]} />
-      <SortOrder items={["asc", "desc"]} />
+      <SortBy items={["Price", "Name"]} />
+      <SortOrder items={["Asc", "Desc"]} />
     </aside>
   );
 };
@@ -74,7 +74,7 @@ const Products = async ({
               <ProductCard
                 key={product.id}
                 product={product}
-                buildId={buildId ? buildId : ""}
+                buildId={buildId}
               />
             ))
           ) : (

@@ -1,6 +1,5 @@
 import CartItemCard from "@/components/Card/CartItemCard";
 import { fetchWithAuth } from "@/lib/secureFetch";
-import { redirect } from "next/navigation";
 import { ShoppingBasket } from "lucide-react";
 
 export default async function Cart() {

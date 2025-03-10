@@ -1,5 +1,4 @@
 "use server";
-import { Category } from "@/components/Sidebar";
 import { fetchWithAuth } from "@/lib/secureFetch";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

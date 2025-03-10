@@ -10,17 +10,12 @@ export default async function ProductDetails({
 }) {
   const { id } = await params;
 
-  const product = await fetch(`http://localhost:8080/api/product/${id}`, {
-    cache: "no-store",
-  });
+  const product = await fetch(`http://localhost:8080/api/product/${id}`);
 
   const productData = await product.json();
 
   const similarProducts = await fetch(
-    `http://localhost:8080/api/product?categoryId=${productData.categoryId}`,
-    {
-      cache: "no-store",
-    }
+    `http://localhost:8080/api/product?categoryId=${productData.categoryId}`
   );
 
   const { products: similarProductsData } = await similarProducts.json();
@@ -34,7 +29,11 @@ export default async function ProductDetails({
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 ">
           <div className="brutalist-style overflow-hidden md:w-1/2">
             <Image
-              src={`https://picsum.photos/seed/${productData.name}/1920/1080`}
+              src={
+                productData.image
+                  ? productData.image
+                  : `https://picsum.photos/seed/${productData.name}/1920/1080`
+              }
               alt={productData.name}
               loading="lazy"
               width="1920"

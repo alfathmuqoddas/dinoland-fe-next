@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { fetchWithAuth } from "./lib/secureFetch";
 
 const protectedRoutes = ["/dashboard", "/products/cart"];
 const publicRoutes = ["/login", "/register", "/about", "/products"];

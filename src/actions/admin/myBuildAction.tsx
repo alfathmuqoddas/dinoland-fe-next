@@ -3,7 +3,7 @@ import { fetchWithAuth } from "@/lib/secureFetch";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const addNewBuildAction = async (prevState: any, formData: FormData) => {
+export const addNewBuildAction = async (_prevState: any, formData: FormData) => {
   const data = {
     name: formData.get("buildName"),
     description: formData.get("buildDescription"),
@@ -47,7 +47,7 @@ export const deleteBuildAction = async (buildId: number | string) => {
   redirect("/profile/my-builds");
 };
 
-export const editBuildAction = async (prevState: any, formData: FormData) => {
+export const editBuildAction = async (_prevState: any, formData: FormData) => {
   const data = {
     name: formData.get("buildName"),
     description: formData.get("buildDescription"),

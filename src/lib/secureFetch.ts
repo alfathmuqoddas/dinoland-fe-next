@@ -1,3 +1,5 @@
+import "server-only";
+
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { signOut } from "@/actions/auth/signOutActions";

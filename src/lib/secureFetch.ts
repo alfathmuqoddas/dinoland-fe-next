@@ -1,4 +1,4 @@
-import "server-only";
+"use server";
 
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -16,12 +16,10 @@ export async function fetchWithAuth(url: string, options: any = {}) {
 
   if (response.status === 401) {
     signOut();
-    redirect("/login");
   }
 
   if (!accessToken) {
     signOut();
-    redirect("/login");
   }
 
   return response;

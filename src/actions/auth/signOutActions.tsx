@@ -17,7 +17,7 @@ export async function signOut() {
   });
 
   if (!response.ok) {
-    throw new Error("Could not sign out");
+    return { success: false, message: "Could not sign out" };
   }
 
   cookieStore.delete("accessToken");

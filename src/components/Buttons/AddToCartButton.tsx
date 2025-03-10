@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import { redirect } from "next/navigation";
 import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
+import { signOut } from "@/actions/auth/signOutActions";
 
 export default function AddToCartButton({ productId }: { productId: number }) {
   const [isPending, startTransition] = useTransition();
@@ -11,14 +12,9 @@ export default function AddToCartButton({ productId }: { productId: number }) {
   async function handleAddToCart() {
     startTransition(async () => {
       const result = await addToCartAction(productId);
-
-      if (result.success) {
-        alert(result.message);
-      } else if (result.message === "Unauthorized") {
-        alert("You are not authorized to add this item");
-        redirect("/login");
-      } else {
-        alert(result.message || "Something went wrong");
+      alert(result.message);
+      if (result.message === "Unauthorized") {
+        signOut();
       }
     });
   }

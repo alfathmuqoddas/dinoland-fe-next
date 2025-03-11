@@ -3,6 +3,7 @@ import NavMenu from "./NavMenu";
 import SignOutButton from "./SignOutButton";
 import getNavItems from "./getNavItems";
 import { fetchWithAuth } from "@/lib/secureFetch";
+import { signOut } from "@/actions/auth/signOutActions";
 
 const NavMenuList = async () => {
   const cookieStore = await cookies();
@@ -14,6 +15,10 @@ const NavMenuList = async () => {
   const response = await fetchWithAuth(
     "http://localhost:8080/api/auth/isAdmin"
   );
+
+  if (response.status === 401) {
+    signOut();
+  }
 
   ({ isAdmin } = await response.json());
 

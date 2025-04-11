@@ -31,7 +31,7 @@ export default async function ProductDetails({
             <Image
               src={
                 productData.image
-                  ? productData.image
+                  ? `https://picsum.photos/seed/${productData.image}/1920/1080`
                   : `https://picsum.photos/seed/${productData.name}/1920/1080`
               }
               alt={productData.name}

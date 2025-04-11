@@ -68,7 +68,7 @@ const BuildItemByCategory = ({
                         <Image
                           src={
                             product.image
-                              ? product.image
+                              ? `https://picsum.photos/seed/${product.image}/1920/1080`
                               : `https://picsum.photos/seed/${product.name}/160/90`
                           }
                           alt={product.name}

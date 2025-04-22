@@ -3,6 +3,8 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { signOut } from "@/actions/auth/signOutActions";
+import { fetchNewToken } from "@/lib/auth";
+import { createSession } from "@/lib/auth";
 
 // export async function fetchWithAuth(url: string, options: any = {}) {
 //   const accessToken = (await cookies()).get("accessToken")?.value;
@@ -25,64 +27,58 @@ import { signOut } from "@/actions/auth/signOutActions";
 //   return response;
 // }
 
-// // Function to fetch new access token using the refresh token
-async function fetchNewToken(refreshToken: string) {
-  const response = await fetch("http://localhost:8080/api/auth/refresh", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ refreshToken }),
-  });
-  return response;
-}
-
-export async function fetchWithAuth(url: string, options: any = {}) {
-  // Retrieve tokens from cookies
+export async function fetchWithAuth(
+  url: string,
+  options: RequestInit = {}
+): Promise<Response> {
   let accessToken = (await cookies()).get("accessToken")?.value;
   const refreshToken = (await cookies()).get("refreshToken")?.value;
 
-  // Set up headers with the access token
-  const authHeaders = {
-    ...options.headers,
-    Authorization: `Bearer ${accessToken}`,
-  };
-
-  // Initial fetch with access token
-  let response = await fetch(url, { ...options, headers: authHeaders });
-
-  if (response.status === 401 && refreshToken) {
-    // Access token might be expired, attempt to refresh it
-    const tokenResponse = await fetchNewToken(refreshToken);
-
-    if (tokenResponse.ok) {
-      const { newAccessToken } = await tokenResponse.json();
-
-      // Update the access token in cookies
-      (await cookies()).set("accessToken", newAccessToken);
-      accessToken = newAccessToken;
-
-      // Retry the original request with the new access token
-      const retryAuthHeaders = {
-        ...options.headers,
-        Authorization: `Bearer ${accessToken}`,
-      };
-
-      response = await fetch(url, { ...options, headers: retryAuthHeaders });
-
-      if (response.status === 401) {
-        signOut();
-        redirect("/login");
-      }
-    } else {
-      signOut();
-      redirect("/login");
-    }
-  } else if (response.status === 401) {
+  // Ensure we have tokens
+  if (!accessToken || !refreshToken) {
     signOut();
     redirect("/login");
   }
 
-  // Return the successful response
+  // Helper to build headers
+  const makeHeaders = (token: string) => ({
+    ...options.headers,
+    Authorization: `Bearer ${token}`,
+  });
+
+  // First attempt
+  let response = await fetch(url, {
+    ...options,
+    headers: makeHeaders(accessToken!),
+  });
+
+  // On 401, try refreshing
+  if (response.status === 401) {
+    try {
+      // Fetch new tokens
+      const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+        await fetchNewToken(refreshToken);
+
+      // Persist new tokens in cookies/session
+      await createSession(newAccessToken, newRefreshToken);
+
+      // Retry original request
+      response = await fetch(url, {
+        ...options,
+        headers: makeHeaders(newAccessToken),
+      });
+
+      // Still unauthorized? force logout
+      if (response.status === 401) {
+        throw new Error("Unauthorized after token refresh");
+      }
+    } catch (err) {
+      // Any error -> sign out
+      console.error("fetchWithAuth error:", err);
+      signOut();
+      redirect("/login");
+    }
+  }
+
   return response;
 }

@@ -56,11 +56,10 @@ export async function fetchWithAuth(
   if (response.status === 401) {
     try {
       // Fetch new tokens
-      const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
-        await fetchNewToken(refreshToken);
+      const { newAccessToken } = await fetchNewToken(refreshToken);
 
       // Persist new tokens in cookies/session
-      await createSession(newAccessToken, newRefreshToken);
+      await createSession(newAccessToken);
 
       // Retry original request
       response = await fetch(url, {

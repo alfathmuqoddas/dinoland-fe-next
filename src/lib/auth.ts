@@ -1,11 +1,16 @@
 import "use server";
 import { cookies } from "next/headers";
 
-export async function createSession(accessToken: string, refreshToken: string) {
+export async function createSession(
+  accessToken: string,
+  refreshToken?: string
+) {
   const cookiesStore = await cookies();
 
   cookiesStore.set("accessToken", accessToken, { httpOnly: true });
-  cookiesStore.set("refreshToken", refreshToken, { httpOnly: true });
+  if (refreshToken) {
+    cookiesStore.set("refreshToken", refreshToken, { httpOnly: true });
+  }
 }
 
 export async function deleteSession() {
@@ -28,6 +33,6 @@ export async function fetchNewToken(token: string) {
     throw new Error(response.statusText);
   }
 
-  const { accessToken, refreshToken } = await response.json();
-  return { accessToken, refreshToken };
+  const { newAccessToken } = await response.json();
+  return { newAccessToken };
 }

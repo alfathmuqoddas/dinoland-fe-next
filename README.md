@@ -2,6 +2,10 @@
 
 The project name is Dinoland, but the app is actually a some sort of pcpartpicker app where user can pick parts and and adding those parts to their build. In this app user also able to add their own pc parts.
 
+## Related Projects
+
+- [Dinoland Backend](https://github.com/alfathmuqoddas/dinoland-be-deno)
+
 ## Features
 
 - Login/Register

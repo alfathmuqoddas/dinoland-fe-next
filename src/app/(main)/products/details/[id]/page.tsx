@@ -12,13 +12,14 @@ export default async function ProductDetails({
 
   const product = await fetch(`http://localhost:8080/api/product/${id}`);
 
-  const productData = await product.json();
+  const { data: productData } = await product.json();
 
   const similarProducts = await fetch(
     `http://localhost:8080/api/product?categoryId=${productData.categoryId}`
   );
 
-  const { products: similarProductsData } = await similarProducts.json();
+  const { data } = await similarProducts.json();
+  const { products: similarProductsData } = data;
   const similarProductsDataFiltered = similarProductsData.filter(
     (product: TProduct) => product.id.toString() !== id
   );

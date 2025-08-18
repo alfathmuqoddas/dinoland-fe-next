@@ -12,7 +12,7 @@ export const Sidebar = async () => {
   const categoriesData = await categories.json();
   return (
     <aside className="pb-8 flex-col gap-4 hidden md:flex">
-      <Category items={categoriesData} />
+      <Category items={categoriesData.data} />
       <SortBy items={["Price", "Name"]} />
       <SortOrder items={["Asc", "Desc"]} />
     </aside>
@@ -59,7 +59,8 @@ const Products = async ({
     url += `?${queryParams.toString()}`;
   }
   const data = await fetch(url);
-  const { products, totalRecords, totalPages, currentPage } = await data.json();
+  const { data: productData } = await data.json();
+  const { products, totalRecords, totalPages, currentPage } = productData;
 
   return (
     <div className="md:flex md:gap-4">

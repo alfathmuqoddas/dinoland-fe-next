@@ -1,6 +1,6 @@
 "use client";
 
-import { TProductCategory } from "@/lib/type/product";
+import { TProductCategory } from "@/type/product";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function FilterCategoryDropdown({

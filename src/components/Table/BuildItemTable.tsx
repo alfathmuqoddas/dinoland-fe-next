@@ -1,4 +1,4 @@
-import { TMyBuildItem, TProductCategory } from "@/lib/type/product";
+import { TMyBuildItem, TProductCategory } from "@/type/product";
 import {
   Table,
   TableBody,

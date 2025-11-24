@@ -11,7 +11,6 @@ import {
   SortByDropdown,
   SortOrderDropdown,
 } from "@/components/Admin/SortByDropdown";
-import type { TProductDTO } from "@/lib/type/product";
 
 export default async function Admin({
   searchParams,

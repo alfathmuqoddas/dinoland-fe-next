@@ -1,4 +1,4 @@
-import { TProduct } from "@/lib/type/product";
+import { TProduct } from "@/type/product";
 import Link from "next/link";
 import Image from "next/image";
 import AddToMyBuildItem from "../Buttons/AddToMyBuildItem";

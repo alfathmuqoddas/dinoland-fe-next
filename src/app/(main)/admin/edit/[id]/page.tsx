@@ -2,7 +2,7 @@
 import useSWR from "swr";
 import { useParams } from "next/navigation";
 import { fetcher } from "@/actions/fetcher";
-import { TProductCategory } from "@/lib/type/product";
+import { TProductCategory } from "@/type/product";
 import editProduct from "@/actions/admin/editProductActions";
 import { useActionState } from "react";
 

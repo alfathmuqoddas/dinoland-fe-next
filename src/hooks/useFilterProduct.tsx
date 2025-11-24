@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { TProductFlattened } from "@/lib/type/product";
+import { TProductFlattened } from "@/type/product";
 import useDebounce from "./useDebounce";
 
 export const useFilterProduct = (

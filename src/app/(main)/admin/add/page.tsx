@@ -1,7 +1,7 @@
 "use client";
 import { useActionState, useState, useEffect } from "react";
 import addProduct from "@/actions/admin/addProductActions";
-import { TProductCategory } from "@/lib/type/product";
+import { TProductCategory } from "@/type/product";
 import useSWR from "swr";
 import { fetcher } from "@/actions/fetcher";
 

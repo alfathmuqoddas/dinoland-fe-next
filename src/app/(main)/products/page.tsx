@@ -1,4 +1,4 @@
-import { TProduct } from "@/lib/type/product";
+import { TProduct } from "@/type/product";
 // import Link from "next/link";
 import { Category, SortBy, SortOrder } from "@/components/Sidebar";
 import ProductCard from "@/components/Card/ProductCard";

@@ -1,7 +1,7 @@
 import { fetchWithAuth, safeJson } from "@/lib/secureFetch";
 import Link from "next/link";
 import BuildItemByCategory from "@/components/Table/BuildItemTable";
-import { TMyBuild } from "@/lib/type/product";
+import { TMyBuild } from "@/type/product";
 import { AddNewBuild } from "@/components/Dialog/AddMyBuild";
 import RemoveMyBuild from "@/components/Buttons/RemoveMyBuild";
 import { EditMyBuild } from "@/components/Dialog/EditMyBuild";
@@ -49,7 +49,6 @@ export default async function MyBuilds({
 
   const myBuilds = await safeJson(myBuildsResponse);
   const myBuildDetails = await safeJson(myBuildDetailsResponse);
-
   const myBuildItems = await safeJson(myBuildItemsResponse);
   const categoryData = await safeJson(categoryDataResponse);
 

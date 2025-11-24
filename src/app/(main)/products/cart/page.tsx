@@ -1,7 +1,7 @@
 import CartItemCard from "@/components/Card/CartItemCard";
 import { fetchWithAuth, safeJson } from "@/lib/secureFetch";
 import { ShoppingBasket } from "lucide-react";
-import type { TCartItem } from "@/lib/type/cart";
+import type { TCartItem } from "@/type/cart";
 
 export default async function Cart() {
   let cartDataResponse: Response | null = null;

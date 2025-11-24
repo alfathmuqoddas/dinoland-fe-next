@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import DeleteAdminProduct from "./DeleteAdminProduct";
-import { TProductDTO } from "@/lib/type/product";
+import { TProductDTO } from "@/type/product";
 
 export default async function AdminProductTable({
   data,

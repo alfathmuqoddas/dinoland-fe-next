@@ -1,10 +1,9 @@
-import { TMyBuildItem, TProductCategory } from "@/type/product";
+import { TMyBuildItem } from "@/type/build";
+import { TProductCategory } from "@/type/category";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -24,6 +23,8 @@ const BuildItemByCategory = ({
   categoryData: TProductCategory[];
   data: TMyBuildItem[];
 }) => {
+  if (data.length === 0) return <div>No items in this build.</div>;
+
   const productNamesByCategory = data.reduce<
     Record<number, { id: number; name: string; price: number; image: string }>
   >((acc, { product: { id, categoryId, name, price, image } }) => {

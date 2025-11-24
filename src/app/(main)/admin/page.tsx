@@ -11,6 +11,7 @@ import {
   SortByDropdown,
   SortOrderDropdown,
 } from "@/components/Admin/SortByDropdown";
+import { TProductCategoryResponse } from "@/type/category";
 
 export default async function Admin({
   searchParams,
@@ -68,11 +69,15 @@ export default async function Admin({
     );
   }
 
-  const products = await safeJson(productsResponse);
-  const categories = await safeJson(categoriesResponse);
+  const { data: products } = await safeJson(productsResponse);
+  const { data: categories } = (await safeJson(
+    categoriesResponse
+  )) as TProductCategoryResponse;
 
-  const failedCategory = !categories;
-  const failedProducts = !products;
+  const failedCategory =
+    !categories || categories.length === 0 || !Array.isArray(categories);
+  const failedProducts =
+    !products || products.length === 0 || Array.isArray(products);
 
   return (
     <div className="flex flex-col gap-4">

@@ -1,10 +1,15 @@
 import { fetchWithAuth, safeJson } from "@/lib/secureFetch";
 import Link from "next/link";
 import BuildItemByCategory from "@/components/Table/BuildItemTable";
-import { TMyBuild } from "@/type/product";
 import { AddNewBuild } from "@/components/Dialog/AddMyBuild";
 import RemoveMyBuild from "@/components/Buttons/RemoveMyBuild";
 import { EditMyBuild } from "@/components/Dialog/EditMyBuild";
+import type {
+  TMyBuildDetailResponse,
+  TMyBuildItemResponse,
+  TMyBuildResponse,
+} from "@/type/build";
+import { TProductCategoryResponse } from "@/type/category";
 
 export default async function MyBuilds({
   searchParams,
@@ -28,13 +33,9 @@ export default async function MyBuilds({
       myBuildItemsResponse,
       categoryDataResponse,
     ] = await Promise.all([
-      fetchWithAuth(`${baseURL}/my-build/`),
-      buildId
-        ? fetchWithAuth(`${baseURL}/my-build/${buildId}`)
-        : Promise.resolve(null),
-      buildId
-        ? fetchWithAuth(`${baseURL}/my-build-item/${buildId}`)
-        : Promise.resolve(null),
+      fetchWithAuth(`${baseURL}/my-build`),
+      fetchWithAuth(`${baseURL}/my-build/${buildId}`),
+      fetchWithAuth(`${baseURL}/my-build-item/${buildId}`),
       fetchWithAuth(`${baseURL}/productCategory`),
     ]);
   } catch (err) {
@@ -47,14 +48,18 @@ export default async function MyBuilds({
     );
   }
 
-  const myBuilds = await safeJson(myBuildsResponse);
-  const myBuildDetails = await safeJson(myBuildDetailsResponse);
-  const myBuildItems = await safeJson(myBuildItemsResponse);
-  const categoryData = await safeJson(categoryDataResponse);
-
-  // UI FALLBACK HANDLERS
-  const failedMyBuilds = !myBuilds || !Array.isArray(myBuilds);
-  const failedCategory = !categoryData || !Array.isArray(categoryData);
+  const { data: myBuilds } = (await safeJson(
+    myBuildsResponse
+  )) as TMyBuildResponse;
+  const { data: myBuildDetails } = (await safeJson(
+    myBuildDetailsResponse
+  )) as TMyBuildDetailResponse;
+  const { data: myBuildItems } = (await safeJson(
+    myBuildItemsResponse
+  )) as TMyBuildItemResponse;
+  const { data: categoryData } = (await safeJson(
+    categoryDataResponse
+  )) as TProductCategoryResponse;
 
   return (
     <>
@@ -65,13 +70,13 @@ export default async function MyBuilds({
             <AddNewBuild />
           </div>
           <h1 className=" my-2">Saved Builds</h1>
-          {failedMyBuilds ? (
+          {!myBuilds ? (
             <div className="text-red-600">Failed to load builds.</div>
           ) : myBuilds.length === 0 ? (
             <div>You have no builds yet, please create one.</div>
           ) : (
             <div className="flex flex-col gap-2 brutalist-style p-2">
-              {myBuilds.map((myBuild: TMyBuild) => (
+              {myBuilds.map((myBuild) => (
                 <Link
                   href={`/profile/my-builds?buildId=${myBuild.id}`}
                   key={myBuild.id}

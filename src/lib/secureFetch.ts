@@ -1,19 +1,13 @@
 "use server";
 import { redirect } from "next/navigation";
-import { signOut } from "@/actions/auth/signOutActions";
-import { getAuthToken } from "@/lib/auth";
+import { cookies } from "next/headers";
 
 export async function fetchWithAuth(
   url: string,
   options: RequestInit = {}
 ): Promise<Response> {
-  const { accessToken } = await getAuthToken();
-
-  // No token → force logout
-  if (!accessToken) {
-    await signOut();
-    redirect("/login");
-  }
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
 
   const response = await fetch(url, {
     ...options,
@@ -23,9 +17,7 @@ export async function fetchWithAuth(
     },
   });
 
-  // Unauthorized → logout + redirect
   if (response.status === 401) {
-    await signOut();
     redirect("/login");
   }
 

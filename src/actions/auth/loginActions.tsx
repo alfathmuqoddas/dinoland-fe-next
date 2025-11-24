@@ -1,4 +1,5 @@
 "use server";
+import { TAuthResponse } from "@/type/auth";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -17,25 +18,22 @@ export async function login(prevState: any, formData: FormData) {
       body: JSON.stringify(data),
     });
 
-    // const cookiesStore = await cookies();
+    const responseJson = (await response.json()) as TAuthResponse;
+    const { accessToken, refreshToken } = responseJson.data;
 
-    const json = await response.json();
+    const cookiesStore = await cookies();
 
-    const _setAccessToken = (await cookies()).set({
-      name: "accessToken",
-      value: json.data.accessToken,
-      httpOnly: true,
-    });
-
-    const _setRefreshToken = (await cookies()).set({
+    cookiesStore.set({
       name: "refreshToken",
-      value: json.data.refreshToken,
+      value: accessToken,
       httpOnly: true,
     });
 
-    if (!response.ok) {
-      throw new Error(json.error);
-    }
+    cookiesStore.set({
+      name: "refreshToken",
+      value: refreshToken,
+      httpOnly: true,
+    });
   } catch (err: any) {
     return { error: `${err.message}` };
   }

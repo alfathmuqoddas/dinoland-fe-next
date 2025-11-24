@@ -19,10 +19,6 @@ const NavMenuList = async () => {
 
   const navList = getNavItems(isAuthenticated, isAdmin);
 
-  if (!isAdmin) {
-    signOut();
-  }
-
   return (
     <div className="flex gap-4">
       {navList.map((nav, index) => (

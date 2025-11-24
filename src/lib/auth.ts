@@ -2,6 +2,13 @@
 import { cookies } from "next/headers";
 import { jwtDecode } from "jwt-decode";
 
+export async function getAuthToken() {
+  const accessToken = (await cookies()).get("accessToken")?.value;
+  const refreshToken = (await cookies()).get("refreshToken")?.value;
+
+  return { accessToken, refreshToken };
+}
+
 export async function createSession(
   accessToken: string,
   refreshToken?: string

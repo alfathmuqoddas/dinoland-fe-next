@@ -1,42 +1,17 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
 import { signOut } from "@/actions/auth/signOutActions";
-import { fetchNewToken } from "@/lib/auth";
-import { createSession } from "@/lib/auth";
-
-// export async function fetchWithAuth(url: string, options: any = {}) {
-//   const accessToken = (await cookies()).get("accessToken")?.value;
-
-//   const authHeaders = {
-//     ...options.headers,
-//     Authorization: `Bearer ${accessToken}`,
-//   };
-
-//   const response = await fetch(url, { ...options, headers: authHeaders });
-
-//   if (response.status === 401) {
-//     signOut();
-//   }
-
-//   if (!accessToken) {
-//     signOut();
-//   }
-
-//   return response;
-// }
+import { fetchNewToken, createSession, getAuthToken } from "@/lib/auth";
 
 export async function fetchWithAuth(
   url: string,
   options: RequestInit = {}
 ): Promise<Response> {
-  let accessToken = (await cookies()).get("accessToken")?.value;
-  const refreshToken = (await cookies()).get("refreshToken")?.value;
+  const { accessToken, refreshToken } = await getAuthToken();
 
   // Ensure we have tokens
   if (!accessToken || !refreshToken) {
-    signOut();
     redirect("/login");
   }
 

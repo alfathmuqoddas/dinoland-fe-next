@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import NavMenu from "./NavMenu";
 import SignOutButton from "./SignOutButton";
 import getNavItems from "./getNavItems";
-import { fetchWithAuth } from "@/lib/secureFetch";
+import { getRoleFromToken } from "@/lib/auth";
 import { signOut } from "@/actions/auth/signOutActions";
 
 const NavMenuList = async () => {
@@ -12,17 +12,16 @@ const NavMenuList = async () => {
 
   let isAdmin = false;
 
-  const response = await fetchWithAuth(
-    "http://localhost:8080/api/auth/isAdmin"
-  );
-
-  if (response.status === 401) {
-    signOut();
+  if (isAuthenticated && accessToken) {
+    const role = await getRoleFromToken(accessToken);
+    isAdmin = role === "admin";
   }
 
-  ({ isAdmin } = await response.json());
-
   const navList = getNavItems(isAuthenticated, isAdmin);
+
+  if (!isAdmin) {
+    signOut();
+  }
 
   return (
     <div className="flex gap-4">

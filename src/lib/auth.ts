@@ -1,5 +1,6 @@
 "use server";
 import { cookies } from "next/headers";
+import { jwtDecode } from "jwt-decode";
 
 export async function createSession(
   accessToken: string,
@@ -17,6 +18,16 @@ export async function deleteSession() {
   const cookiesStore = await cookies();
   cookiesStore.delete("accessToken");
   cookiesStore.delete("refreshToken");
+}
+
+export async function getRoleFromToken(token: string): Promise<string> {
+  try {
+    const decoded = jwtDecode<{ userId: string; userRole: string }>(token);
+    return decoded.userRole;
+  } catch (e) {
+    console.error("Failed to decode token:", e);
+    return "guest";
+  }
 }
 
 // // Function to fetch new access token using the refresh token

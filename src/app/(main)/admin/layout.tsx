@@ -1,17 +1,24 @@
-import { fetchWithAuth } from "@/lib/secureFetch";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import NextBreadcrumb from "@/components/Breadcrumbs";
 import { ChevronRight } from "lucide-react";
+import { getRoleFromToken } from "@/lib/auth";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const response = await fetchWithAuth(
-    "http://localhost:8080/api/auth/isAdmin"
-  );
-  const { isAdmin } = await response.json();
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+  const isAuthenticated = Boolean(accessToken);
+
+  let isAdmin = false;
+
+  if (isAuthenticated && accessToken) {
+    const role = await getRoleFromToken(accessToken);
+    isAdmin = role === "admin";
+  }
 
   if (!isAdmin) {
     redirect("/login");

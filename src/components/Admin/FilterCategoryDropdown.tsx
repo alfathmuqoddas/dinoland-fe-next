@@ -31,7 +31,7 @@ export default function FilterCategoryDropdown({
       onChange={handleCategoryChange}
     >
       <option value="">All</option>
-      {categories.map((category: TProductCategory) => (
+      {categories?.map((category: TProductCategory) => (
         <option key={category.id} value={category.id}>
           {category.name}
         </option>

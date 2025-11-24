@@ -37,7 +37,7 @@ export default async function AdminProductTable({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item: TProductDTO, index: number) => (
+          {data?.map((item: TProductDTO, index: number) => (
             <TableRow
               key={item.id}
               className={

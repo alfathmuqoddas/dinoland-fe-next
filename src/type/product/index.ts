@@ -1,3 +1,5 @@
+import type { TApiResponse, TPaginatedResponse } from "../api";
+
 export interface TProduct {
   id: number;
   name: string;
@@ -24,3 +26,5 @@ export interface TProductDTO {
 export interface TProductFlattened extends TProduct {
   categoryName: string;
 }
+
+export type TProductResponse = TPaginatedResponse<"products", TProductDTO>;

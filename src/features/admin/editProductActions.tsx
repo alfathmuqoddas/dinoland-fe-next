@@ -14,14 +14,14 @@ export default async function editProduct(prevState: any, formData: FormData) {
   };
 
   const response = await fetchWithAuth(
-    "http://localhost:8080/api/product/update/" + productId,
+    `${process.env.BASE_API_URL}/product/update/${productId}`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }
+    },
   );
 
   if (!response.ok) {
@@ -29,8 +29,6 @@ export default async function editProduct(prevState: any, formData: FormData) {
     return { success: false, message: result.error };
   }
 
-  // const result = await response.json();
-  // return { success: true, message: result.message };
   revalidatePath("/admin");
   redirect("/admin");
 }

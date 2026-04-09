@@ -4,17 +4,17 @@ import { revalidatePath } from "next/cache";
 
 export async function cartItemAction(
   action: "increment" | "decrement" | "delete",
-  productId: number
+  productId: number,
 ) {
   const response = await fetchWithAuth(
-    `http://localhost:8080/api/cart/update/${productId}`,
+    `${process.env.BASE_API_URL}/cart/update/${productId}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ action }),
-    }
+    },
   );
 
   // Check for unauthorized first

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { deleteMyBuildItemAction } from "@/actions/admin/myBuildAction";
+import { deleteMyBuildItemAction } from "@/features/admin/myBuildAction";
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
 

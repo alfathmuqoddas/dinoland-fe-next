@@ -12,6 +12,8 @@ import {
   SortOrderDropdown,
 } from "@/components/Admin/SortByDropdown";
 import { TProductCategoryResponse } from "@/type/category";
+import { redirect } from "next/navigation";
+import type { TProductResponse } from "@/type/product";
 
 export default async function Admin({
   searchParams,
@@ -21,7 +23,7 @@ export default async function Admin({
   const { categoryId, sortBy, sortOrder, q, page, pageSize } =
     await searchParams;
 
-  let url = `http://localhost:8080/api/product`;
+  let url = `${process.env.BASE_API_URL}/product`;
 
   const params = new URLSearchParams() as any;
 
@@ -51,16 +53,16 @@ export default async function Admin({
     url += `?${params.toString()}`;
   }
 
-  let productsResponse: Response | null = null;
-  let categoriesResponse: Response | null = null;
+  const [productsResponse, categoriesResponse] = await Promise.all([
+    fetchWithAuth(url),
+    fetchWithAuth(`${process.env.BASE_API_URL}/api/productCategory`),
+  ]);
 
-  try {
-    [productsResponse, categoriesResponse] = await Promise.all([
-      fetchWithAuth(url),
-      fetchWithAuth("http://localhost:8080/api/productCategory"),
-    ]);
-  } catch (err) {
-    console.error("Error fetching one of the API endpoints:", err);
+  if (productsResponse.status === 401 || categoriesResponse.status === 401) {
+    redirect("/login");
+  }
+
+  if (!productsResponse.ok || !categoriesResponse.ok) {
     return (
       <div className="p-4 text-red-600">
         <h2 className="font-bold text-xl mb-2">Failed to load data</h2>
@@ -69,18 +71,18 @@ export default async function Admin({
     );
   }
 
-  const { data: products } = await safeJson(productsResponse);
-  const { data: categories } = (await safeJson(
-    categoriesResponse
-  )) as TProductCategoryResponse;
+  const { data: products } = await safeJson<TProductResponse>(productsResponse);
+  const { data: categories } =
+    await safeJson<TProductCategoryResponse>(categoriesResponse);
 
-  const failedCategory =
-    !categories || categories.length === 0 || !Array.isArray(categories);
+  const failedCategory = !Array.isArray(categories) || categories.length === 0;
   const failedProducts =
-    !products || products.length === 0 || Array.isArray(products);
+    !products ||
+    !Array.isArray(products.products) ||
+    products.products.length === 0;
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 mb-4">
       <h1 className="text-2xl font-bold">Admin</h1>
       <div className="flex flex-col md:flex-row gap-2 justify-between">
         <div>
@@ -110,8 +112,8 @@ export default async function Admin({
         <>No Products</>
       ) : (
         <>
-          <AdminProductTable data={products.products} />
-          <PageSelector totalPages={products.totalPages} path="admin" />
+          <AdminProductTable data={products?.products} />
+          <PageSelector totalPages={products?.totalPages} path="admin" />
         </>
       )}
     </div>

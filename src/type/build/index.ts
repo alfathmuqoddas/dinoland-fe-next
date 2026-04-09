@@ -1,4 +1,5 @@
 import type { TProduct } from "../product";
+import type { TApiResponse } from "../api";
 
 export type TMyBuild = {
   id: number;
@@ -9,17 +10,9 @@ export type TMyBuild = {
   updatedAt: string;
 };
 
-export type TMyBuildResponse = {
-  status: string;
-  message: string;
-  data: TMyBuild[];
-};
+export type TMyBuildResponse = TApiResponse<TMyBuild[]>;
 
-export type TMyBuildDetailResponse = {
-  status: string;
-  message: string;
-  data: TMyBuild;
-};
+export type TMyBuildDetailResponse = TApiResponse<TMyBuild>;
 
 export type TMyBuildItem = {
   id: number;
@@ -33,8 +26,4 @@ export type TMyBuildItem = {
   >;
 };
 
-export type TMyBuildItemResponse = {
-  status: string;
-  message: string;
-  data: TMyBuildItem[];
-};
+export type TMyBuildItemResponse = TApiResponse<TMyBuildItem[]>;

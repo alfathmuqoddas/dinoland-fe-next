@@ -1,15 +1,17 @@
 import CartItemCard from "@/components/Card/CartItemCard";
 import { fetchWithAuth, safeJson } from "@/lib/secureFetch";
 import { ShoppingBasket } from "lucide-react";
-import type { TCartItem } from "@/type/cart";
+import { TCartResponse } from "@/type/cart";
+import { redirect } from "next/navigation";
 
 export default async function Cart() {
   let cartDataResponse: Response | null = null;
 
-  try {
-    cartDataResponse = await fetchWithAuth("http://localhost:8080/api/cart");
-  } catch (err) {
-    console.error("Error fetching one of the API endpoints:", err);
+  cartDataResponse = await fetchWithAuth(`${process.env.BASE_API_URL}/cart`);
+
+  if (!cartDataResponse.ok) {
+    if (cartDataResponse.status === 401) redirect("/login");
+
     return (
       <div className="p-4 text-red-600">
         <h2 className="font-bold text-xl mb-2">Failed to load data</h2>
@@ -18,17 +20,9 @@ export default async function Cart() {
     );
   }
 
-  const cartData = (await safeJson(cartDataResponse)) as {
-    cartItem: any;
-    totalPrice: number;
-    totalQuantity: number;
-  };
+  const { data: cartData } = await safeJson<TCartResponse>(cartDataResponse);
 
-  const { cartItem, totalPrice, totalQuantity } = cartData as {
-    cartItem: TCartItem[];
-    totalPrice: number;
-    totalQuantity: number;
-  };
+  const { cartItem = [], totalPrice = 0, totalQuantity = 0 } = cartData || {};
 
   return (
     <>

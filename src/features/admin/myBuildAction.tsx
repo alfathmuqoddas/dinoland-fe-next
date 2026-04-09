@@ -3,13 +3,18 @@ import { fetchWithAuth } from "@/lib/secureFetch";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const addNewBuildAction = async (_prevState: any, formData: FormData) => {
+const BASE_API_URL = process.env.BASE_API_URL || "http://localhost:8080/api";
+
+export const addNewBuildAction = async (
+  _prevState: any,
+  formData: FormData,
+) => {
   const data = {
     name: formData.get("buildName"),
     description: formData.get("buildDescription"),
   };
 
-  const response = await fetchWithAuth("http://localhost:8080/api/my-build", {
+  const response = await fetchWithAuth(`${BASE_API_URL}/my-build`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -28,15 +33,12 @@ export const addNewBuildAction = async (_prevState: any, formData: FormData) => 
 };
 
 export const deleteBuildAction = async (buildId: number | string) => {
-  const response = await fetchWithAuth(
-    `http://localhost:8080/api/my-build/${buildId}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const response = await fetchWithAuth(`${BASE_API_URL}/my-build/${buildId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
   if (!response.ok) {
     const json = await response.json();
@@ -55,14 +57,14 @@ export const editBuildAction = async (_prevState: any, formData: FormData) => {
   };
 
   const response = await fetchWithAuth(
-    `http://localhost:8080/api/my-build/${data.buildId}`,
+    `${BASE_API_URL}/my-build/${data.buildId}`,
     {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }
+    },
   );
 
   if (!response.ok) {
@@ -76,17 +78,17 @@ export const editBuildAction = async (_prevState: any, formData: FormData) => {
 
 export const deleteMyBuildItemAction = async (
   buildId: number | string,
-  productId: number | string
+  productId: number | string,
 ) => {
   const response = await fetchWithAuth(
-    `http://localhost:8080/api/my-build-item/delete/${buildId}`,
+    `${BASE_API_URL}/my-build-item/delete/${buildId}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ productId }),
-    }
+    },
   );
 
   const res = await response.json();
@@ -100,17 +102,17 @@ export const deleteMyBuildItemAction = async (
 
 export const addBuildItemAction = async (
   buildId: string | string[] | undefined,
-  productId: number
+  productId: number,
 ) => {
   const response = await fetchWithAuth(
-    `http://localhost:8080/api/my-build-item/${buildId}`,
+    `${BASE_API_URL}/my-build-item/${buildId}`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ productId }),
-    }
+    },
   );
 
   const res = await response.json();

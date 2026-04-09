@@ -15,19 +15,19 @@ export default async function ProductDetails({
   const { data: productData } = await product.json();
 
   const similarProducts = await fetch(
-    `http://localhost:8080/api/product?categoryId=${productData.categoryId}`
+    `http://localhost:8080/api/product?categoryId=${productData.categoryId}`,
   );
 
   const { data } = await similarProducts.json();
   const { products: similarProductsData } = data;
   const similarProductsDataFiltered = similarProductsData.filter(
-    (product: TProduct) => product.id.toString() !== id
+    (product: TProduct) => product.id.toString() !== id,
   );
 
   return (
-    <div className="flex flex-col gap-4">
-      <section className="mt-4 md:mt-8">
-        <div className="flex flex-col md:flex-row gap-8 md:gap-12 ">
+    <div className="flex flex-col py-8">
+      <section className="mb-8">
+        <div className="flex flex-col md:flex-row gap-4 justify-between">
           <div className="brutalist-style overflow-hidden md:w-1/2">
             <Image
               src={
@@ -42,17 +42,19 @@ export default async function ProductDetails({
               className="w-full h-auto object-cover"
             />
           </div>
-          <div className="flex flex-col gap-4 md:w-1/2">
-            <h1 className="text-3xl font-bold">{productData.name}</h1>
-            <p className="text-xl font-bold">${productData.price} USD</p>
+          <div className="flex flex-col gap-4 md:w-1/2 brutalist-card ">
+            <h1 className="text-3xl font-bold font-heading">
+              {productData.name}
+            </h1>
+            <p className="text-xl font-bold">${productData.price}</p>
             <div>{productData.description}</div>
             <AddToCartButton productId={productData.id} />
           </div>
         </div>
       </section>
       <section>
-        <h1 className="text-3xl font-bold my-8 ">Similar Products</h1>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
+        <h1 className="text-3xl font-bold mb-4">Similar Products</h1>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {similarProductsDataFiltered.map((product: TProduct) => (
             <ProductCard key={product.id} product={product} />
           ))}

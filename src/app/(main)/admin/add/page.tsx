@@ -1,9 +1,9 @@
 "use client";
 import { useActionState, useState, useEffect } from "react";
-import addProduct from "@/actions/admin/addProductActions";
+import addProduct from "@/features/admin/addProductActions";
 import { TProductCategory } from "@/type/product";
 import useSWR from "swr";
-import { fetcher } from "@/actions/fetcher";
+import { fetcher } from "@/features/fetcher";
 
 export default function Add() {
   const [state, addProductAction, isPending] = useActionState(addProduct, null);

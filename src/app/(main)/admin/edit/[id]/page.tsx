@@ -1,9 +1,9 @@
 "use client";
 import useSWR from "swr";
 import { useParams } from "next/navigation";
-import { fetcher } from "@/actions/fetcher";
+import { fetcher } from "@/features/fetcher";
 import { TProductCategory } from "@/type/product";
-import editProduct from "@/actions/admin/editProductActions";
+import editProduct from "@/features/admin/editProductActions";
 import { useActionState } from "react";
 
 export default function Edit() {
@@ -23,7 +23,7 @@ export default function Edit() {
 
   const [state, editProductAction, isPending] = useActionState(
     editProduct,
-    null
+    null,
   );
 
   if (isLoadingProduct || isLoadingCategories) {

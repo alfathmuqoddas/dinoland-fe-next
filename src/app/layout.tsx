@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, Manrope } from "next/font/google";
 import { ThemeProvider } from "../components/ThemeProvider";
 import DarkModeToggle from "../components/DarkModeToggle";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const manrope = Manrope({
   subsets: ["latin"],
+  variable: "--font-manrope",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -25,10 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang="en"
+      className={`${manrope.variable} ${spaceGrotesk.variable} `}
+      suppressHydrationWarning
+    >
+      <body className={`antialiased`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

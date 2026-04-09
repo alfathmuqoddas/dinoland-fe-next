@@ -1,24 +1,14 @@
-import { cookies } from "next/headers";
 import NavMenu from "./NavMenu";
 import SignOutButton from "./SignOutButton";
-import getNavItems from "./getNavItems";
-import { getRoleFromToken } from "@/lib/auth";
-import { signOut } from "@/actions/auth/signOutActions";
+import type { NavItem } from "./getNavItems";
 
-const NavMenuList = async () => {
-  const cookieStore = await cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
-  const isAuthenticated = Boolean(accessToken);
-
-  let isAdmin = false;
-
-  if (isAuthenticated && accessToken) {
-    const role = await getRoleFromToken(accessToken);
-    isAdmin = role === "admin";
-  }
-
-  const navList = getNavItems(isAuthenticated, isAdmin);
-
+const NavMenuList = async ({
+  navList,
+  isAuthenticated,
+}: {
+  navList: NavItem[];
+  isAuthenticated: boolean;
+}) => {
   return (
     <div className="flex gap-4">
       {navList.map((nav, index) => (

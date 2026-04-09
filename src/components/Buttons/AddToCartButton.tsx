@@ -1,10 +1,9 @@
 "use client";
-import { addToCartAction } from "../../actions/cart/addToCartAction";
+import { addToCartAction } from "../../features/cart/addToCartAction";
 import { useTransition } from "react";
-import { redirect } from "next/navigation";
 import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
-import { signOut } from "@/actions/auth/signOutActions";
+import { signOutAction as signOut } from "@/features/auth/actions";
 
 export default function AddToCartButton({ productId }: { productId: number }) {
   const [isPending, startTransition] = useTransition();

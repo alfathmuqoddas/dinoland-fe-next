@@ -11,14 +11,14 @@ import {
 } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
 import { useActionState, useState, useEffect } from "react";
-import { addNewBuildAction } from "@/actions/admin/myBuildAction";
+import { addNewBuildAction } from "@/features/admin/myBuildAction";
 import { Button } from "../ui/button";
 
 export function AddNewBuild() {
   const [open, setOpen] = useState(false);
   const [state, addNewBuild, isPending] = useActionState(
     addNewBuildAction,
-    null
+    null,
   );
 
   useEffect(() => {

@@ -1,9 +1,8 @@
+import type { TApiResponse } from "../api";
+
 export type TAuth = {
   accessToken: string;
   refreshToken: string;
 };
-export type TAuthResponse = {
-  status: string;
-  message: string;
-  data: TAuth;
-};
+
+export type TAuthResponse = TApiResponse<TAuth>;

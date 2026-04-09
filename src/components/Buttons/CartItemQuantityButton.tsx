@@ -1,6 +1,6 @@
 "use client";
 
-import { cartItemAction } from "@/actions/cart/cartItemAction";
+import { cartItemAction } from "@/features/cart/cartItemAction";
 import { useTransition } from "react";
 import { Plus, Minus } from "lucide-react";
 
@@ -34,23 +34,25 @@ export default function CartItemQuantityButton({
   }
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-stretch">
       <button
-        className="bg-red-500 border-[3px] border-black text-black p-0.5"
+        className="border-[3px] rounded-l-md hover:bg-gray-800 hover:text-white border-black text-black px-2 flex items-center justify-center disabled:opacity-50"
         onClick={handleDecrementCartItemQuantity}
         disabled={isPending}
       >
-        <Minus />
+        <Minus size={20} />
       </button>
-      <div className="bg-green border-y-[3px] border-black h-full max-h-[34px] font-bold px-2 py-1">
+
+      <div className=" border-y-[3px] border-black font-bold px-4 flex items-center justify-center min-w-[40px]">
         {quantity}
       </div>
+
       <button
-        className="bg-blue-500 border-[3px] border-black text-black p-0.5"
+        className=" border-[3px] rounded-r-md hover:bg-gray-800 hover:text-white border-black text-black px-2 flex items-center justify-center disabled:opacity-50"
         onClick={handleIncrementCartItemQuantity}
         disabled={isPending}
       >
-        <Plus />
+        <Plus size={20} />
       </button>
     </div>
   );

@@ -2,7 +2,7 @@
 import { fetchWithAuth } from "@/lib/secureFetch";
 
 export async function addToCartAction(productId: number) {
-  const response = await fetchWithAuth("http://localhost:8080/api/cart", {
+  const response = await fetchWithAuth(`${process.env.BASE_API_URL}/cart`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

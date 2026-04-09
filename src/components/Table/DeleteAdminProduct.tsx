@@ -2,7 +2,7 @@
 
 import { Trash } from "lucide-react";
 import { useTransition } from "react";
-import { deleteProductAction } from "@/actions/admin/deleteProductAction";
+import { deleteProductAction } from "@/features/admin/deleteProductAction";
 
 export default function DeleteAdminProduct({
   productId,

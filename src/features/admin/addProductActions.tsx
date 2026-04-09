@@ -16,14 +16,14 @@ export default async function addProduct(prevState: any, formData: FormData) {
   console.log(data);
 
   const response = await fetchWithAuth(
-    "http://localhost:8080/api/product/add",
+    `${process.env.BASE_API_URL}/product/add`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    }
+    },
   );
 
   if (!response.ok) {

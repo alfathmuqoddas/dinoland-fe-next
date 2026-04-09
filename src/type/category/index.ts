@@ -1,3 +1,5 @@
+import { TApiResponse } from "../api";
+
 export type TProductCategory = {
   id: number;
   name: string;
@@ -6,8 +8,4 @@ export type TProductCategory = {
   updatedAt: string;
 };
 
-export type TProductCategoryResponse = {
-  status: string;
-  message: string;
-  data: TProductCategory[];
-};
+export type TProductCategoryResponse = TApiResponse<TProductCategory[]>;

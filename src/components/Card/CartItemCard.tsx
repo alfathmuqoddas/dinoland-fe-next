@@ -30,9 +30,7 @@ export default async function CartItemCard({
         <div className="flex flex-col gap-2">
           <h3 className="text-xl font-bold">{name}</h3>
           <p className="font-bold">${price} USD</p>
-          <div>
-            <CartItemQuantityButton quantity={quantity} productId={productId} />
-          </div>
+          <CartItemQuantityButton quantity={quantity} productId={productId} />
         </div>
       </div>
       <RemoveFromCartButton productId={productId} />

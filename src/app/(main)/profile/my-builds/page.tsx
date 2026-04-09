@@ -10,6 +10,7 @@ import type {
   TMyBuildResponse,
 } from "@/type/build";
 import { TProductCategoryResponse } from "@/type/category";
+import { redirect } from "next/navigation";
 
 export default async function MyBuilds({
   searchParams,
@@ -18,28 +19,32 @@ export default async function MyBuilds({
 }) {
   const { buildId } = await searchParams;
 
-  // Use environment variable for API base URL for flexibility across environments
-  const baseURL = process.env.API_BASE_URL || "http://localhost:8080/api";
+  const baseURL = process.env.BASE_API_URL || "http://localhost:8080/api";
 
-  let myBuildsResponse: Response | null = null;
-  let myBuildDetailsResponse: Response | null = null;
-  let myBuildItemsResponse: Response | null = null;
-  let categoryDataResponse: Response | null = null;
+  const [
+    myBuildsResponse,
+    myBuildDetailsResponse,
+    myBuildItemsResponse,
+    categoryDataResponse,
+  ] = await Promise.all([
+    fetchWithAuth(`${baseURL}/my-build`),
+    fetchWithAuth(`${baseURL}/my-build/${buildId}`),
+    fetchWithAuth(`${baseURL}/my-build-item/${buildId}`),
+    fetchWithAuth(`${baseURL}/productCategory`),
+  ]);
 
-  try {
-    [
-      myBuildsResponse,
-      myBuildDetailsResponse,
-      myBuildItemsResponse,
-      categoryDataResponse,
-    ] = await Promise.all([
-      fetchWithAuth(`${baseURL}/my-build`),
-      fetchWithAuth(`${baseURL}/my-build/${buildId}`),
-      fetchWithAuth(`${baseURL}/my-build-item/${buildId}`),
-      fetchWithAuth(`${baseURL}/productCategory`),
-    ]);
-  } catch (err) {
-    console.error("Error fetching one of the API endpoints:", err);
+  const responses = [
+    myBuildsResponse,
+    myBuildDetailsResponse,
+    myBuildItemsResponse,
+    categoryDataResponse,
+  ];
+
+  if (responses.some((res) => res.status === 401)) {
+    redirect("/login");
+  }
+
+  if (responses.some((res) => !res.ok)) {
     return (
       <div className="p-4 text-red-600">
         <h2 className="font-bold text-xl mb-2">Failed to load data</h2>
@@ -48,34 +53,40 @@ export default async function MyBuilds({
     );
   }
 
-  const { data: myBuilds } = (await safeJson(
-    myBuildsResponse
-  )) as TMyBuildResponse;
-  const { data: myBuildDetails } = (await safeJson(
-    myBuildDetailsResponse
-  )) as TMyBuildDetailResponse;
-  const { data: myBuildItems } = (await safeJson(
-    myBuildItemsResponse
-  )) as TMyBuildItemResponse;
-  const { data: categoryData } = (await safeJson(
-    categoryDataResponse
-  )) as TProductCategoryResponse;
+  const { data: myBuilds } = await safeJson<TMyBuildResponse>(myBuildsResponse);
+
+  const { data: myBuildDetails } = await safeJson<TMyBuildDetailResponse>(
+    myBuildDetailsResponse,
+  );
+
+  const { data: myBuildItems } =
+    await safeJson<TMyBuildItemResponse>(myBuildItemsResponse);
+
+  const { data: categoryData } =
+    await safeJson<TProductCategoryResponse>(categoryDataResponse);
 
   return (
     <>
-      <h1 className="text-2xl font-bold ">My Builds</h1>
-      <div className="flex flex-col md:flex-row gap-12 items-start mt-4">
+      <div className="flex flex-col md:flex-row items-start gap-8">
         <aside className="w-full md:w-3/12">
+          <h1 className="text-2xl font-bold mb-4 font-heading">My Builds</h1>
+
           <div className="mb-8">
             <AddNewBuild />
           </div>
-          <h1 className=" my-2">Saved Builds</h1>
+
           {!myBuilds ? (
-            <div className="text-red-600">Failed to load builds.</div>
+            <div className="text-red-600 brutalist-style p-2">
+              Failed to load builds.
+            </div>
           ) : myBuilds.length === 0 ? (
-            <div>You have no builds yet, please create one.</div>
+            <div className="brutalist-style p-2">
+              You have no builds yet, please create one.
+            </div>
           ) : (
             <div className="flex flex-col gap-2 brutalist-style p-2">
+              <h1 className="font-heading font-bold">Saved Builds</h1>
+
               {myBuilds.map((myBuild) => (
                 <Link
                   href={`/profile/my-builds?buildId=${myBuild.id}`}
@@ -100,7 +111,7 @@ export default async function MyBuilds({
               {/* Build Details */}
               <div className="flex flex-col gap-4">
                 <div>
-                  <h1 className="text-2xl font-bold">
+                  <h1 className="text-2xl font-bold font-heading">
                     {myBuildDetails.name ?? "Unknown Build"}
                   </h1>
                   <p>{myBuildDetails.description}</p>

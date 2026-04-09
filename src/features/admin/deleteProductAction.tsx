@@ -4,13 +4,13 @@ import { fetchWithAuth } from "@/lib/secureFetch";
 
 export async function deleteProductAction(productId: number | string) {
   const response = await fetchWithAuth(
-    `http://localhost:8080/api/product/delete/${productId}`,
+    `${process.env.BASE_API_URL}/product/delete/${productId}`,
     {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   const json = await response.json();

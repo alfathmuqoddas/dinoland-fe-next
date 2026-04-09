@@ -11,7 +11,7 @@ export default function ProductCard({
   buildId?: string | string[] | undefined;
 }) {
   return (
-    <div className="brutalist-card group h-full">
+    <div className="brutalist-card group h-full transform transition-transform hover:scale-105">
       <div className="relative overflow-hidden border-2 dark:border-border border-black rounded-[12px]">
         <Image
           src={
@@ -24,16 +24,16 @@ export default function ProductCard({
           width={1920}
           height={1080}
           quality={50}
-          className="w-full h-auto object-cover transform transition-transform group-hover:scale-110"
+          className="w-full h-auto object-cover"
         />
-        <div className="absolute top-0 right-0 bg-yellow-400 px-2 md:px-4 py-1 md:py-2 border-l-4 border-b-4 border-black font-bold text-xs md:text-sm text-black">
-          ${product.price}
-        </div>
       </div>
       <Link href={`/products/details/${product.id}`}>
-        <h3 className="text-sm md:text-base font-bold mt-2 hover:text-pink-500">
-          {product.name}
-        </h3>
+        <div className="flex justify-between items-center mt-2 gap-4">
+          <h3 className="text-sm md:text-xl font-heading font-bold hover:text-pink-500">
+            {product.name}
+          </h3>
+          <p className="text-right">${product.price}</p>
+        </div>
       </Link>
       {buildId ? (
         <AddToMyBuildItem buildId={buildId} productId={product.id} />

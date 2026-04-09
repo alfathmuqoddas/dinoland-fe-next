@@ -23,7 +23,7 @@ const BuildItemByCategory = ({
   categoryData: TProductCategory[];
   data: TMyBuildItem[];
 }) => {
-  if (data.length === 0) return <div>No items in this build.</div>;
+  // if (data.length === 0) return <div>No items in this build.</div>;
 
   const productNamesByCategory = data.reduce<
     Record<number, { id: number; name: string; price: number; image: string }>
@@ -39,10 +39,12 @@ const BuildItemByCategory = ({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="font-bold">Category</TableHead>
-            <TableHead className="font-bold">Product Name</TableHead>
-            <TableHead className="font-bold">Price</TableHead>
-            <TableHead className="font-bold">Action</TableHead>
+            <TableHead className="font-heading font-bold">Category</TableHead>
+            <TableHead className="font-heading  font-bold">
+              Product Name
+            </TableHead>
+            <TableHead className="font-heading  font-bold">Price</TableHead>
+            <TableHead className="font-heading font-bold">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

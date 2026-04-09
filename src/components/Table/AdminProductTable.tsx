@@ -1,10 +1,4 @@
-import {
-  ChevronDown,
-  ChevronUp,
-  ChevronsUpDown,
-  Edit,
-  Trash,
-} from "lucide-react";
+import { Edit } from "lucide-react";
 import {
   Table,
   TableBody,

@@ -1,5 +1,5 @@
 "use client";
-import { cartItemAction } from "@/actions/cart/cartItemAction";
+import { cartItemAction } from "@/features/cart/cartItemAction";
 import { Trash } from "lucide-react";
 import { useTransition } from "react";
 

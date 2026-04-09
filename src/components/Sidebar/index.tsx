@@ -25,16 +25,20 @@ export const Category = ({ items }: { items: Category[] }) => {
       : "";
   };
 
+  if (!items || items.length === 0) {
+    return null;
+  }
+
   return (
     <section>
       <h3 className="text-xl font-bold">Categories :</h3>
       <ul>
-        {items.map((item) => (
+        {items?.map((item) => (
           <li key={item.id}>
             <Link
               href={`products?${newParams(item.id)}`}
               className={`hover:underline underline-offset-4 ${isActive(
-                item.id
+                item.id,
               )} text-sm`}
             >
               {item.name}
@@ -71,7 +75,7 @@ export const SortBy = ({ items }: { items: string[] }) => {
             <Link
               href={`products?${newParams(item)}`}
               className={`hover:underline underline-offset-4 ${isActive(
-                item
+                item,
               )} text-sm`}
             >
               {item}
@@ -108,7 +112,7 @@ export const SortOrder = ({ items }: { items: string[] }) => {
             <Link
               href={`products?${newParams(item)}`}
               className={`hover:underline underline-offset-4 ${isActive(
-                item
+                item,
               )} text-sm`}
             >
               {item}

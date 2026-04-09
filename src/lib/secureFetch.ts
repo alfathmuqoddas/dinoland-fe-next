@@ -1,10 +1,9 @@
 "use server";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
 export async function fetchWithAuth(
   url: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
 ): Promise<Response> {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
@@ -17,19 +16,16 @@ export async function fetchWithAuth(
     },
   });
 
-  if (response.status === 401) {
-    redirect("/login");
-  }
-
   return response;
 }
 
-export async function safeJson(response: Response | null) {
-  if (!response) return null;
+export async function safeJson<T>(
+  response: Response | null,
+): Promise<T | Partial<T>> {
+  if (!response || !response.ok) return {} as T;
   try {
     return await response.json();
-  } catch (err) {
-    console.error("JSON parsing failed:", err);
-    return null;
+  } catch {
+    return {} as T;
   }
 }

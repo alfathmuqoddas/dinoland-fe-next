@@ -1,5 +1,3 @@
-// import { fetchWithAuth } from "@/lib/secureFetch";
-// import { redirect } from "next/navigation";
 import NextBreadcrumb from "@/components/Breadcrumbs";
 import { ChevronRight } from "lucide-react";
 
@@ -9,7 +7,7 @@ export default async function ProfileLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 my-6">
       <NextBreadcrumb
         homeElement={"Home"}
         separator={<ChevronRight className="w-4 h-4" />}

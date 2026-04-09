@@ -63,11 +63,11 @@
 } */
 
 .brutalist-style {
-  @apply bg-amber-100 rounded-2xl border-2 border-black dark:border-border dark:bg-card;
+  @apply bg-amber-50 rounded-2xl border-2 border-black dark:border-border dark:bg-card;
 }
 
 .brutalist-card {
-  @apply relative brutalist-style p-2 transform transition-transform duration-200;
+  @apply relative brutalist-style p-4 transform transition-transform duration-200 shadow-[4px_4px_0px_rgba(0,0,0,1)];
 }
 
 .brutalist-input {

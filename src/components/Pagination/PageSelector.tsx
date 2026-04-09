@@ -37,7 +37,7 @@ export default function PageSelector({
             className={`hover:underline underline-offset-4 text-xl font-bold transition-colors ${
               active
                 ? "underline underline-pink-500 text-pink-500 pointer-events-none"
-                : "text-black hover:text-pink-400"
+                : "hover:text-pink-400"
             }`}
           >
             {page}

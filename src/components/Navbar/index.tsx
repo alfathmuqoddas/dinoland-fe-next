@@ -29,7 +29,7 @@ const Navbar = async () => {
         </div>
         <div className="md:w-1/3">
           <Link
-            href="/"
+            href="/products"
             className="flex items-center space-x-2 text-white font-bold font-heading text-xl"
           >
             <span>BRUTALIST STORE 🚀</span>

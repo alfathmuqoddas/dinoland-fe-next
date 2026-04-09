@@ -3,7 +3,7 @@ import { fetchWithAuth } from "@/lib/secureFetch";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export default async function addProduct(prevState: any, formData: FormData) {
+export default async function addProduct(_prevState: any, formData: FormData) {
   const data = [
     {
       name: formData.get("addProductName"),

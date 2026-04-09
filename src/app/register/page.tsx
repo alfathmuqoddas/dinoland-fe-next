@@ -22,13 +22,15 @@ const Register = () => {
   }, [state]);
 
   return (
-    <div className="max-w-md mx-auto px-4 mt-16">
+    <div className="flex items-center justify-center min-h-screen">
       <div className="brutalist-card">
         <div className="p-4">
           <div className="absolute -top-8 -left-8 bg-yellow-400 p-4 border-4 border-black">
             <UserPlus className="w-8 h-8" />
           </div>
-          <h2 className="text-3xl font-bold mb-8 mt-4">Register</h2>
+          <h2 className="text-3xl font-bold font-heading mb-8 mt-4">
+            Register
+          </h2>
           <form className="space-y-4" action={registerAction}>
             <div>
               <label className="block font-bold mb-2">Full Name</label>

@@ -119,5 +119,5 @@ export const addBuildItemAction = async (
 
   if (!response.ok) return { success: false, message: res.error };
 
-  redirect("/profile/my-builds?buildId=" + buildId);
+  redirect(`/profile/my-builds/${buildId}`);
 };

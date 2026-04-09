@@ -31,8 +31,16 @@ export const Category = ({ items }: { items: Category[] }) => {
 
   return (
     <section>
-      <h3 className="text-xl font-bold">Categories :</h3>
+      <h3 className="text-xl font-bold font-heading">Categories :</h3>
       <ul>
+        <li>
+          <Link
+            href="/products"
+            className="text-sm hover:underline underline-offset-4"
+          >
+            All
+          </Link>
+        </li>
         {items?.map((item) => (
           <li key={item.id}>
             <Link
@@ -68,7 +76,7 @@ export const SortBy = ({ items }: { items: string[] }) => {
 
   return (
     <section>
-      <h3 className="text-xl font-bold">Sort By :</h3>
+      <h3 className="text-xl font-bold font-heading">Sort By :</h3>
       <ul>
         {items.map((item, index) => (
           <li key={index}>
@@ -105,7 +113,7 @@ export const SortOrder = ({ items }: { items: string[] }) => {
 
   return (
     <section>
-      <h3 className="text-xl font-bold">Sort Order :</h3>
+      <h3 className="text-xl font-bold font-heading">Sort Order :</h3>
       <ul>
         {items.map((item, index) => (
           <li key={index}>

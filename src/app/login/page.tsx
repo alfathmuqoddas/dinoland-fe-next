@@ -22,13 +22,13 @@ const Login = () => {
   }, [_state]);
 
   return (
-    <div className="max-w-md mx-auto px-4 mt-16">
+    <div className="flex items-center justify-center min-h-screen">
       <div className="brutalist-card">
         <div className="p-4">
           <div className="absolute -top-8 -left-8 bg-yellow-400 p-4 border-4 border-black">
             <LogIn className="w-8 h-8" />
           </div>
-          <h2 className="text-3xl font-bold my-4">Login</h2>
+          <h1 className="text-3xl font-bold font-heading my-4">Login</h1>
           <form className="flex flex-col gap-4" action={loginAction}>
             <div>
               <label className="block font-bold mb-2" htmlFor="email">

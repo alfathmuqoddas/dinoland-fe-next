@@ -55,14 +55,13 @@ export default async function Admin({
 
   const [productsResponse, categoriesResponse] = await Promise.all([
     fetchWithAuth(url),
-    fetchWithAuth(`${process.env.BASE_API_URL}/api/productCategory`),
+    fetchWithAuth(`${process.env.BASE_API_URL}/productCategory`),
   ]);
 
-  if (productsResponse.status === 401 || categoriesResponse.status === 401) {
-    redirect("/login");
-  }
-
   if (!productsResponse.ok || !categoriesResponse.ok) {
+    if (productsResponse.status === 401 || categoriesResponse.status === 401) {
+      redirect("/login");
+    }
     return (
       <div className="p-4 text-red-600">
         <h2 className="font-bold text-xl mb-2">Failed to load data</h2>

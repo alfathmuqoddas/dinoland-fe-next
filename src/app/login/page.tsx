@@ -5,11 +5,7 @@ import { LogIn } from "lucide-react";
 import { loginAction as login } from "@/features/auth/actions";
 
 const Login = () => {
-  const [_state, loginAction, isPending] = useActionState(login, {
-    success: false,
-    message: "",
-    errors: {},
-  });
+  const [_state, loginAction, isPending] = useActionState(login, null);
 
   useEffect(() => {
     if (_state?.message) {

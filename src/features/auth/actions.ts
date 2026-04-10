@@ -7,11 +7,12 @@ import { handleBackendError } from "@/lib/utils";
 
 export async function loginAction(_prevState: any, formData: FormData) {
   const rawData = Object.fromEntries(formData);
+  console.log(rawData);
   const validated = loginSchema.safeParse(rawData);
   if (!validated.success) {
     return {
       success: false,
-      errors: validated.error.flatten().fieldErrors,
+      errors: "Validation error",
       message: "",
     };
   }

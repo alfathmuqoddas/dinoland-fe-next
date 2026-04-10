@@ -3,7 +3,7 @@
 import { useTransition } from "react";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
-import { addBuildItemAction } from "@/features/admin/myBuildAction";
+import { addBuildItemAction } from "@/features/profile/actions";
 
 export default function AddToMyBuildItem({
   buildId,
@@ -18,11 +18,10 @@ export default function AddToMyBuildItem({
     startTransition(async () => {
       const result = await addBuildItemAction(buildId, productId);
 
-      if (result.success === false) {
-        alert(result.message || "Something went wrong");
-      } else {
-        alert("Build item added successfully");
+      if (!result.success) {
+        alert(result?.message || "Something went wrong");
       }
+      alert("Build item added successfully");
     });
   }
 

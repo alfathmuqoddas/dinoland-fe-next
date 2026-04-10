@@ -2,9 +2,10 @@
 import useSWR from "swr";
 import { useParams } from "next/navigation";
 import { fetcher } from "@/features/fetcher";
-import { TProductCategory } from "@/type/product";
-import editProduct from "@/features/admin/editProductActions";
+import { TProductCategoryResponse } from "@/type/category";
+import { editProductAction } from "@/features/admin/actions";
 import { useActionState } from "react";
+import { TProductDetailResponse } from "@/type/product";
 
 export default function Edit() {
   const { id } = useParams();
@@ -13,16 +14,22 @@ export default function Edit() {
     data: productData,
     error: errorProduct,
     isLoading: isLoadingProduct,
-  } = useSWR(`http://localhost:8080/api/product/${id}`, fetcher);
+  } = useSWR<TProductDetailResponse>(
+    `http://localhost:8080/api/product/${id}`,
+    fetcher,
+  );
 
   const {
     data: productCategories,
     error: errorCategories,
     isLoading: isLoadingCategories,
-  } = useSWR(`http://localhost:8080/api/productCategory`, fetcher);
+  } = useSWR<TProductCategoryResponse>(
+    `http://localhost:8080/api/productCategory`,
+    fetcher,
+  );
 
-  const [state, editProductAction, isPending] = useActionState(
-    editProduct,
+  const [state, formAction, isPending] = useActionState(
+    editProductAction,
     null,
   );
 
@@ -37,21 +44,21 @@ export default function Edit() {
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold">Edit Product</h1>
-      <form action={editProductAction} className="flex flex-col gap-4">
+      <form action={formAction} className="flex flex-col gap-4">
         <input type="hidden" name="productId" value={id} />
         <input
           type="text"
           name="addProductName"
           placeholder="Name"
           className="brutalist-input"
-          defaultValue={productData.name}
+          defaultValue={productData?.data?.name}
         />
         <input
           type="number"
           name="addProductPrice"
           placeholder="Price"
           className="brutalist-input"
-          defaultValue={productData.price}
+          defaultValue={productData?.data?.price}
           step="any"
         />
         <input
@@ -59,25 +66,29 @@ export default function Edit() {
           name="addProductDescription"
           placeholder="Description"
           className="brutalist-input"
-          defaultValue={productData.description}
+          defaultValue={productData?.data?.description}
         />
         <select
           name="addProductCategoryId"
           className="brutalist-input-select"
-          defaultValue={productData.categoryId.toString()}
+          defaultValue={productData?.data?.categoryId.toString()}
         >
-          {productCategories.map((category: TProductCategory) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
+          {isLoadingCategories ? (
+            <option>Loading...</option>
+          ) : (
+            productCategories?.data?.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))
+          )}
         </select>
         <input
           type="text"
           name="addProductImage"
           placeholder="Image"
           className="brutalist-input"
-          defaultValue={productData.image}
+          defaultValue={productData?.data?.image}
         />
         <button
           type="submit"

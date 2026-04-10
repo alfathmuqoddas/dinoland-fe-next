@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
 import { useActionState, useState, useEffect } from "react";
-import { addNewBuildAction } from "@/features/admin/myBuildAction";
+import { addNewBuildAction } from "@/features/profile/actions";
 import { Button } from "../ui/button";
 
 export function AddNewBuild() {
@@ -23,7 +23,6 @@ export function AddNewBuild() {
 
   useEffect(() => {
     if (state?.success) {
-      alert(state?.message);
       setOpen(false);
     } else {
       return;

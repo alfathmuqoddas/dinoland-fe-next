@@ -2,7 +2,7 @@
 
 import { Trash } from "lucide-react";
 import { useTransition } from "react";
-import { deleteProductAction } from "@/features/admin/deleteProductAction";
+import { deleteProductAction } from "@/features/admin/actions";
 
 export default function DeleteAdminProduct({
   productId,
@@ -12,20 +12,22 @@ export default function DeleteAdminProduct({
   const [isPending, startTransition] = useTransition();
 
   const handleDeleteProduct = async (productId: number) => {
+    if (!confirm("Are you sure you want to delete this product?")) return;
+
     startTransition(async () => {
       const result = await deleteProductAction(productId);
 
-      if (result?.success) {
+      if (result?.success === false) {
         alert(result.message);
-      } else {
-        alert(result?.message || "Something went wrong");
       }
     });
   };
+
   return (
     <button
       onClick={() => handleDeleteProduct(productId)}
       className="p-1 text-red-600 hover:text-red-800"
+      disabled={isPending}
     >
       <Trash className="h-5 w-5" />
     </button>

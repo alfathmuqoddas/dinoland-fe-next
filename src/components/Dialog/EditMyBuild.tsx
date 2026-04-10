@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Pencil } from "lucide-react";
 import { useActionState } from "react";
-import { editBuildAction } from "@/features/admin/myBuildAction";
+import { editBuildAction } from "@/features/profile/actions";
 import { Button } from "../ui/button";
 
 export function EditMyBuild({

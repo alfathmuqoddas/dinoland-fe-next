@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import { deleteMyBuildItemAction } from "@/features/admin/myBuildAction";
+import { deleteMyBuildItemAction } from "@/features/profile/actions";
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
 
@@ -15,14 +15,9 @@ export default function RemoveMyBuildItemButton({
   const [isPending, startTransition] = useTransition();
 
   async function handleRemoveMyBuildItem() {
-    // Prompt the user to confirm the deletion
     if (!confirm("Are you sure you want to delete this build item?")) return;
     startTransition(async () => {
-      const result = await deleteMyBuildItemAction(buildId, productId);
-
-      if (result.success === false) {
-        alert(result.message || "Something went wrong");
-      }
+      await deleteMyBuildItemAction(buildId, productId);
     });
   }
 

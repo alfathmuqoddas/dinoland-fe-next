@@ -1,23 +1,32 @@
 "use client";
-import { useActionState, useState, useEffect } from "react";
-import addProduct from "@/features/admin/addProductActions";
-import { TProductCategory } from "@/type/product";
+import { useActionState } from "react";
+import { addProductAction } from "@/features/admin/actions";
+import { TProductCategoryResponse } from "@/type/category";
 import useSWR from "swr";
 import { fetcher } from "@/features/fetcher";
+import { useEffect } from "react";
 
 export default function Add() {
-  const [state, addProductAction, isPending] = useActionState(addProduct, null);
+  const [state, formAction, isPending] = useActionState(addProductAction, null);
 
-  const {
-    data: productCategories,
-    error: errorCategories,
-    isLoading: isLoadingCategories,
-  } = useSWR(`http://localhost:8080/api/productCategory`, fetcher);
+  const { data: productCategories, isLoading: isLoadingCategories } =
+    useSWR<TProductCategoryResponse>(
+      `http://localhost:8080/api/productCategory`,
+      fetcher,
+    );
+
+  useEffect(() => {
+    if (state) {
+      if (!state.success) {
+        alert(state.message);
+      }
+    }
+  }, [state]);
 
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-bold">Add New Product</h1>
-      <form action={addProductAction} className="flex flex-col gap-4">
+      <form action={formAction} className="flex flex-col gap-4">
         <input
           type="text"
           name="addProductName"
@@ -43,7 +52,7 @@ export default function Add() {
           {isLoadingCategories ? (
             <option>Loading...</option>
           ) : (
-            productCategories.map((category: TProductCategory) => (
+            productCategories?.data?.map((category) => (
               <option
                 key={category.id}
                 value={category.id}

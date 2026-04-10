@@ -1,6 +1,6 @@
 "use client";
 import { Trash } from "lucide-react";
-import { deleteBuildAction } from "@/features/admin/myBuildAction";
+import { deleteBuildAction } from "@/features/profile/actions";
 import { useTransition } from "react";
 import { Button } from "../ui/button";
 
@@ -12,7 +12,7 @@ export default function RemoveMyBuild({ buildId }: { buildId: any }) {
       startTransition(async () => {
         const result = await deleteBuildAction(buildId);
 
-        if (result?.success === false) {
+        if (!result?.success) {
           alert(result?.message || "Something went wrong");
         }
       });

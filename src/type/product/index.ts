@@ -11,6 +11,11 @@ export interface TProduct {
   updatedAt: string;
 }
 
+export type TProductBodyRequest = Pick<
+  TProduct,
+  "name" | "price" | "description" | "image" | "categoryId"
+>;
+
 export interface TProductDTO {
   id: number;
   name: string;
@@ -28,3 +33,4 @@ export interface TProductFlattened extends TProduct {
 }
 
 export type TProductResponse = TPaginatedResponse<"products", TProductDTO>;
+export type TProductDetailResponse = TApiResponse<TProduct>;

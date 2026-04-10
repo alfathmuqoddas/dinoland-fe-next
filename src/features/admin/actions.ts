@@ -35,17 +35,17 @@ export async function editProductAction(_prevState: any, formData: FormData) {
   const rawData = Object.fromEntries(formData.entries());
   const validated = editProductSchema.safeParse({
     name: rawData.addProductName,
-    price: rawData.addProductPrice,
+    price: Number(rawData.addProductPrice),
     description: rawData.addProductDescription,
     image: rawData.addProductImage,
-    categoryId: rawData.addProductCategoryId,
+    categoryId: Number(rawData.addProductCategoryId),
+    productId: rawData.productId,
   });
 
   if (!validated.success) {
     return {
       success: false,
-      errors: "Validation error",
-      message: "",
+      message: "Validation error",
     };
   }
 

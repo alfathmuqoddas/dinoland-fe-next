@@ -111,7 +111,11 @@ export default async function Admin({
         <>No Products</>
       ) : (
         <>
-          <AdminProductTable data={products?.products} />
+          <AdminProductTable
+            data={products?.products}
+            page={Number(page?.toString())}
+            pageSize={Number(pageSize?.toString() || "10")}
+          />
           <PageSelector totalPages={products?.totalPages} path="admin" />
         </>
       )}

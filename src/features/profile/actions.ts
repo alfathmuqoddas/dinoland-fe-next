@@ -76,6 +76,7 @@ export const deleteMyBuildItemAction = async (
   try {
     await deleteMyBuildItem(buildId, productId);
     revalidatePath(`/profile/my-builds/${buildId}`);
+    revalidatePath(`/profile/my-builds`);
     return { success: true, message: "Build item removed successfully" };
   } catch (e: any) {
     return { success: false, message: e.message };

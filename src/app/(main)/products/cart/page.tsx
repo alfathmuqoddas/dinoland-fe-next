@@ -9,16 +9,7 @@ export default async function Cart() {
 
   cartDataResponse = await fetchWithAuth(`${process.env.BASE_API_URL}/cart`);
 
-  if (!cartDataResponse.ok) {
-    if (cartDataResponse.status === 401) redirect("/login");
-
-    return (
-      <div className="p-4 text-red-600">
-        <h2 className="font-bold text-xl mb-2">Failed to load data</h2>
-        <p>Please refresh the page or try again later.</p>
-      </div>
-    );
-  }
+  if (cartDataResponse.status === 401) redirect("/login");
 
   const { data: cartData } = await safeJson<TCartResponse>(cartDataResponse);
 

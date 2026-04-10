@@ -8,15 +8,16 @@ export async function fetchWithAuth(
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("accessToken")?.value;
 
-  const response = await fetch(url, {
-    ...options,
-    headers: {
-      ...options.headers,
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  const headers = new Headers(options.headers);
 
-  return response;
+  if (accessToken) {
+    headers.set("Authorization", `Bearer ${accessToken}`);
+  }
+
+  return fetch(url, {
+    ...options,
+    headers,
+  });
 }
 
 export async function safeJson<T>(

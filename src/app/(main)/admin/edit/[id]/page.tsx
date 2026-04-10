@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import { fetcher } from "@/features/fetcher";
 import { TProductCategoryResponse } from "@/type/category";
 import { editProductAction } from "@/features/admin/actions";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { TProductDetailResponse } from "@/type/product";
 
 export default function Edit() {
@@ -15,7 +15,7 @@ export default function Edit() {
     error: errorProduct,
     isLoading: isLoadingProduct,
   } = useSWR<TProductDetailResponse>(
-    `http://localhost:8080/api/product/${id}`,
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/product/${id}`,
     fetcher,
   );
 
@@ -24,7 +24,7 @@ export default function Edit() {
     error: errorCategories,
     isLoading: isLoadingCategories,
   } = useSWR<TProductCategoryResponse>(
-    `http://localhost:8080/api/productCategory`,
+    `${process.env.NEXT_PUBLIC_BASE_API_URL}/productCategory`,
     fetcher,
   );
 
@@ -32,6 +32,14 @@ export default function Edit() {
     editProductAction,
     null,
   );
+
+  useEffect(() => {
+    if (state) {
+      if (!state.success) {
+        alert(state.message);
+      }
+    }
+  }, [state]);
 
   if (isLoadingProduct || isLoadingCategories) {
     return <p>Loading...</p>;

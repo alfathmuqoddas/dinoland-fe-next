@@ -11,7 +11,7 @@ export default function Add() {
 
   const { data: productCategories, isLoading: isLoadingCategories } =
     useSWR<TProductCategoryResponse>(
-      `http://localhost:8080/api/productCategory`,
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}productCategory`,
       fetcher,
     );
 

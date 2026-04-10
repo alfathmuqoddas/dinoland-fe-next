@@ -10,12 +10,12 @@ export default async function ProductDetails({
 }) {
   const { id } = await params;
 
-  const product = await fetch(`http://localhost:8080/api/product/${id}`);
+  const product = await fetch(`${process.env.BASE_API_URL}/product/${id}`);
 
   const { data: productData } = await product.json();
 
   const similarProducts = await fetch(
-    `http://localhost:8080/api/product?categoryId=${productData.categoryId}`,
+    `${process.env.BASE_API_URL}/product?categoryId=${productData.categoryId}`,
   );
 
   const { data } = await similarProducts.json();

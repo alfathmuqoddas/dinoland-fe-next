@@ -11,7 +11,7 @@ export async function getAuthToken() {
 
 export async function createSession(
   accessToken: string,
-  refreshToken?: string
+  refreshToken?: string,
 ) {
   const cookiesStore = await cookies();
 
@@ -39,7 +39,7 @@ export async function getRoleFromToken(token: string): Promise<string> {
 
 // // Function to fetch new access token using the refresh token
 export async function fetchNewToken(token: string) {
-  const response = await fetch("http://localhost:8080/api/auth/refresh", {
+  const response = await fetch(`${process.env.BASE_API_URL}/auth/refresh`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -4,9 +4,12 @@ import ProductCard from "@/components/Card/ProductCard";
 import PageSelector from "@/components/Pagination/PageSelector";
 
 export const Sidebar = async () => {
-  const categories = await fetch("http://localhost:8080/api/productCategory", {
-    cache: "no-store",
-  });
+  const categories = await fetch(
+    `${process.env.BASE_API_URL}/productCategory`,
+    {
+      cache: "no-store",
+    },
+  );
   const categoriesData = await categories.json();
   return (
     <aside className="pt-8 flex-col gap-4 hidden md:flex md:w-1/6 border-r-2 border-black">
@@ -25,7 +28,7 @@ const Products = async ({
   const { categoryId, sortBy, sortOrder, q, page, pageSize, buildId } =
     await searchParams;
 
-  let url = "http://localhost:8080/api/product";
+  let url = `${process.env.BASE_API_URL}/product`;
 
   const queryParams = new URLSearchParams() as any;
 

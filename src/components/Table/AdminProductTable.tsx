@@ -13,8 +13,12 @@ import { TProductDTO } from "@/type/product";
 
 export default async function AdminProductTable({
   data,
+  page,
+  pageSize,
 }: {
   data: TProductDTO[];
+  page: number;
+  pageSize: number;
 }) {
   return (
     <div className="overflow-x-auto brutalist-style">

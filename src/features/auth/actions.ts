@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { loginSchema, registerSchema } from "./schemas";
 import { login, register, logout } from "./api";
 import { handleBackendError } from "@/lib/utils";
+import { success } from "zod";
 
 export async function loginAction(_prevState: any, formData: FormData) {
   const rawData = Object.fromEntries(formData);
@@ -59,7 +60,7 @@ export async function signOutAction() {
     cookieStore.delete("accessToken");
     cookieStore.delete("refreshToken");
   } catch (err: any) {
-    return handleBackendError(err);
+    return { success: false, message: err.message };
   }
 }
 
